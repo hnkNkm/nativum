@@ -7,7 +7,7 @@
 ## 必要component
 
 - `navigation` — `nv-nav` / `nv-pagination` (+ `aria-current="page"`)
-- `dropdown` — `nv-dropdown-trigger` / `nv-dropdown` / `nv-dropdown-end` (アカウントメニュー)
+- `dropdown` — `nv-dropdown-trigger` / `nv-dropdown` / `nv-dropdown-end` (アカウントpopover)
 - `dialog` — 設定ダイアログ (`commandfor` / `command="show-modal"`)
 - `table` — `nv-table-scroll` / `nv-table-striped`
 - `details` — `nv-accordion`
@@ -28,7 +28,7 @@
     </span>
 
     <span style="--nv-anchor: --nv-anchor-account">
-      <button class="nv-dropdown-trigger" popovertarget="account-menu" aria-haspopup="true">
+      <button class="nv-dropdown-trigger" popovertarget="account-menu">
         Hanako
       </button>
       <div id="account-menu" class="nv-dropdown nv-dropdown-end" popover>
@@ -50,7 +50,6 @@
       <strong>24</strong>
       <span class="nv-badge nv-badge-success">+3 this month</span>
     </article>
-    <!-- メトリクスカードを nv-grid で並べる -->
   </section>
 
   <section class="nv-grid">
@@ -90,7 +89,9 @@
 
 要点:
 
-- `nv-grid` は列数を指定せず、`--nv-grid-min` (デフォルト `16rem`) で自動調整。カード幅を変えたい場合のみインラインで `--nv-grid-min` を上書きする
+- `nv-grid` は列数を指定せず、`--nv-grid-min` (デフォルト `16rem`) で自動調整
+- アカウントdropdownは通常のリンク / ボタンをpopoverに表示するパターンでありARIA menu widgetではない。`aria-haspopup="true"` / `role="menu"` は付けない
+- `popovertarget` のネイティブinvoker relationshipがexpanded stateを支援技術へ公開する。独自 `aria-expanded` stateを手動同期しない
 - アカウントdropdownと設定dialogは `--nv-anchor` の親スコープと `commandfor` で宣言的に接続する
 - テーマはサーバーが `<html data-theme="dark">` 等を出力して制御する。クライアント側theme switchはNativumの提供範囲外であり、ホストアプリケーションの責務として実装してよい
 - ダミーリンク (`href="#"`) は例示のためのもので、実装ではサーバーが実URLを生成する
