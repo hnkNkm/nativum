@@ -2,15 +2,16 @@
 
 ## Purpose
 
-Popover APIで軽量なオーバーレイ（ヘルプ、アカウント情報等）を実現する。開閉は `popovertarget` / `popovertargetaction` 属性で宣言的に行う。Dropdown（アンカー付きメニュー）の基盤でもある。
+Popover APIで軽量なオーバーレイ（ヘルプ、アカウント情報等）を実現する。開閉は `popovertarget` / `popovertargetaction` 属性で宣言的に行う。Dropdown（アンカー付きリンクリスト等）の基盤でもある。
 
 ## Native primitive
 
-- `[popover]` 属性（popover要素）
+- `[popover]` 属性（popover要素。属性自体は開閉時に付け外しされない）
 - `popovertarget`（トリガー要素が対象の `id` を指定）
 - `popovertargetaction="toggle"` / `"show"` / `"hide"`（デフォルトは `toggle`）
-- トップレイヤー + light dismiss（Esc / 外部クリック）
-- `:popover-open` 疑似クラス
+- popover showing state + `:popover-open` 疑似クラス
+- トップレイヤー + light dismiss（デフォルトの `popover="auto"` では Esc / 外部クリック等）
+- `popovertarget` が作るinvoker relationship（支援技術向けの暗黙 `aria-details` / `aria-expanded` 関係と、論理的なフォーカス順）
 
 ## Required markup
 
@@ -39,16 +40,18 @@ Dropdownとして使う場合は `nv-dropdown-trigger` / `nv-dropdown` / `nv-dro
 すべてブラウザのネイティブ動作である。
 
 - トリガーのクリックで `toggle` / `show` / `hide`
-- light dismiss: Escキー、popover外のクリック、他のpopoverの表示で閉じる
+- デフォルトの `popover="auto"` はlight dismissに対応する
 - トップレイヤー表示（z-indexを手動管理しない）
-- `popover` 属性の有無で開閉が決まり、`:popover-open` でスタイル可能
+- 開いている状態はpopover showing stateとしてブラウザが管理し、CSSでは `:popover-open` でスタイル可能
+- `popover` content attributeは「この要素がpopoverである」ことを宣言する設定であり、表示中だけ存在する状態属性ではない
 
 ## Accessibility
 
-- popoverの開閉は `popover` 属性の有無としてスクリーンリーダーに通知される
-- popoverトリガーでは `aria-expanded` が利用できないため、開閉状態をARIAで補えない（`examples/popover.html` の注意書き）。状態表示が必要な場合は `aria-describedby` で静的な説明を与える
-- トリガーとpopoverの関連付けは `popovertarget` + 対象の `id` で行う。リンク等は通常のフォーカス順でアクセスできる
-- popoverはlight dismissで閉じるため、重要な状態遷移（フォーム送信結果等）の表示には使わない。持続的なメッセージは `nv-notice` を使う
+- `<button popovertarget="...">` のネイティブinvoker relationshipを使う。ブラウザは対象popoverとの暗黙の関連付けとexpanded stateを支援技術へ公開する
+- ネイティブinvokerの開閉状態を手動の `aria-expanded` で複製しない。ブラウザが管理する状態とずれる独自stateを作らない
+- `popovertarget` と対象の `id` でトリガーとpopoverを関連付ける。可能ならpopoverはトリガーの近くに置き、読み上げ・フォーカス順も自然になる構造にする
+- popover内の内容には本来の意味を持つHTMLを使う。単なるリンクリストへ `role="menu"` を付けない
+- popoverはlight dismissされ得るため、保存結果など持続的に伝える必要がある状態は `nv-notice` 等の通常コンテンツで表現する
 
 ## Progressive enhancements
 
@@ -57,9 +60,9 @@ Dropdownとして使う場合は `nv-dropdown-trigger` / `nv-dropdown` / `nv-dro
 
 ## Fallback behavior
 
-- Popover API非対応環境では、`[popover]` 要素は通常の要素としてドキュメントフローに表示される
+- Popover API非対応環境では、`[popover]` は未知の属性として扱われ、要素は通常のドキュメントフロー内コンテンツとして表示される
 - フォールバック時も意味のある内容を保つこと（コンテンツが「隠れたまま」にならない設計にする）
-- アンカー付きDropdownとして使う場合、CSS Anchor Positioning非対応環境ではpopoverのデフォルト配置（トップレイヤー中央等）にフォールバックする（[dropdown.md](./dropdown.md)）
+- アンカー付きDropdownとして使う場合、CSS Anchor Positioning非対応環境ではpopoverのデフォルト配置にフォールバックする（[dropdown.md](./dropdown.md)）
 
 ## Examples
 
@@ -82,14 +85,15 @@ Dropdownとして使う場合は `nv-dropdown-trigger` / `nv-dropdown` / `nv-dro
 </div>
 
 <div id="tips" popover>
-  <p>Esc・backdropクリック・外部クリックでネイティブに閉じられます。</p>
+  <p>Escやpopover外のクリック等でネイティブにlight dismissできます。</p>
 </div>
 ```
 
 ## Anti-patterns
 
-- `role="menu"` をpopover内のリンクリストに付与する（Arrow keyによるフルキーボード操作の実装が必要になる。リンクリストはそのまま `<a>` のリストでよい。理由は [dropdown.md](./dropdown.md) 参照）
-- トリガーに `aria-expanded` を付与する（popoverトリガーでは利用不可）
+- `role="menu"` をpopover内の通常リンクリストに付与する（menu widget固有のキーボード操作を実装していないため）
+- ネイティブ `popovertarget` のexpanded stateを独自 `aria-expanded` stateで手動同期する
+- `popover` 属性の有無を開閉状態として付け外しする（表示状態はブラウザが管理するpopover showing state / `:popover-open` を使う）
 - `position: fixed` 等で自作のオーバーレイを実装する
 - checkbox hack でpopoverを再現する
 - 状態が重要な内容（保存結果等）をpopoverのみで伝える（light dismissで閉じるため情報を見失う。`nv-notice` を使用する）
