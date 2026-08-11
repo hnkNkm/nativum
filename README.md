@@ -57,13 +57,13 @@ Release済みの `nativum.css` を読み込むだけです。
 
 <dialog id="settings">
   <header><h2>Settings</h2></header>
-  <form>
+  <form id="settings-form">
     <label for="name">Name</label>
     <input id="name" name="name" type="text" required>
   </form>
   <footer>
     <button commandfor="settings" command="close">Close</button>
-    <button class="nv-primary" type="submit">Save</button>
+    <button class="nv-primary" type="submit" form="settings-form">Save</button>
   </footer>
 </dialog>
 ```
