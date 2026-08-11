@@ -38,7 +38,7 @@
           <h2>Settings</h2>
         </header>
 
-        <form action="#" method="post">
+        <form action="#" method="post" id="settings-form">
           <div class="nv-field">
             <label for="d-name">Display name</label>
             <input id="d-name" name="name" type="text" value="Hanako" required>
@@ -55,17 +55,18 @@
 
         <footer>
           <button commandfor="settings" command="close">Close</button>
-          <button class="nv-primary" type="submit" form="settings">Save</button>
+          <button class="nv-primary" type="submit" form="settings-form">Save</button>
         </footer>
       </dialog>
 
       <p class="nv-text-muted">
-        Escキーでのキャンセル、<code>::backdrop</code> クリックでの破棄、フォーカストラップはすべてブラウザが提供する。
+        Escキーでのキャンセルとフォーカストラップはブラウザが提供する。
+        実際のアプリでは <code>action</code> にサーバーエンドポイントを指定し、送信結果に応じてサーバーが再レンダリングする。
       </p>
     </section>
 
     <section class="nv-stack-sm">
-      <h2>Form dialog (method="dialog")</h2>
+      <h2>Confirm dialog (server form)</h2>
       <div class="nv-cluster">
         <button commandfor="confirm" command="show-modal">Request confirmation</button>
       </div>
@@ -76,34 +77,25 @@
         </header>
         <p>この操作は取り消せません。プロジェクトと全データが削除されます。</p>
         <footer>
-          <button type="submit" form="confirm-form">Cancel</button>
-          <button class="nv-danger" type="submit" form="confirm-form" name="action" value="delete">Delete</button>
+          <button commandfor="confirm" command="close">Cancel</button>
+          <button class="nv-danger" type="submit" form="delete-form" name="action" value="delete">Delete</button>
         </footer>
       </dialog>
-      <form method="dialog" id="confirm-form" hidden></form>
+      <!-- 削除はサーバーへの POST 送信で実行する。実際のアプリでは action に
+           サーバーエンドポイントを指定し、成功時はサーバーがリダイレクトする。 -->
+      <form method="post" action="#" id="delete-form" hidden></form>
 
       <p class="nv-text-muted">
-        <code>&lt;form method="dialog"&gt;</code> のsubmitボタンはフォームの値を <code>close()</code> に渡してdialogを閉じる。
+        状態変更はサーバーへの通常の <code>&lt;form method="post"&gt;</code> 送信で行う
+        (<code>&lt;form method="dialog"&gt;</code> は <code>returnValue</code> をJavaScriptで読み取る用途のみで、サーバー送信はしない)。
       </p>
     </section>
 
-    <section>
-      <h2>Non-modal dialog</h2>
-      <div class="nv-cluster">
-        <button commandfor="inspector" command="show">Show inspector</button>
-        <button commandfor="inspector" command="hide">Hide inspector</button>
-      </div>
-
-      <dialog id="inspector">
-        <header>
-          <h2>Inspector</h2>
-        </header>
-        <p>モーダルではないため、背後にあるページと並行して操作できる。</p>
-        <footer>
-          <button commandfor="inspector" command="close">Close</button>
-        </footer>
-      </dialog>
-    </section>
+    <div class="nv-notice nv-notice-info" role="status">
+      非モーダルのオーバーレイには <code>&lt;dialog&gt;</code> ではなく Popover API が適切なprimitiveである
+      (<a href="popover.html">Popover</a> 参照)。
+      <code>command="show"</code> / <code>command="hide"</code> はdialogに定義されていないため使用しない。
+    </div>
 
     <div class="nv-notice nv-notice-info" role="status">
       <code>commandfor</code> に対応しない環境では、<code>&lt;dialog&gt;</code> はフォールバックとして
