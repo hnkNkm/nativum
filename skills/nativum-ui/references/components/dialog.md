@@ -2,14 +2,18 @@
 
 ## 目的
 
-ネイティブの `<dialog>` でモーダル / ノンモーダルのダイアログを実現する。開閉はHTML Standardの `command` / `commandfor` 属性で宣言的に行う。カスタムモーダル実装は禁止。
+ネイティブの `<dialog>` でモーダルダイアログを実現する。開閉はHTML Standardの `command` / `commandfor` 属性で宣言的に行う。カスタムモーダル実装は禁止。
+
+**注意**: 非モーダルのオーバーレイには `<dialog>` ではなく **Popover API** が適切なprimitiveである (`popover.md` 参照)。
 
 ## ネイティブprimitive
 
 - `<dialog>` / `<dialog open>`
-- `commandfor` + `command="show-modal"` / `command="show"` / `command="close"` / `command="hide"`
-- `<form method="dialog">` (submitで閉じ、値を `close()` へ渡す)
+- `commandfor` + `command="show-modal"` / `command="close"` / `command="request-close"`
+- `<form method="dialog">` (submitで閉じ、**submitterボタンの `value`** を `close(returnValue)` へ渡す。読み取りにはJavaScriptが必要)
 - `::backdrop` / Escキー (`cancel` イベント)
+
+**注意**: `command="show"` / `command="hide"` は標準の `command` keyword ではない (popover用の標準commandは `show-popover` / `hide-popover` / `toggle-popover`)。dialogに対して使用してはならない。
 
 ## Required markup
 
@@ -20,14 +24,20 @@
   <header>
     <h2>Settings</h2>
   </header>
-  <p>本文。</p>
+  <form action="/settings" method="post" id="settings-form">
+    ...
+  </form>
   <footer>
     <button commandfor="settings" command="close">Close</button>
+    <button class="nv-primary" type="submit" form="settings-form">Save</button>
   </footer>
 </dialog>
 ```
 
-`header` / `footer` / `::backdrop` は要素セレクタで自動スタイルされる。
+要点:
+
+- `form="..."` が参照するのは **`<form>` 要素のid** であり、`<dialog>` のidではない
+- `header` / `footer` / `::backdrop` は要素セレクタで自動スタイルされる
 
 ## Nativum classes
 
@@ -39,11 +49,17 @@
 ## 動作 (ネイティブのinteraction)
 
 - `command="show-modal"` でモーダル表示 (トップレイヤー + 背景inert + フォーカストラップ)
-- `command="show"` / `command="hide"` でノンモーダル表示 / 非表示
 - `command="close"` で閉じる。Escでキャンセル
-- `<form method="dialog">` のsubmitで閉じ、値を `close(returnValue)` へ渡す
+- `command="request-close"` で `cancel` イベント経由で閉じる (ハンドラが無ければ `close` と同等)
+- `<form method="dialog">` のsubmitで閉じ、submitterボタンの `value` を `close(returnValue)` へ渡す (**サーバーへは送信されない**)
 - `dialog[open]` でサーバーレンダリング初期表示
-- **`::backdrop` クリックで閉じる動作はネイティブに存在しない** (JSが必要)
+- **デフォルトの `<dialog>` は backdrop クリックだけでは閉じない**。対応環境では `closedby="any"` でネイティブの light dismiss を opt-in できる (Enhancement)
+
+## `method="dialog"` の使い分け
+
+- 状態変更 (削除・保存) には使わない。通常の `<form method="post" action="...">` を使う
+- 「閉じる際に値を渡す」用途 (選択結果を返すピッカー等) に限る
+- フォームはダイアログの**子孫**に置く (`method="dialog"` は直近のdialog祖先を閉じる)
 
 ## フォールバック
 
@@ -58,9 +74,12 @@
 
 - `position: fixed` + 自作オーバーレイでモーダルを再実装
 - `showModal()` / `close()` を呼ぶJSを追加
-- `::backdrop` クリックで閉じることを「ネイティブにある」と前提にする
+- `command="show"` / `command="hide"` をdialogに使う (標準の `command` keyword ではない)
+- `method="dialog"` のフォームをダイアログ外に置く (送信が破棄される)
+- `form="..."` で `<dialog>` / `<div>` のidを参照する (`<form>` のidのみ有効)
+- `::backdrop` クリックで閉じることを「ネイティブにある」と前提にする (デフォルトでは閉じない。`closedby="any"` で opt-in)
 - checkbox hack でモーダルを再現
 
 ## 詳細
 
-詳細は `../../../../docs/components/dialog.md` を参照。
+この Skill 内の該当 section が正本。リポジトリの `docs/components/` は人間向けの詳細版。

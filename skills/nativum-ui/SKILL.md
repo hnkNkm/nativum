@@ -83,6 +83,22 @@ Explain that Nativum does not provide this behavior
 このSkillをアプリケーションへ vendor した場合、リポジトリ内の `docs/` と `src/` は存在しない。
 クラス名・CSS変数の真実源はこの Skill 内の `references/` のみとし、存在しないAPIは推測して生成しない。
 
+## ドキュメントの同期方針
+
+リポジトリ内では `docs/` が人間向けの詳細版、この Skill の `references/` が agent 向け正本である。両者は **NativumのComponent APIを同じように記述する** が、vendor 後に Skill 単体で成立するよう、Skill 内のファイルはリポジトリ外パス (`docs/` / `src/`) を**参照しない**。
+
+乖離の検出は CI で機械検査する:
+
+```sh
+./tools/check-skill-examples.sh   # skill の examples / references のクラス・トークンと src/ の整合
+```
+
+**保証範囲**: この検査は `examples/*.html` と `references/**/*.md` のコード例が
+参照するクラス (`nv-*`) とトークン (`--nv-*`) が `src/` に実在することを検証する。
+非対象: md 内の散文 (anti-pattern の禁止例言及) と、コマンド・属性・説明の意味論
+(マークアップの正しさはこの Skill の記述と実ブラウザでの動作確認で担保する)。
+CSSのクラス・トークンが変更された場合は、この Skill の `references/` と `examples/` も同じリリースで更新する (CSSとSkillは同一バージョン)。
+
 ## Hard Rules
 
 ### MUST
@@ -115,7 +131,7 @@ Explain that Nativum does not provide this behavior
 
 - 既存React / Vue / Svelte等のアプリ内でNativumクラスを利用する
 - application-specific behaviorとしてJS/TSを使用する
-- application側のstate management・routing・data fetchingを使用する
+- application側のstate management・routing・data fetchingを使用する (例: ホストアプリのルーター。Nativum Coreはルーティングを提供しないが、ホスト側のルーター使用を禁止しない)
 - Nativumが提供しない複雑なinteractionをhost application側で実装する
 
 ただし、Nativum componentが標準HTMLだけで実現可能なのに、不必要にJS stateへ置き換えないこと。

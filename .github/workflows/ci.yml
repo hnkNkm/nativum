@@ -21,4 +21,4 @@ jobs:
         run: ./tools/verify.sh
 
       - name: Check Agent Skill sync
-        run: ./tools/check-skill-sync.sh
+        run: ./tools/check-skill-examples.sh

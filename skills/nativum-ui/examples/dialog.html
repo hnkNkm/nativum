@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nativum — Dialog (commandfor / form method="dialog")</title>
+  <title>Nativum — Dialog (commandfor / server form)</title>
   <!--
     アプリケーションに vendor した nativum.css を参照すること。
     (推奨構成: public/vendor/nativum/nativum.css)
     <link rel="stylesheet" href="/vendor/nativum/nativum.css">
     この例は参照パス nativum.css で同ディレクトリに配置した前提で書いている。
-    すべてのクラスは src/*.css に実在するもののみを使用する。
+    すべてのクラスはこの Skill の references/ に記載されたもののみを使用する。
   -->
   <link rel="stylesheet" href="nativum.css">
 </head>
@@ -33,7 +33,7 @@
         <header>
           <h2>設定</h2>
         </header>
-        <form action="/settings" method="post">
+        <form action="/settings" method="post" id="settings-form">
           <div class="nv-field">
             <label for="d-name">表示名</label>
             <input id="d-name" name="name" type="text" value="Hanako" required>
@@ -49,17 +49,19 @@
         </form>
         <footer>
           <button commandfor="settings" command="close">キャンセル</button>
-          <button class="nv-primary" type="submit" form="settings">保存</button>
+          <button class="nv-primary" type="submit" form="settings-form">保存</button>
         </footer>
       </dialog>
 
       <p class="nv-text-muted">
-        Escキーでのキャンセル、<code>::backdrop</code>、フォーカストラップはすべてブラウザが提供する。
+        Escキーでのキャンセルとフォーカストラップはブラウザが提供する。
+        <code>form="..."</code> が参照するのは <code>&lt;form&gt;</code> のidである
+        (<code>&lt;dialog&gt;</code> のidではない)。
       </p>
     </section>
 
     <section class="nv-stack-sm">
-      <h2>確認ダイアログ (form method="dialog")</h2>
+      <h2>確認ダイアログ (サーバーへのPOST)</h2>
       <div class="nv-cluster">
         <button commandfor="confirm" command="show-modal">削除の確認を要求</button>
       </div>
@@ -70,40 +72,25 @@
         </header>
         <p>この操作は取り消せません。プロジェクトと全データが削除されます。</p>
         <footer>
-          <button type="submit" form="confirm-form">キャンセル</button>
-          <button class="nv-danger" type="submit" form="confirm-form"
+          <button commandfor="confirm" command="close">キャンセル</button>
+          <button class="nv-danger" type="submit" form="delete-form"
                   name="action" value="delete">削除する</button>
         </footer>
       </dialog>
-      <form method="dialog" id="confirm-form" hidden></form>
+      <!-- 状態変更はサーバーへの POST 送信で行う (実際の action はサーバーが生成する) -->
+      <form method="post" action="/projects/delete" id="delete-form" hidden></form>
 
       <p class="nv-text-muted">
-        <code>&lt;form method="dialog"&gt;</code> のsubmitボタンはフォームの値を
-        <code>close()</code> に渡してdialogを閉じる。削除の実行はサーバーへの通常POSTで行う。
+        状態変更はサーバーへの通常の <code>&lt;form method="post"&gt;</code> 送信で行う。
+        <code>&lt;form method="dialog"&gt;</code> は <code>returnValue</code> を
+        JavaScriptで読み取る用途のみで、サーバー送信はしない。
       </p>
     </section>
 
-    <section class="nv-stack-sm">
-      <h2>ノンモーダルダイアログ</h2>
-      <div class="nv-cluster">
-        <button commandfor="inspector" command="show">インスペクタを表示</button>
-        <button commandfor="inspector" command="hide">インスペクタを隠す</button>
-      </div>
-
-      <dialog id="inspector">
-        <header>
-          <h2>インスペクタ</h2>
-        </header>
-        <p>モーダルではないため、背後にあるページと並行して操作できる。</p>
-        <footer>
-          <button commandfor="inspector" command="close">閉じる</button>
-        </footer>
-      </dialog>
-    </section>
-
     <div class="nv-notice nv-notice-info" role="status">
-      <code>commandfor</code> に対応しない環境では、<code>&lt;dialog&gt;</code> を
-      <code>open</code> 属性付きでサーバーレンダリングし、操作対象をページ内のフォームへ置き換えること。
+      非モーダルのオーバーレイには <code>&lt;dialog&gt;</code> ではなく Popover API が
+      適切なprimitiveである。<code>command="show"</code> / <code>command="hide"</code> は
+      dialogに定義されていないため使用しない。
     </div>
 
     <footer class="nv-stack-sm">

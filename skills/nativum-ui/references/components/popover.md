@@ -51,4 +51,4 @@ popover固有のクラスは `nv-dropdown-*` (別コンポーネント) のみ�
 
 ## 詳細
 
-詳細は `../../../../docs/components/popover.md` を参照。
+この Skill 内の該当 section が正本。リポジトリの `docs/components/` は人間向けの詳細版。

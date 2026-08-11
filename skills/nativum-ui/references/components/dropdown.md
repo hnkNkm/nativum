@@ -34,7 +34,7 @@ Popover API + CSS Anchor Positioningで、トリガーに紐付いたアンカ�
 
 ## Nativum classes
 
-`src/60-components.css` に存在するもののみ:
+このSkillの references/ に記載されたもののみ:
 
 - `nv-dropdown-trigger` — トリガー側 (`anchor-name: var(--nv-anchor)`)
 - `nv-dropdown` — メニュー側 (`min-width: 12rem`、アンカー配置)
@@ -64,4 +64,4 @@ Popover API + CSS Anchor Positioningで、トリガーに紐付いたアンカ�
 
 ## 詳細
 
-詳細は `../../../../docs/components/dropdown.md` を参照。
+この Skill 内の該当 section が正本。リポジトリの `docs/components/` は人間向けの詳細版。
