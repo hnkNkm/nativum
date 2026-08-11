@@ -39,10 +39,12 @@
           packages = with pkgs; [
             python3
             coreutils
+            # Playwright MCP — Web画面の動作検証 (開発ツールでありCoreの実行時依存ではない)
+            playwright-mcp
           ];
 
           shellHook = ''
-            echo "nativum dev shell — build: tools/build.sh / verify: tools/verify.sh / serve: tools/serve.sh"
+            echo "nativum dev shell — build: tools/build.sh / verify: tools/verify.sh / serve: tools/serve.sh / browser: playwright-mcp"
           '';
         };
       });
