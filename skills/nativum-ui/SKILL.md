@@ -90,12 +90,13 @@ Explain that Nativum does not provide this behavior
 乖離の検出は CI で機械検査する:
 
 ```sh
-./tools/check-skill-examples.sh   # skill examples のクラス・トークンと src/ の整合
+./tools/check-skill-examples.sh   # skill の examples / references のクラス・トークンと src/ の整合
 ```
 
-**保証範囲**: この検査が対象とするのは `examples/*.html` が参照するクラス・トークンのみである。
-`references/*.md` の記述内容 (コマンド・属性・説明) は機械検査の対象外であり、
-マークアップの正しさはこの Skill の記述と実ブラウザでの動作確認で担保する。
+**保証範囲**: この検査は `examples/*.html` と `references/**/*.md` のコード例が
+参照するクラス (`nv-*`) とトークン (`--nv-*`) が `src/` に実在することを検証する。
+非対象: md 内の散文 (anti-pattern の禁止例言及) と、コマンド・属性・説明の意味論
+(マークアップの正しさはこの Skill の記述と実ブラウザでの動作確認で担保する)。
 CSSのクラス・トークンが変更された場合は、この Skill の `references/` と `examples/` も同じリリースで更新する (CSSとSkillは同一バージョン)。
 
 ## Hard Rules
