@@ -13,7 +13,6 @@ result-*
 
 # playwright 検証の成果物
 .playwright-mcp/
-*.png
 
 # opencode 実行環境 (Coreの成果物ではない)
 .opencode/node_modules/

@@ -3,7 +3,7 @@
   "mcp": {
     "playwright": {
       "type": "local",
-      "command": ["playwright-mcp", "--browser", "chrome"],
+      "command": ["playwright-mcp"],
       "enabled": true
     }
   }
