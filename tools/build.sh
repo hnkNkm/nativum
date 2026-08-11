@@ -5,7 +5,8 @@ set -eu
 cd "$(dirname "$0")/.."
 
 VERSION="0.1.0"
-DIST="dist"
+# 出力先は NATIVUM_DIST で上書き可能 (verify.sh が一時ディレクトリへビルドして比較するため)
+DIST="${NATIVUM_DIST:-dist}"
 FILES="src/00-layer.css src/10-reset.css src/20-tokens.css src/30-base.css src/40-layout.css src/50-forms.css src/60-components.css src/70-motion.css"
 
 mkdir -p "$DIST"
