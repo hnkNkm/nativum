@@ -8,11 +8,11 @@
 
 - `<dialog>` / `<dialog open>`
 - `commandfor` + `command="show-modal"` / `command="close"` / `command="request-close"`
-- `<form method="dialog">`（submitでdialogを閉じ、値を `close(returnValue)` へ渡す。値の読み取りにはJavaScriptが必要）
+- `<form method="dialog">`（submitでdialogを閉じ、**submitterボタンの `value`** を `close(returnValue)` へ渡す。読み取りにはJavaScriptが必要）
 - `::backdrop`
 - `cancel` / `close` イベント（Esc操作等、ブラウザ内部動作）
 
-**注意**: `command="show"` / `command="hide"` はdialogには定義されていない（popover用のコマンド）。dialogに対して使用してはならない。
+**注意**: `command="show"` / `command="hide"` は標準の `command` keyword ではない（popover用の標準commandは `show-popover` / `hide-popover` / `toggle-popover`）。dialogに対して使用してはならない。
 
 **注意**: 非モーダルのオーバーレイには `<dialog>` ではなく **Popover API** が適切なprimitiveである（`docs/components/popover.md` 参照）。
 
@@ -64,9 +64,9 @@
 - `command="close"` で閉じる
 - `command="request-close"` で `cancel` イベントを経由して閉じる（JavaScriptの `cancel` ハンドラで中止可能。ハンドラが無ければ `close` と同等）
 - Escキーでキャンセル（`cancel` イベント）
-- `<form method="dialog">` の submit でダイアログを閉じ、フォーム値を `close(returnValue)` へ渡す
+- `<form method="dialog">` の submit でダイアログを閉じ、submitterボタンの `value` を `close(returnValue)` へ渡す
 - `dialog[open]` でサーバーレンダリングされた初期表示
-- `::backdrop` クリックでの自動破棄はネイティブの `<dialog>` には**存在しない**。その動作にはJavaScriptが必要であり、Nativumは提供しない（`closedby="any"` 属性はprogressive enhancementとして利用可能）
+- デフォルトの `<dialog>` は backdrop クリックだけでは**閉じない**。対応環境では `closedby="any"` でネイティブの light dismiss を opt-in できる（Enhancement）
 
 ## `method="dialog"` の正しい使い方
 
@@ -180,10 +180,10 @@
 - 自作のモーダルオーバーレイ（`position: fixed` + 背景を `inert` にするdiv等）で `<dialog>` を再実装する（禁止）
 - `<div role="dialog">` に `aria-modal` を付けて自作する
 - `showModal()` / `close()` を呼ぶJavaScriptを追加する（`command` / `commandfor` を使う）
-- `command="show"` / `command="hide"` をdialogに使う（dialogに定義されていないコマンド。popover用）
+- `command="show"` / `command="hide"` をdialogに使う（標準の `command` keyword ではない）
 - `<form method="dialog">` をダイアログの外に置く（直近のdialog祖先が無く送信が破棄される）
 - `method="dialog"` のフォームで「サーバーに送信される」と誤解する（送信されない。状態変更は `method="post"` を使う）
 - `form="..."` 属性で `<dialog>` や `<div>` のidを参照する（参照できるのは `<form>` のidのみ）
-- `::backdrop` クリックで閉じる動作を「ネイティブにある」と前提にした設計にする（ネイティブにはない。JSが必要か `closedby` 属性を使う）
+- `::backdrop` クリックで閉じる動作を「ネイティブにある」と前提にした設計にする（デフォルトでは閉じない。`closedby="any"` で opt-in する）
 - `commandfor` をボタン系でない要素（`<a>` 等）に付与する
 - checkbox hack や hidden state でモーダルを再現する
