@@ -38,21 +38,24 @@ Enhancement は「利用可能なら UI・positioning・motion を改善する�
 | Web Platform 機能 | 使われている場所 | ない場合のフォールバック |
 |---|---|---|
 | `@starting-style` | `src/70-motion.css`（`dialog[open]` / `dialog[open]::backdrop` / `[popover]:popover-open` の enter アニメーション） | フェード・スケールなしの即時表示。表示と操作は維持される |
-| `allow-discrete` transition（`display` / `overlay` プロパティ） | `src/70-motion.css`（`dialog[open]` / `dialog::backdrop` / `[popover]:popover-open` の transition） | トップレイヤーへの出入りはブラウザが制御する。transition は非対応プロパティを除いて縮退する |
+| `allow-discrete` transition（`display` / `overlay` プロパティ） | `src/70-motion.css`（基底 `dialog` / `dialog::backdrop` / `[popover]` に transition を置き、enter と exit の双方で適用） | トップレイヤーへの出入りはブラウザが制御する。transition は非対応プロパティを除いて縮退する |
 | CSS Anchor Positioning（`anchor-name` / `position-anchor` / `anchor()`） | `src/60-components.css`（`@supports (anchor-name: ...) and (top: anchor(top))` ガード内の `.nv-dropdown-trigger` / `.nv-dropdown` / `.nv-dropdown-end`） | `@supports` によりこのルール群自体が無効化され、popover のデフォルト配置にフォールバックする（`docs/components/dropdown.md`） |
 | Container Queries（`@container`） | **v0.1 の `src/` では未使用**。方針として「Nativum の responsive design は viewport だけでなく Container Queries を積極的に利用する」としているが、v0.1 では `.nv-grid` の `--nv-grid-min`（`minmax` + `auto-fit`）グリッドがコンテナ幅追従の役割を代替している | 使用していないためフォールバック不要。今後のバージョンで導入する場合は必ず Enhancement として扱う |
 | `accent-color` | `src/50-forms.css`（`input[type="checkbox"]` / `input[type="radio"]` / `input[type="range"]` / `progress` / `meter`） | ブラウザ既定のアクセントカラーで描画される |
 | `light-dark()` | `src/20-tokens.css`（全 `--nv-color-*` トークンの値） | 未対応環境ではカスタムプロパティの値が invalid-at-computed-value となり、各要素は UA 既定色（背景白・文字黒等）にフォールバックする。コンテンツの可読性は維持される。`color-scheme` による form control の配色はそのまま機能する |
-| `@view-transition { navigation: auto; }` | `src/70-motion.css`（冒頭、layer の外に配置） | ページ遷移アニメーションが発生しない通常ナビゲーション（enhancement として扱う） |
 | `text-wrap: balance` / `text-wrap: pretty` | `src/30-base.css`（`h1`–`h6` / `p`） | 通常の折り返しにフォールバック |
 | `dvh`（`max-height: 80dvh`） | `src/60-components.css`（`dialog`） | 宣言が無視され `max-height` 指定なし。`overflow: auto` により内容はスクロール可能 |
 | `appearance: none`（select のカスタム矢印） | `src/50-forms.css`（`select`）+ `src/20-tokens.css`（`--nv-select-icon` データURI） | ネイティブの select 矢印が表示される。アイコンはデータURIで焼き込まれており外部依存はない |
 
 ## Experimental
 
-**該当なし。**
+明示的 opt-in のみ有効になる機能。Nativum Core は既定で有効にしない。
 
-補足: v0.1 の `src/` で最も未成熟な機能は cross-document View Transitions（`@view-transition`）だが、enhancement として扱い、必須動作にしていない。v0.1 には「明示的 opt-in を要求する機能」は存在しない。新機能を追加する際は、この節に Experimental として列挙してから段階的に取り込む。
+| Web Platform 機能 | 使われている場所 | ない場合のフォールバック |
+|---|---|---|
+| `@view-transition { navigation: auto; }` | Coreでは**無効**（`src/70-motion.css` のコメントに使用法を記載）。ホストアプリケーションが明示的に opt-in する | 記載しない限りページ遷移アニメーションは発生しない（通常ナビゲーション） |
+
+補足: cross-document View Transitions は仕様・実装が成熟しつつあるものの、Nativumを読み込むだけでホストアプリケーションのナビゲーション挙動を変えないため、**明示的 opt-in のみ**に分類する。
 
 ## コンポーネント別の Required / Enhancement / Fallback
 
@@ -71,5 +74,5 @@ Enhancement は「利用可能なら UI・positioning・motion を改善する�
 
 ## 検証方針
 
-- すべての motion は `@media (prefers-reduced-motion: no-preference)` 時のみ有効（`src/70-motion.css`）。`prefers-reduced-motion: reduce` では無効化される
+- すべての motion は `@media (prefers-reduced-motion: no-preference)` 時のみ有効（`src/70-motion.css`）。`prefers-reduced-motion: reduce` では Nativum の duration トークンが実質ゼロ (0.01ms) になり無効化される（ホストアプリケーションのアニメーションには影響しない）
 - `examples/*.html` は JavaScript を無効化した状態で全機能を確認できる
