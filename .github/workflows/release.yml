@@ -1,0 +1,87 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .release/version
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read release version
+        id: release
+        shell: sh
+        run: |
+          set -eu
+          VERSION="$(tr -d '[:space:]' < .release/version)"
+          case "$VERSION" in
+            ''|*[!0-9.]*)
+              echo "invalid release version: $VERSION" >&2
+              exit 1
+              ;;
+          esac
+          TAG="v$VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Verify version consistency
+        shell: sh
+        run: |
+          set -eu
+          VERSION="${{ steps.release.outputs.version }}"
+          grep -Fq "VERSION=\"$VERSION\"" tools/build.sh
+          grep -Fq "version = \"$VERSION\";" flake.nix
+          grep -Fq "Nativum $VERSION" skills/nativum-ui/SKILL.md
+          grep -Fq "nativum.css       $VERSION" skills/nativum-ui/SKILL.md
+          grep -Fq "nativum-ui Skill  $VERSION" skills/nativum-ui/SKILL.md
+
+      - name: Build dist
+        run: ./tools/build.sh
+
+      - name: Check dist freshness
+        run: git diff --exit-code -- dist/
+
+      - name: Verify Security Contract
+        run: ./tools/verify.sh
+
+      - name: Check Agent Skill sync
+        run: ./tools/check-skill-examples.sh
+
+      - name: Ensure tag and release do not already exist
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.release.outputs.tag }}
+        shell: sh
+        run: |
+          set -eu
+          if gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" >/dev/null 2>&1; then
+            echo "tag already exists: $TAG" >&2
+            exit 1
+          fi
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "release already exists: $TAG" >&2
+            exit 1
+          fi
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.release.outputs.version }}
+          TAG: ${{ steps.release.outputs.tag }}
+        shell: sh
+        run: |
+          set -eu
+          gh release create "$TAG" \
+            dist/nativum.css \
+            dist/SHA256SUMS \
+            --target "$GITHUB_SHA" \
+            --title "Nativum v$VERSION" \
+            --notes-file ".github/release-notes/v$VERSION.md"
