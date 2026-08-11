@@ -10,10 +10,10 @@
 
 - `<dialog>` / `<dialog open>`
 - `commandfor` + `command="show-modal"` / `command="close"` / `command="request-close"`
-- `<form method="dialog">` (submitで閉じ、値を `close(returnValue)` へ渡す。値の読み取りにはJavaScriptが必要)
+- `<form method="dialog">` (submitで閉じ、**submitterボタンの `value`** を `close(returnValue)` へ渡す。読み取りにはJavaScriptが必要)
 - `::backdrop` / Escキー (`cancel` イベント)
 
-**注意**: `command="show"` / `command="hide"` はdialogに定義されていない (popover用)。使用してはならない。
+**注意**: `command="show"` / `command="hide"` は標準の `command` keyword ではない (popover用の標準commandは `show-popover` / `hide-popover` / `toggle-popover`)。dialogに対して使用してはならない。
 
 ## Required markup
 
@@ -51,9 +51,9 @@
 - `command="show-modal"` でモーダル表示 (トップレイヤー + 背景inert + フォーカストラップ)
 - `command="close"` で閉じる。Escでキャンセル
 - `command="request-close"` で `cancel` イベント経由で閉じる (ハンドラが無ければ `close` と同等)
-- `<form method="dialog">` のsubmitで閉じ、値を `close(returnValue)` へ渡す (**サーバーへは送信されない**)
+- `<form method="dialog">` のsubmitで閉じ、submitterボタンの `value` を `close(returnValue)` へ渡す (**サーバーへは送信されない**)
 - `dialog[open]` でサーバーレンダリング初期表示
-- **`::backdrop` クリックで閉じる動作はネイティブに存在しない** (JSが必要か `closedby="any"` 属性を使う)
+- **デフォルトの `<dialog>` は backdrop クリックだけでは閉じない**。対応環境では `closedby="any"` でネイティブの light dismiss を opt-in できる (Enhancement)
 
 ## `method="dialog"` の使い分け
 
@@ -74,10 +74,10 @@
 
 - `position: fixed` + 自作オーバーレイでモーダルを再実装
 - `showModal()` / `close()` を呼ぶJSを追加
-- `command="show"` / `command="hide"` をdialogに使う (popover用のコマンド)
+- `command="show"` / `command="hide"` をdialogに使う (標準の `command` keyword ではない)
 - `method="dialog"` のフォームをダイアログ外に置く (送信が破棄される)
 - `form="..."` で `<dialog>` / `<div>` のidを参照する (`<form>` のidのみ有効)
-- `::backdrop` クリックで閉じることを「ネイティブにある」と前提にする
+- `::backdrop` クリックで閉じることを「ネイティブにある」と前提にする (デフォルトでは閉じない。`closedby="any"` で opt-in)
 - checkbox hack でモーダルを再現
 
 ## 詳細

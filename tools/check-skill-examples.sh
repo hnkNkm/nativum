@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# Nativum skill sync check — Skill内のexampleが src/ の実在APIのみ参照しているかを検査
+# Nativum skill example check — Skillのexampleが src/ の実在APIのみ参照しているかを検査
 #
 # Agent Skill と CSS 実装の乖離 (stale reference) を CI で検出するための検査。
 # 対象: skills/nativum-ui/examples/*.html の class="..." と var(--nv-...)。
@@ -12,7 +12,7 @@ set -eu
 cd "$(dirname "$0")/.."
 
 fail() {
-  echo "SYNC FAIL: $1" >&2
+  echo "EXAMPLES FAIL: $1" >&2
   exit 1
 }
 
@@ -43,4 +43,4 @@ for f in "$SKILL_EXAMPLES"/*.html; do
   done
 done
 
-echo "SYNC OK — skill examples のクラス・トークンは src/ と整合しています"
+echo "EXAMPLES OK — skill examples のクラス・トークンは src/ と整合しています"
