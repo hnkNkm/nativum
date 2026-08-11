@@ -33,7 +33,7 @@
 
 ## Nativum classes
 
-`src/60-components.css` に存在するもののみ:
+このSkillの references/ に記載されたもののみ:
 
 - `nv-table-striped` — 奇数行の背景色 (ゼブラ表示)
 - `nv-table-scroll` — 横スクロールラッパー (`overflow-x: auto`。幅制限内でテーブルがはみ出す場合に使用)
@@ -68,4 +68,4 @@
 
 ## 詳細
 
-詳細は `../../../../docs/components/table.md` を参照。
+この Skill 内の該当 section が正本。リポジトリの `docs/components/` は人間向けの詳細版。

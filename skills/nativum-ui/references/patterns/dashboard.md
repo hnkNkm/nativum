@@ -78,12 +78,12 @@
 
 <dialog id="settings">
   <header><h2>Settings</h2></header>
-  <form action="/settings" method="post">
+  <form action="/settings" method="post" id="settings-form">
     <!-- nv-field で構成 -->
   </form>
   <footer>
     <button commandfor="settings" command="close">Cancel</button>
-    <button class="nv-primary" type="submit" form="settings">Save changes</button>
+    <button class="nv-primary" type="submit" form="settings-form">Save changes</button>
   </footer>
 </dialog>
 ```

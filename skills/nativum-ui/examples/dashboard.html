@@ -9,7 +9,7 @@
     (推奨構成: public/vendor/nativum/nativum.css)
     <link rel="stylesheet" href="/vendor/nativum/nativum.css">
     この例は参照パス nativum.css で同ディレクトリに配置した前提で書いている。
-    すべてのクラスは src/*.css に実在するもののみを使用する。
+    すべてのクラス・トークンはこの Skill の references/ に記載されたもののみを使用する。
 
     テーマ: デフォルトではOS設定に追従する (color-scheme: light dark)。
     サーバー側で <html data-theme="dark"> / <html data-theme="light"> を出力することで
@@ -187,7 +187,7 @@
     <header>
       <h2>設定</h2>
     </header>
-    <form action="/settings" method="post">
+    <form action="/settings" method="post" id="settings-form">
       <div class="nv-field">
         <label for="s-name">表示名</label>
         <input id="s-name" name="name" type="text" value="田中 花子" required>
@@ -211,7 +211,7 @@
     </form>
     <footer>
       <button commandfor="settings" command="close">キャンセル</button>
-      <button class="nv-primary" type="submit" form="settings">変更を保存</button>
+      <button class="nv-primary" type="submit" form="settings-form">変更を保存</button>
     </footer>
   </dialog>
 

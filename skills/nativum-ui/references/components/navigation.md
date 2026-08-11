@@ -33,7 +33,7 @@
 
 ## Nativum classes
 
-`src/60-components.css` に存在するもののみ:
+このSkillの references/ に記載されたもののみ:
 
 - `nv-nav` — 横並びのナビゲーションバー (`flex-wrap`、`aria-current="page"` のアクティブ表示)
 - `nv-breadcrumb` — パンくずリスト (`<ol>` に付与。`/` 区切りをCSSで描画)
@@ -63,4 +63,4 @@
 
 ## 詳細
 
-詳細は `../../../../docs/components/navigation.md` を参照。
+この Skill 内の該当 section が正本。リポジトリの `docs/components/` は人間向けの詳細版。

@@ -8,7 +8,7 @@
 
 - `forms` — 送信フォーム (`method="post"`) と検証状態
 - `button` — `nv-primary` / `nv-danger` の送信・破壊的操作ボタン
-- `dialog` — 破壊的操作の確認 (`form method="dialog"`)
+- `dialog` — 破壊的操作の確認
 - 内容: `nv-notice` (送信結果のフィードバック)
 
 ## 構造の要点
@@ -27,7 +27,7 @@
 </form>
 ```
 
-破壊的操作は `<dialog>` + `<form method="dialog">` で確認する。
+破壊的操作は `<dialog>` で確認し、実行はサーバーへの通常POSTで行う。
 
 ```html
 <button commandfor="confirm" command="show-modal">Delete project</button>
@@ -36,15 +36,16 @@
   <header><h2>Delete project?</h2></header>
   <p>この操作は取り消せません。</p>
   <footer>
-    <button type="submit" form="confirm-form">Cancel</button>
-    <button class="nv-danger" type="submit" form="confirm-form"
+    <button commandfor="confirm" command="close">Cancel</button>
+    <button class="nv-danger" type="submit" form="delete-form"
             name="action" value="delete">Delete</button>
   </footer>
 </dialog>
-<form method="dialog" id="confirm-form" hidden></form>
+<form method="post" action="/projects/123/delete" id="delete-form" hidden></form>
 ```
 
-`method="dialog"` のsubmitボタンはフォームの値を `close()` に渡してdialogを閉じる。削除の実行はこのdialog内のフォーム送信ではなく、サーバー側のエンドポイントへの通常POST (`action="/projects/123/delete"` 等) として実装する。
+状態変更はサーバーへの通常POST (`action="/projects/123/delete"` 等) で実行する。
+`<form method="dialog">` はサーバー送信をしないため、状態変更には使わない (値の受け渡し用途のみ。`dialog.md` 参照)。
 
 サーバー側検証エラーの再レンダリング:
 

@@ -23,7 +23,7 @@
 
 ## Nativum classes
 
-`src/60-components.css` に存在するもののみ:
+このSkillの references/ に記載されたもののみ:
 
 - `nv-primary` — 主要アクションの強調
 - `nv-danger` — 破壊的操作 (削除等) の警告色
@@ -54,4 +54,4 @@
 
 ## 詳細
 
-詳細は `../../../../docs/components/button.md` を参照。
+この Skill 内の該当 section が正本。リポジトリの `docs/components/` は人間向けの詳細版。

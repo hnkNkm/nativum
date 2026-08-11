@@ -22,7 +22,7 @@
 
 ## Nativum classes
 
-`src/60-components.css` に存在するもののみ:
+このSkillの references/ に記載されたもののみ:
 
 - `nv-accordion` — 複数の `<details>` を1本のボーダーでまとめたグループ
 
@@ -59,4 +59,4 @@
 
 ## 詳細
 
-詳細は `../../../../docs/components/details.md` を参照。
+この Skill 内の該当 section が正本。リポジトリの `docs/components/` は人間向けの詳細版。

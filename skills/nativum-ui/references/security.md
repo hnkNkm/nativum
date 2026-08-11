@@ -56,8 +56,8 @@ background-image: url("https://...");
 ```
 
 - 外部Web Font、外部Icon Font、CDN stylesheetは使用しない
-- 標準テーマはOS/system font stackのみを使用する (`src/20-tokens.css` の `--nv-font-sans` / `--nv-font-mono`)
-- `src/20-tokens.css` の `--nv-select-icon` は**データURI** (`data:image/svg+xml`) であり外部依存ではない。これは禁止対象に含まれない
+- 標準テーマはOS/system font stackのみを使用する (このSkillの `references/` に記載の `--nv-font-sans` / `--nv-font-mono`)
+- `--nv-select-icon` は**データURI** (`data:image/svg+xml`) であり外部依存ではない。これは禁止対象に含まれない
 - アイコンが必要な場合も同様に、外部Icon FontやCDN画像ではなくデータURIまたはCSS描画で対応する
 
 ## Agentが生成するHTML/CSSに含めてはいけないもの

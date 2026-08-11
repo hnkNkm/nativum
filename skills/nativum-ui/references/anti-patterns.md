@@ -111,9 +111,14 @@ Do not: 複数階層の開閉は <details> の入れ子で表現できる範囲�
 ### SPA navigation
 
 ```
-Status: Unsupported
-Reason: クライアント側ルーティングはNativumのNon-Goal
-Do not: 通常の <a href> リンクとサーバー側ページ遷移を使う
+Status: Unsupported (Nativum Coreとしては)
+
+Reason: Nativum Coreはクライアント側ルーティングを提供しない
+Do not: Nativumの実装としてルーターを追加する。通常の <a href> リンクと
+       サーバー側ページ遷移を基本とする
+
+Host Applicationの範囲: ホストアプリケーションが自前のルーター (React Router等) を
+使うことは禁止しない。Nativumは「HTMLを生成する」ことだけを要求する
 ```
 
 ### sortable / reorderable UI

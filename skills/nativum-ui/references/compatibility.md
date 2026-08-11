@@ -36,7 +36,7 @@ Nativumの3段階分類。機能を「必須」「任意」「実験的」に分
 利用方針:
 
 - 基本構造 (Core) の上に「後付け」で書く
-- 機能検出は `@supports` でガードする (例: `src/60-components.css` の `@supports (anchor-name: --nv-test) and (top: anchor(top))` ブロック)
+- 機能検出は `@supports` でガードする (例: Nativumのdropdown実装の `@supports (anchor-name: --nv-test) and (top: anchor(top))` ガード)
 - 未対応環境ではデフォルト動作にフォールバックする設計にする。popover非対応環境では `[popover]` 要素はドキュメントフロー内の通常コンテンツとして表示されるため、「内容が永久に隠れる」設計にしない
 
 ### Experimental — 仕様または実装が十分成熟していない機能。明示的opt-inのみ
@@ -45,11 +45,11 @@ Nativumの3段階分類。機能を「必須」「任意」「実験的」に分
 
 代表例:
 
-- declarative cross-document View Transitions (`@view-transition { navigation: auto }`、`src/70-motion.css` が既定で宣言)
+- declarative cross-document View Transitions (`@view-transition { navigation: auto }` — Nativum Coreは既定で宣言せず、ホストアプリが明示的に opt-in する)
 
 利用方針:
 
-- Nativum既定の記述 (`src/70-motion.css`) に従う
+- Nativumのmotion実装 (70-motion 相当の記述) に従う
 - この機能はprogressive enhancementであり、Nativumの必須動作ではない
 
 ## 利用可否の判断ガイドライン

@@ -27,7 +27,7 @@
 
 ## Nativum classes
 
-`src/50-forms.css` に存在するもののみ:
+このSkillの references/ に記載されたもののみ:
 
 - `nv-field` — ラベル + コントロール + メッセージの縦グループ
 - `nv-field-hint` — 補助説明 (`aria-describedby` で関連付ける)
@@ -58,4 +58,4 @@
 
 ## 詳細
 
-詳細は `../../../../docs/components/forms.md` を参照。
+この Skill 内の該当 section が正本。リポジトリの `docs/components/` は人間向けの詳細版。
