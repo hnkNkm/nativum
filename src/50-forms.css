@@ -1,0 +1,186 @@
+/* Nativum 0.1.0 — Forms */
+/* ネイティブのform controlをスタイルする。再実装しない。 */
+
+@layer nativum.components {
+  /* --- Label --- */
+  label {
+    display: block;
+    font-size: var(--nv-font-size-sm);
+    font-weight: var(--nv-font-weight-medium);
+    margin-block-end: var(--nv-space-2);
+  }
+
+  /* --- Text fields (input / textarea / select) --- */
+  input:not([type]),
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="url"],
+  input[type="tel"],
+  input[type="search"],
+  input[type="number"],
+  input[type="date"],
+  input[type="datetime-local"],
+  input[type="month"],
+  input[type="week"],
+  input[type="time"],
+  textarea,
+  select {
+    width: 100%;
+    min-height: var(--nv-control-height);
+    padding: var(--nv-space-2) var(--nv-space-3);
+    font-size: var(--nv-font-size-sm);
+    color: var(--nv-color-text);
+    background-color: var(--nv-color-surface);
+    border: var(--nv-border-width) solid var(--nv-color-border-strong);
+    border-radius: var(--nv-radius-md);
+  }
+
+  input:not([type]):hover,
+  input[type="text"]:hover,
+  input[type="email"]:hover,
+  input[type="password"]:hover,
+  input[type="url"]:hover,
+  input[type="tel"]:hover,
+  input[type="search"]:hover,
+  input[type="number"]:hover,
+  input[type="date"]:hover,
+  input[type="datetime-local"]:hover,
+  input[type="month"]:hover,
+  input[type="week"]:hover,
+  input[type="time"]:hover,
+  textarea:hover,
+  select:hover {
+    border-color: var(--nv-color-primary);
+  }
+
+  ::placeholder {
+    color: var(--nv-color-text-muted);
+    opacity: 1;
+  }
+
+  textarea {
+    min-height: 6rem;
+    resize: vertical;
+  }
+
+  /* --- Select (custom chevron) --- */
+  select {
+    appearance: none;
+    background-image: var(--nv-select-icon);
+    background-repeat: no-repeat;
+    background-position: right var(--nv-space-3) center;
+    background-size: 1em auto;
+    padding-inline-end: calc(var(--nv-space-3) * 2 + 1em);
+  }
+
+  /* --- Checkbox / Radio --- */
+  input[type="checkbox"],
+  input[type="radio"] {
+    accent-color: var(--nv-color-primary);
+    width: 1rem;
+    height: 1rem;
+    vertical-align: text-bottom;
+  }
+
+  /* --- Range / Progress / Meter --- */
+  input[type="range"] {
+    accent-color: var(--nv-color-primary);
+    width: 100%;
+  }
+
+  progress {
+    accent-color: var(--nv-color-primary);
+    width: 100%;
+    height: 0.5rem;
+    border-radius: var(--nv-radius-full);
+    vertical-align: text-bottom;
+  }
+
+  meter {
+    accent-color: var(--nv-color-primary);
+    width: 100%;
+    height: 1rem;
+    vertical-align: text-bottom;
+  }
+
+  /* --- Fieldset --- */
+  fieldset {
+    border: var(--nv-border-width) solid var(--nv-color-border);
+    border-radius: var(--nv-radius-md);
+    padding: var(--nv-space-4);
+    margin-block-end: var(--nv-space-4);
+    min-width: 0;
+  }
+
+  legend {
+    font-size: var(--nv-font-size-sm);
+    font-weight: var(--nv-font-weight-semibold);
+    padding-inline: var(--nv-space-2);
+  }
+
+  fieldset:disabled {
+    opacity: 0.6;
+  }
+
+  fieldset:disabled > * {
+    pointer-events: none;
+  }
+
+  /* --- Disabled --- */
+  input:disabled,
+  textarea:disabled,
+  select:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    background-color: var(--nv-color-subtle);
+  }
+
+  /* --- Form field wrapper --- */
+  .nv-field {
+    margin-block-end: var(--nv-space-4);
+  }
+
+  .nv-field-hint,
+  .nv-field-error {
+    display: block;
+    font-size: var(--nv-font-size-xs);
+    margin-block-start: var(--nv-space-1);
+  }
+
+  .nv-field-hint {
+    color: var(--nv-color-text-muted);
+  }
+
+  .nv-field-error {
+    color: var(--nv-color-danger);
+    font-weight: var(--nv-font-weight-medium);
+  }
+
+  /* --- Validation states --- */
+  /* ユーザー操作後にのみ適用されるネイティブの疑似クラス */
+  input:user-invalid,
+  textarea:user-invalid,
+  select:user-invalid {
+    border-color: var(--nv-color-danger);
+  }
+
+  input:user-invalid:focus-visible,
+  textarea:user-invalid:focus-visible,
+  select:user-invalid:focus-visible {
+    outline-color: var(--nv-color-danger);
+  }
+
+  /* サーバー側で検証済みエラーをレンダリングする場合 */
+  input[aria-invalid="true"],
+  textarea[aria-invalid="true"],
+  select[aria-invalid="true"] {
+    border-color: var(--nv-color-danger);
+  }
+
+  input[aria-invalid="true"]:focus-visible,
+  textarea[aria-invalid="true"]:focus-visible,
+  select[aria-invalid="true"]:focus-visible {
+    outline-color: var(--nv-color-danger);
+  }
+}

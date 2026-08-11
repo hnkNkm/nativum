@@ -1,0 +1,1219 @@
+/*
+ * Nativum Native Web UI System — v0.1.0
+ *
+ * Passive, zero-JavaScript. HTML + CSS only.
+ * No third-party runtime dependencies.
+ * Built directly on the modern Web Platform.
+ * Modern UI, by the Web Platform.
+ *
+ * License: MIT — see LICENSE
+ */
+
+/* Nativum 0.1.0 — Cascade Layer order */
+/* https://nativum.example */
+
+@layer
+  nativum.reset,
+  nativum.tokens,
+  nativum.base,
+  nativum.layout,
+  nativum.components,
+  nativum.motion,
+  nativum.utilities;
+
+/* Nativum 0.1.0 — Reset */
+/* 依存ライブラリは使わない。必要最小限のUA差の平準化のみを行う。 */
+
+@layer nativum.reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+}
+
+/* Nativum 0.1.0 — Design Tokens */
+/* 主要デザイン値はすべてCSS Custom Propertiesとして公開する。 */
+/* アプリケーションは :root でトークンを上書きするだけでテーマを変更できる。 */
+
+@layer nativum.tokens {
+  :root {
+    /* OS設定に従い light/dark の両方をサポートする */
+    color-scheme: light dark;
+
+    /* --- Typography --- */
+    --nv-font-sans: system-ui, -apple-system, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, "Noto Sans", "Hiragino Sans", sans-serif;
+    --nv-font-mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo,
+      Consolas, "Liberation Mono", monospace;
+
+    --nv-font-size-xs: 0.75rem;
+    --nv-font-size-sm: 0.875rem;
+    --nv-font-size-md: 1rem;
+    --nv-font-size-lg: 1.125rem;
+    --nv-font-size-xl: 1.25rem;
+    --nv-font-size-2xl: 1.5rem;
+    --nv-font-size-3xl: 1.875rem;
+    --nv-font-size-4xl: 2.25rem;
+
+    --nv-line-height-tight: 1.25;
+    --nv-line-height-normal: 1.6;
+
+    --nv-font-weight-medium: 500;
+    --nv-font-weight-semibold: 600;
+
+    /* --- Spacing --- */
+    --nv-space-1: 0.25rem;
+    --nv-space-2: 0.5rem;
+    --nv-space-3: 0.75rem;
+    --nv-space-4: 1rem;
+    --nv-space-6: 1.5rem;
+    --nv-space-8: 2rem;
+    --nv-space-12: 3rem;
+    --nv-space-16: 4rem;
+
+    /* --- Border --- */
+    --nv-border-width: 1px;
+    --nv-radius-sm: 0.25rem;
+    --nv-radius-md: 0.5rem;
+    --nv-radius-lg: 0.75rem;
+    --nv-radius-full: 999px;
+
+    /* --- Motion --- */
+    --nv-duration-fast: 120ms;
+    --nv-duration-normal: 180ms;
+    --nv-duration-slow: 300ms;
+    --nv-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --nv-ease-emphasized: cubic-bezier(0.3, 0, 0.2, 1);
+
+    /* --- Sizing --- */
+    --nv-control-height-sm: 1.75rem;
+    --nv-control-height: 2.25rem;
+    --nv-control-height-lg: 2.75rem;
+
+    /* --- Layout --- */
+    --nv-content-width: 64rem;
+    --nv-narrow-width: 40rem;
+    --nv-grid-min: 16rem;
+
+    /* --- Focus --- */
+    --nv-focus-ring-width: 0.125rem;
+    --nv-focus-ring-offset: 0.125rem;
+
+    /* --- Shadow --- */
+    --nv-shadow-sm: 0 1px 2px rgb(15 15 20 / 0.06);
+    --nv-shadow-md: 0 2px 6px rgb(15 15 20 / 0.08), 0 8px 24px rgb(15 15 20 / 0.08);
+    --nv-shadow-lg: 0 4px 12px rgb(15 15 20 / 0.1), 0 16px 48px rgb(15 15 20 / 0.12);
+
+    /* --- Color (light) --- */
+    --nv-color-bg: light-dark(#f7f7f8, #101014);
+    --nv-color-surface: light-dark(#ffffff, #18181d);
+    --nv-color-subtle: light-dark(#ededf1, #222229);
+    --nv-color-text: light-dark(#17171c, #ececf1);
+    --nv-color-text-muted: light-dark(#62626e, #9c9ca9);
+    --nv-color-border: light-dark(#e2e2e8, #2a2a32);
+    --nv-color-border-strong: light-dark(#c9c9d2, #3b3b45);
+
+    --nv-color-primary: light-dark(#1d4ed8, #7c9fff);
+    --nv-color-primary-hover: light-dark(#1e40af, #93adff);
+    --nv-color-primary-active: light-dark(#1e3a8a, #628af2);
+    --nv-color-on-primary: light-dark(#ffffff, #0d0d10);
+
+    --nv-color-danger: light-dark(#dc2626, #e5484d);
+    --nv-color-danger-hover: light-dark(#b91c1c, #ec5d5d);
+    --nv-color-on-danger: light-dark(#ffffff, #ffffff);
+
+    --nv-color-success: light-dark(#15803d, #3fb950);
+    --nv-color-success-hover: light-dark(#166534, #2ea043);
+    --nv-color-on-success: light-dark(#ffffff, #ffffff);
+
+    --nv-color-warning: light-dark(#b45309, #d29922);
+    --nv-color-warning-hover: light-dark(#92400e, #bb8009);
+    --nv-color-on-warning: light-dark(#ffffff, #ffffff);
+
+    --nv-color-link: var(--nv-color-primary);
+    --nv-color-link-hover: var(--nv-color-primary-hover);
+
+    --nv-color-selection: light-dark(rgb(29 78 216 / 0.18), rgb(124 159 255 / 0.28));
+
+    /* <select> のカスタム矢印アイコン (テーマごとに色を焼き込む) */
+    --nv-select-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='16'%20height='16'%20viewBox='0%200%2016%2016'%20fill='none'%3E%3Cpath%20d='M4%206l4%204%204-4'%20stroke='%2362626e'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+
+  /* サーバー側で明示的に dark を強制する場合 */
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --nv-select-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='16'%20height='16'%20viewBox='0%200%2016%2016'%20fill='none'%3E%3Cpath%20d='M4%206l4%204%204-4'%20stroke='%239c9ca9'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+
+  /* サーバー側で明示的に light を強制する場合 */
+  :root[data-theme="light"] {
+    color-scheme: light;
+  }
+}
+
+/* Nativum 0.1.0 — Base */
+/* 標準HTML要素の自動スタイル。classを付けなくてもtypographyと基本要素が成立する。 */
+
+@layer nativum.base {
+  /* --- Typography --- */
+  body {
+    font-family: var(--nv-font-sans);
+    font-size: var(--nv-font-size-md);
+    line-height: var(--nv-line-height-normal);
+    color: var(--nv-color-text);
+    background-color: var(--nv-color-bg);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: var(--nv-font-weight-semibold);
+    line-height: var(--nv-line-height-tight);
+    text-wrap: balance;
+    margin-block: 0 var(--nv-space-4);
+  }
+
+  h1 { font-size: var(--nv-font-size-4xl); }
+  h2 { font-size: var(--nv-font-size-3xl); }
+  h3 { font-size: var(--nv-font-size-2xl); }
+  h4 { font-size: var(--nv-font-size-xl); }
+  h5 { font-size: var(--nv-font-size-lg); }
+  h6 { font-size: var(--nv-font-size-md); }
+
+  p {
+    margin-block: 0 var(--nv-space-4);
+    text-wrap: pretty;
+  }
+
+  small {
+    font-size: var(--nv-font-size-sm);
+    color: var(--nv-color-text-muted);
+  }
+
+  strong {
+    font-weight: var(--nv-font-weight-semibold);
+  }
+
+  ul,
+  ol {
+    margin-block: 0 var(--nv-space-4);
+    padding-inline-start: var(--nv-space-6);
+  }
+
+  li {
+    margin-block-end: var(--nv-space-1);
+  }
+
+  /* --- Links --- */
+  a {
+    color: var(--nv-color-link);
+    text-decoration: underline;
+    text-decoration-thickness: 0.06em;
+    text-underline-offset: 0.15em;
+    border-radius: var(--nv-radius-sm);
+  }
+
+  a:hover {
+    color: var(--nv-color-link-hover);
+  }
+
+  /* --- Code --- */
+  code {
+    font-family: var(--nv-font-mono);
+    font-size: 0.9em;
+    background-color: var(--nv-color-subtle);
+    border: var(--nv-border-width) solid var(--nv-color-border);
+    border-radius: var(--nv-radius-sm);
+    padding: 0.1em 0.35em;
+  }
+
+  pre {
+    font-family: var(--nv-font-mono);
+    font-size: var(--nv-font-size-sm);
+    background-color: var(--nv-color-subtle);
+    border: var(--nv-border-width) solid var(--nv-color-border);
+    border-radius: var(--nv-radius-md);
+    padding: var(--nv-space-4);
+    overflow-x: auto;
+    margin-block: 0 var(--nv-space-4);
+  }
+
+  pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: inherit;
+  }
+
+  kbd {
+    font-family: var(--nv-font-mono);
+    font-size: 0.85em;
+    background-color: var(--nv-color-subtle);
+    border: var(--nv-border-width) solid var(--nv-color-border-strong);
+    border-block-end-width: 0.1875rem;
+    border-radius: var(--nv-radius-sm);
+    padding: 0.125em 0.4em;
+  }
+
+  /* --- Blockquote --- */
+  blockquote {
+    border-inline-start: 0.1875rem solid var(--nv-color-border-strong);
+    padding-inline: var(--nv-space-4);
+    margin-block: 0 var(--nv-space-4);
+    color: var(--nv-color-text-muted);
+  }
+
+  /* --- Separator --- */
+  hr {
+    border: none;
+    border-block-start: var(--nv-border-width) solid var(--nv-color-border);
+    margin-block: var(--nv-space-8);
+  }
+
+  /* --- Mark --- */
+  mark {
+    background-color: var(--nv-color-selection);
+    border-radius: var(--nv-radius-sm);
+    padding-inline: 0.125em;
+  }
+
+  /* --- Media --- */
+  figure {
+    margin-block: 0 var(--nv-space-4);
+  }
+
+  figcaption {
+    font-size: var(--nv-font-size-sm);
+    color: var(--nv-color-text-muted);
+    margin-block-start: var(--nv-space-2);
+  }
+
+  /* --- Focus (global) --- */
+  :focus-visible {
+    outline: var(--nv-focus-ring-width) solid var(--nv-color-primary);
+    outline-offset: var(--nv-focus-ring-offset);
+  }
+
+  ::selection {
+    background-color: var(--nv-color-selection);
+  }
+}
+
+/* Nativum 0.1.0 — Layout primitives */
+/* nv- prefix付きの頻出layout primitiveのみ。utility framework化はしない。 */
+
+@layer nativum.layout {
+  /* --- Stack: 縦方向のflow layout --- */
+  .nv-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nv-space-4);
+  }
+
+  .nv-stack-sm {
+    gap: var(--nv-space-2);
+  }
+
+  .nv-stack-lg {
+    gap: var(--nv-space-6);
+  }
+
+  /* --- Cluster: 横方向のflexible layout --- */
+  .nv-cluster {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nv-space-2) var(--nv-space-4);
+  }
+
+  .nv-cluster-between {
+    justify-content: space-between;
+  }
+
+  .nv-cluster-end {
+    justify-content: flex-end;
+  }
+
+  /* --- Grid: responsive grid --- */
+  /* 列数の代わりに最小列幅(--nv-grid-min)を管理する。
+     コンテナ幅が広くなるほど列数が自動で増える。 */
+  .nv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--nv-grid-min)), 1fr));
+    gap: var(--nv-space-4);
+  }
+
+  /* --- Container: content width管理 --- */
+  .nv-container {
+    width: min(100%, var(--nv-content-width));
+    margin-inline: auto;
+    padding-inline: var(--nv-space-4);
+  }
+
+  .nv-container-narrow {
+    width: min(100%, var(--nv-narrow-width));
+    margin-inline: auto;
+    padding-inline: var(--nv-space-4);
+  }
+}
+
+/* Nativum 0.1.0 — Forms */
+/* ネイティブのform controlをスタイルする。再実装しない。 */
+
+@layer nativum.components {
+  /* --- Label --- */
+  label {
+    display: block;
+    font-size: var(--nv-font-size-sm);
+    font-weight: var(--nv-font-weight-medium);
+    margin-block-end: var(--nv-space-2);
+  }
+
+  /* --- Text fields (input / textarea / select) --- */
+  input:not([type]),
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="url"],
+  input[type="tel"],
+  input[type="search"],
+  input[type="number"],
+  input[type="date"],
+  input[type="datetime-local"],
+  input[type="month"],
+  input[type="week"],
+  input[type="time"],
+  textarea,
+  select {
+    width: 100%;
+    min-height: var(--nv-control-height);
+    padding: var(--nv-space-2) var(--nv-space-3);
+    font-size: var(--nv-font-size-sm);
+    color: var(--nv-color-text);
+    background-color: var(--nv-color-surface);
+    border: var(--nv-border-width) solid var(--nv-color-border-strong);
+    border-radius: var(--nv-radius-md);
+  }
+
+  input:not([type]):hover,
+  input[type="text"]:hover,
+  input[type="email"]:hover,
+  input[type="password"]:hover,
+  input[type="url"]:hover,
+  input[type="tel"]:hover,
+  input[type="search"]:hover,
+  input[type="number"]:hover,
+  input[type="date"]:hover,
+  input[type="datetime-local"]:hover,
+  input[type="month"]:hover,
+  input[type="week"]:hover,
+  input[type="time"]:hover,
+  textarea:hover,
+  select:hover {
+    border-color: var(--nv-color-primary);
+  }
+
+  ::placeholder {
+    color: var(--nv-color-text-muted);
+    opacity: 1;
+  }
+
+  textarea {
+    min-height: 6rem;
+    resize: vertical;
+  }
+
+  /* --- Select (custom chevron) --- */
+  select {
+    appearance: none;
+    background-image: var(--nv-select-icon);
+    background-repeat: no-repeat;
+    background-position: right var(--nv-space-3) center;
+    background-size: 1em auto;
+    padding-inline-end: calc(var(--nv-space-3) * 2 + 1em);
+  }
+
+  /* --- Checkbox / Radio --- */
+  input[type="checkbox"],
+  input[type="radio"] {
+    accent-color: var(--nv-color-primary);
+    width: 1rem;
+    height: 1rem;
+    vertical-align: text-bottom;
+  }
+
+  /* --- Range / Progress / Meter --- */
+  input[type="range"] {
+    accent-color: var(--nv-color-primary);
+    width: 100%;
+  }
+
+  progress {
+    accent-color: var(--nv-color-primary);
+    width: 100%;
+    height: 0.5rem;
+    border-radius: var(--nv-radius-full);
+    vertical-align: text-bottom;
+  }
+
+  meter {
+    accent-color: var(--nv-color-primary);
+    width: 100%;
+    height: 1rem;
+    vertical-align: text-bottom;
+  }
+
+  /* --- Fieldset --- */
+  fieldset {
+    border: var(--nv-border-width) solid var(--nv-color-border);
+    border-radius: var(--nv-radius-md);
+    padding: var(--nv-space-4);
+    margin-block-end: var(--nv-space-4);
+    min-width: 0;
+  }
+
+  legend {
+    font-size: var(--nv-font-size-sm);
+    font-weight: var(--nv-font-weight-semibold);
+    padding-inline: var(--nv-space-2);
+  }
+
+  fieldset:disabled {
+    opacity: 0.6;
+  }
+
+  fieldset:disabled > * {
+    pointer-events: none;
+  }
+
+  /* --- Disabled --- */
+  input:disabled,
+  textarea:disabled,
+  select:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    background-color: var(--nv-color-subtle);
+  }
+
+  /* --- Form field wrapper --- */
+  .nv-field {
+    margin-block-end: var(--nv-space-4);
+  }
+
+  .nv-field-hint,
+  .nv-field-error {
+    display: block;
+    font-size: var(--nv-font-size-xs);
+    margin-block-start: var(--nv-space-1);
+  }
+
+  .nv-field-hint {
+    color: var(--nv-color-text-muted);
+  }
+
+  .nv-field-error {
+    color: var(--nv-color-danger);
+    font-weight: var(--nv-font-weight-medium);
+  }
+
+  /* --- Validation states --- */
+  /* ユーザー操作後にのみ適用されるネイティブの疑似クラス */
+  input:user-invalid,
+  textarea:user-invalid,
+  select:user-invalid {
+    border-color: var(--nv-color-danger);
+  }
+
+  input:user-invalid:focus-visible,
+  textarea:user-invalid:focus-visible,
+  select:user-invalid:focus-visible {
+    outline-color: var(--nv-color-danger);
+  }
+
+  /* サーバー側で検証済みエラーをレンダリングする場合 */
+  input[aria-invalid="true"],
+  textarea[aria-invalid="true"],
+  select[aria-invalid="true"] {
+    border-color: var(--nv-color-danger);
+  }
+
+  input[aria-invalid="true"]:focus-visible,
+  textarea[aria-invalid="true"]:focus-visible,
+  select[aria-invalid="true"]:focus-visible {
+    outline-color: var(--nv-color-danger);
+  }
+}
+
+/* Nativum 0.1.0 — Components */
+/* 独自の視覚的概念のみ nv- prefix を付ける。標準HTML要素は自動的にスタイルする。 */
+
+@layer nativum.components {
+  /* ============================================================
+     Buttons — ネイティブの <button> を再実装しない
+     ============================================================ */
+  button,
+  input[type="submit"],
+  input[type="reset"],
+  input[type="button"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--nv-space-2);
+    min-height: var(--nv-control-height);
+    padding: var(--nv-space-2) var(--nv-space-4);
+    font-size: var(--nv-font-size-sm);
+    font-weight: var(--nv-font-weight-medium);
+    line-height: 1.2;
+    color: var(--nv-color-text);
+    background-color: var(--nv-color-surface);
+    border: var(--nv-border-width) solid var(--nv-color-border-strong);
+    border-radius: var(--nv-radius-md);
+    cursor: pointer;
+    text-decoration: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button:hover,
+  input[type="submit"]:hover,
+  input[type="reset"]:hover,
+  input[type="button"]:hover {
+    background-color: var(--nv-color-subtle);
+  }
+
+  button:active,
+  input[type="submit"]:active,
+  input[type="reset"]:active,
+  input[type="button"]:active {
+    background-color: var(--nv-color-border);
+  }
+
+  button:disabled,
+  input[type="submit"]:disabled,
+  input[type="reset"]:disabled,
+  input[type="button"]:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .nv-primary {
+    background-color: var(--nv-color-primary);
+    border-color: var(--nv-color-primary);
+    color: var(--nv-color-on-primary);
+  }
+
+  .nv-primary:hover {
+    background-color: var(--nv-color-primary-hover);
+    border-color: var(--nv-color-primary-hover);
+  }
+
+  .nv-primary:active {
+    background-color: var(--nv-color-primary-active);
+    border-color: var(--nv-color-primary-active);
+  }
+
+  .nv-danger {
+    background-color: var(--nv-color-danger);
+    border-color: var(--nv-color-danger);
+    color: var(--nv-color-on-danger);
+  }
+
+  .nv-danger:hover {
+    background-color: var(--nv-color-danger-hover);
+    border-color: var(--nv-color-danger-hover);
+  }
+
+  .nv-danger:active {
+    background-color: var(--nv-color-danger-hover);
+    border-color: var(--nv-color-danger-hover);
+  }
+
+  /* ============================================================
+     Table
+     ============================================================ */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--nv-font-size-sm);
+    margin-block-end: var(--nv-space-4);
+  }
+
+  caption {
+    text-align: start;
+    font-size: var(--nv-font-size-sm);
+    color: var(--nv-color-text-muted);
+    margin-block-end: var(--nv-space-2);
+  }
+
+  th,
+  td {
+    padding: var(--nv-space-3);
+    text-align: start;
+    vertical-align: top;
+    border-block-end: var(--nv-border-width) solid var(--nv-color-border);
+  }
+
+  thead th {
+    font-size: var(--nv-font-size-xs);
+    font-weight: var(--nv-font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--nv-color-text-muted);
+    border-block-end: var(--nv-border-width) solid var(--nv-color-border-strong);
+  }
+
+  tbody tr:hover {
+    background-color: var(--nv-color-subtle);
+  }
+
+  .nv-table-striped tbody tr:nth-child(odd) {
+    background-color: var(--nv-color-subtle);
+  }
+
+  /* テーブルを横スクロールさせる場合のラッパー */
+  .nv-table-scroll {
+    overflow-x: auto;
+    margin-block-end: var(--nv-space-4);
+  }
+
+  .nv-table-scroll table {
+    margin-block-end: 0;
+  }
+
+  /* ============================================================
+     Card
+     ============================================================ */
+  .nv-card {
+    background-color: var(--nv-color-surface);
+    border: var(--nv-border-width) solid var(--nv-color-border);
+    border-radius: var(--nv-radius-lg);
+    box-shadow: var(--nv-shadow-sm);
+    padding: var(--nv-space-6);
+  }
+
+  .nv-card > :first-child {
+    margin-block-start: 0;
+  }
+
+  .nv-card > :last-child {
+    margin-block-end: 0;
+  }
+
+  /* ============================================================
+     Badge
+     ============================================================ */
+  .nv-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nv-space-1);
+    padding: 0.0625rem var(--nv-space-2);
+    font-size: var(--nv-font-size-xs);
+    font-weight: var(--nv-font-weight-semibold);
+    line-height: 1.5;
+    color: var(--nv-color-text);
+    background-color: var(--nv-color-subtle);
+    border: var(--nv-border-width) solid var(--nv-color-border-strong);
+    border-radius: var(--nv-radius-full);
+    white-space: nowrap;
+  }
+
+  .nv-badge-primary {
+    color: var(--nv-color-on-primary);
+    background-color: var(--nv-color-primary);
+    border-color: var(--nv-color-primary);
+  }
+
+  .nv-badge-success {
+    color: var(--nv-color-on-success);
+    background-color: var(--nv-color-success);
+    border-color: var(--nv-color-success);
+  }
+
+  .nv-badge-warning {
+    color: var(--nv-color-on-warning);
+    background-color: var(--nv-color-warning);
+    border-color: var(--nv-color-warning);
+  }
+
+  .nv-badge-danger {
+    color: var(--nv-color-on-danger);
+    background-color: var(--nv-color-danger);
+    border-color: var(--nv-color-danger);
+  }
+
+  /* ============================================================
+     Notice
+     ============================================================ */
+  .nv-notice {
+    padding: var(--nv-space-3) var(--nv-space-4);
+    font-size: var(--nv-font-size-sm);
+    color: var(--nv-color-text);
+    background-color: var(--nv-color-subtle);
+    border: var(--nv-border-width) solid var(--nv-color-border);
+    border-inline-start: 0.25rem solid var(--nv-color-border-strong);
+    border-radius: var(--nv-radius-md);
+    margin-block-end: var(--nv-space-4);
+  }
+
+  .nv-notice-info { border-inline-start-color: var(--nv-color-primary); }
+  .nv-notice-success { border-inline-start-color: var(--nv-color-success); }
+  .nv-notice-warning { border-inline-start-color: var(--nv-color-warning); }
+  .nv-notice-danger { border-inline-start-color: var(--nv-color-danger); }
+
+  /* ============================================================
+     Navigation
+     ============================================================ */
+  .nv-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nv-space-1);
+    padding: var(--nv-space-2);
+    background-color: var(--nv-color-surface);
+    border: var(--nv-border-width) solid var(--nv-color-border);
+    border-radius: var(--nv-radius-md);
+  }
+
+  .nv-nav a {
+    padding: var(--nv-space-2) var(--nv-space-3);
+    font-size: var(--nv-font-size-sm);
+    font-weight: var(--nv-font-weight-medium);
+    color: var(--nv-color-text);
+    text-decoration: none;
+    border-radius: var(--nv-radius-md);
+  }
+
+  .nv-nav a:hover {
+    background-color: var(--nv-color-subtle);
+    color: var(--nv-color-text);
+  }
+
+  .nv-nav a[aria-current="page"] {
+    background-color: var(--nv-color-primary);
+    color: var(--nv-color-on-primary);
+  }
+
+  /* ============================================================
+     Breadcrumb
+     ============================================================ */
+  .nv-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nv-space-2);
+    list-style: none;
+    padding: 0;
+    margin-block: 0 var(--nv-space-4);
+    font-size: var(--nv-font-size-sm);
+  }
+
+  .nv-breadcrumb li {
+    margin: 0;
+  }
+
+  .nv-breadcrumb li + li::before {
+    content: "/";
+    margin-inline-end: var(--nv-space-2);
+    color: var(--nv-color-text-muted);
+  }
+
+  .nv-breadcrumb a {
+    text-decoration: none;
+  }
+
+  .nv-breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .nv-breadcrumb li[aria-current="page"] {
+    color: var(--nv-color-text-muted);
+    font-weight: var(--nv-font-weight-medium);
+  }
+
+  /* ============================================================
+     Pagination
+     ============================================================ */
+  .nv-pagination {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nv-space-1);
+    list-style: none;
+    padding: 0;
+    margin-block: 0;
+  }
+
+  .nv-pagination li {
+    margin: 0;
+  }
+
+  .nv-pagination a,
+  .nv-pagination span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--nv-control-height);
+    height: var(--nv-control-height);
+    padding-inline: var(--nv-space-2);
+    font-size: var(--nv-font-size-sm);
+    text-decoration: none;
+    color: var(--nv-color-text);
+    background-color: var(--nv-color-surface);
+    border: var(--nv-border-width) solid var(--nv-color-border-strong);
+    border-radius: var(--nv-radius-md);
+  }
+
+  .nv-pagination a:hover {
+    background-color: var(--nv-color-subtle);
+  }
+
+  .nv-pagination span[aria-current="page"] {
+    background-color: var(--nv-color-primary);
+    border-color: var(--nv-color-primary);
+    color: var(--nv-color-on-primary);
+    font-weight: var(--nv-font-weight-medium);
+  }
+
+  .nv-pagination span:not([aria-current]) {
+    color: var(--nv-color-text-muted);
+  }
+
+  /* ============================================================
+     Toolbar
+     ============================================================ */
+  .nv-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nv-space-2);
+    padding: var(--nv-space-2);
+    background-color: var(--nv-color-surface);
+    border: var(--nv-border-width) solid var(--nv-color-border);
+    border-radius: var(--nv-radius-md);
+    margin-block-end: var(--nv-space-4);
+  }
+
+  /* ============================================================
+     Disclosure / Accordion — ネイティブの <details> を使用する
+     ============================================================ */
+  details {
+    background-color: var(--nv-color-surface);
+    border: var(--nv-border-width) solid var(--nv-color-border);
+    border-radius: var(--nv-radius-md);
+    margin-block-end: var(--nv-space-4);
+  }
+
+  details > summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: var(--nv-space-2);
+    padding: var(--nv-space-3) var(--nv-space-4);
+    font-size: var(--nv-font-size-sm);
+    font-weight: var(--nv-font-weight-medium);
+    cursor: pointer;
+  }
+
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details > summary:hover {
+    background-color: var(--nv-color-subtle);
+  }
+
+  details > summary::before {
+    content: "";
+    flex-shrink: 0;
+    width: 0.4375rem;
+    height: 0.4375rem;
+    border-block-end: 0.125rem solid currentColor;
+    border-inline-end: 0.125rem solid currentColor;
+    transform: translateY(-0.0625rem) rotate(-45deg);
+  }
+
+  details[open] > summary::before {
+    transform: translateY(0.125rem) rotate(45deg);
+  }
+
+  details[open] > summary {
+    border-block-end: var(--nv-border-width) solid var(--nv-color-border);
+  }
+
+  details > :not(summary) {
+    padding-inline: var(--nv-space-4);
+    padding-block-end: var(--nv-space-4);
+  }
+
+  .nv-accordion {
+    border: var(--nv-border-width) solid var(--nv-color-border);
+    border-radius: var(--nv-radius-md);
+    overflow: hidden;
+    margin-block-end: var(--nv-space-4);
+  }
+
+  .nv-accordion details {
+    border: none;
+    border-radius: 0;
+    margin-block-end: 0;
+  }
+
+  .nv-accordion details + details {
+    border-block-start: var(--nv-border-width) solid var(--nv-color-border);
+  }
+
+  .nv-accordion details[open] > summary {
+    border-block-end: none;
+  }
+
+  /* ============================================================
+     Dialog — ネイティブの <dialog> を使用する
+     ============================================================ */
+  dialog {
+    width: min(100% - 2rem, 32rem);
+    max-height: 80dvh;
+    overflow: auto;
+    padding: 0;
+    color: var(--nv-color-text);
+    background-color: var(--nv-color-surface);
+    border: var(--nv-border-width) solid var(--nv-color-border-strong);
+    border-radius: var(--nv-radius-lg);
+    box-shadow: var(--nv-shadow-lg);
+  }
+
+  dialog::backdrop {
+    background-color: rgb(15 15 20 / 0.45);
+  }
+
+  dialog > header {
+    padding: var(--nv-space-4) var(--nv-space-6);
+    border-block-end: var(--nv-border-width) solid var(--nv-color-border);
+  }
+
+  dialog > header > :last-child {
+    margin-block-end: 0;
+  }
+
+  dialog > footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--nv-space-2);
+    padding: var(--nv-space-4) var(--nv-space-6);
+    border-block-start: var(--nv-border-width) solid var(--nv-color-border);
+  }
+
+  dialog > :not(header, footer) {
+    padding: var(--nv-space-4) var(--nv-space-6);
+  }
+
+  /* ============================================================
+     Popover — Popover API を使用する
+     ============================================================ */
+  [popover] {
+    width: max-content;
+    max-width: calc(100vw - 2rem);
+    padding: var(--nv-space-4);
+    color: var(--nv-color-text);
+    background-color: var(--nv-color-surface);
+    border: var(--nv-border-width) solid var(--nv-color-border-strong);
+    border-radius: var(--nv-radius-md);
+    box-shadow: var(--nv-shadow-lg);
+  }
+
+  /* ============================================================
+     Dropdown — Popover + CSS Anchor Positioning
+     アンカー名は --nv-anchor カスタムプロパティで与える:
+       <button class="nv-dropdown-trigger" style="--nv-anchor: --nv-anchor-x">
+     anchor対応ブラウザでのみ絶対配置され、非対応ではpopoverの
+     デフォルト配置にフォールバックする。
+     ============================================================ */
+  .nv-dropdown-trigger {
+    anchor-name: var(--nv-anchor);
+  }
+
+  .nv-dropdown {
+    width: max-content;
+    min-width: 12rem;
+  }
+
+  @supports (anchor-name: --nv-test) and (top: anchor(top)) {
+    .nv-dropdown {
+      position: absolute;
+      position-anchor: var(--nv-anchor);
+      top: anchor(bottom);
+      inset-inline-start: anchor(left);
+      margin-block-start: var(--nv-space-2);
+      margin-inline: 0;
+    }
+
+    .nv-dropdown-end {
+      inset-inline-start: auto;
+      inset-inline-end: anchor(right);
+    }
+  }
+}
+
+/* ============================================================
+   Utilities
+   ============================================================ */
+@layer nativum.utilities {
+  .nv-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .nv-text-muted {
+    color: var(--nv-color-text-muted);
+  }
+
+  .nv-text-center {
+    text-align: center;
+  }
+}
+
+/* Nativum 0.1.0 — Motion */
+/* JavaScript Animation Library は使わない。CSSで宣言できるmotionのみ。 */
+
+/* 同一origin navigationでのcross-document View Transition (enhancement) */
+@view-transition {
+  navigation: auto;
+}
+
+@layer nativum.motion {
+  /* 通常のmotionは prefers-reduced-motion: no-preference の時のみ有効にする */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* インタラクティブ要素の共通transition */
+    :where(a, button, summary, input, textarea, select, [popover], dialog) {
+      transition-property: background-color, border-color, color, opacity,
+        transform, box-shadow;
+      transition-duration: var(--nv-duration-fast);
+      transition-timing-function: var(--nv-ease-standard);
+    }
+
+    /* Disclosure chevron */
+    details > summary::before {
+      transition: transform var(--nv-duration-fast) var(--nv-ease-standard);
+    }
+
+    /* --- Dialog enter / exit --- */
+    dialog {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    dialog[open] {
+      opacity: 1;
+      transform: scale(1);
+      transition:
+        opacity var(--nv-duration-normal) var(--nv-ease-standard),
+        transform var(--nv-duration-normal) var(--nv-ease-standard),
+        overlay var(--nv-duration-normal) var(--nv-ease-standard) allow-discrete,
+        display var(--nv-duration-normal) var(--nv-ease-standard) allow-discrete;
+    }
+
+    @starting-style {
+      dialog[open] {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+    }
+
+    dialog::backdrop {
+      opacity: 0;
+      transition:
+        opacity var(--nv-duration-normal) var(--nv-ease-standard),
+        overlay var(--nv-duration-normal) var(--nv-ease-standard) allow-discrete,
+        display var(--nv-duration-normal) var(--nv-ease-standard) allow-discrete;
+    }
+
+    dialog[open]::backdrop {
+      opacity: 1;
+    }
+
+    @starting-style {
+      dialog[open]::backdrop {
+        opacity: 0;
+      }
+    }
+
+    /* --- Popover enter / exit --- */
+    [popover] {
+      opacity: 0;
+    }
+
+    [popover]:popover-open {
+      opacity: 1;
+      transform: none;
+      transition:
+        opacity var(--nv-duration-normal) var(--nv-ease-standard),
+        transform var(--nv-duration-normal) var(--nv-ease-standard),
+        overlay var(--nv-duration-normal) var(--nv-ease-standard) allow-discrete,
+        display var(--nv-duration-normal) var(--nv-ease-standard) allow-discrete;
+    }
+
+    @starting-style {
+      [popover]:popover-open {
+        opacity: 0;
+        transform: translateY(-0.25rem);
+      }
+    }
+  }
+
+  /* motionが存在しなくても操作・意味・状態を理解できる設計を維持する */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

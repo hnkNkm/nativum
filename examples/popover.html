@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nativum — Popover &amp; Dropdown</title>
+  <link rel="stylesheet" href="../dist/nativum.css">
+</head>
+<body>
+  <header class="nv-container">
+    <nav class="nv-nav" aria-label="Examples">
+      <strong>Nativum</strong>
+      <a href="index.html">Showcase</a>
+      <a href="forms.html">Forms</a>
+      <a href="dialog.html">Dialog</a>
+      <a href="popover.html" aria-current="page">Popover</a>
+      <a href="dashboard.html">Dashboard</a>
+    </nav>
+  </header>
+
+  <main class="nv-container-narrow nv-stack-lg" style="padding-block: 3rem 4rem">
+    <section class="nv-stack-sm">
+      <h1>Popover &amp; Dropdown</h1>
+      <p class="nv-text-muted">
+        Popover APIを使用する。Dropdownは Popover + CSS Anchor Positioning で構成する。
+      </p>
+    </section>
+
+    <section class="nv-stack-sm">
+      <h2>Popover (popovertarget)</h2>
+      <div class="nv-cluster">
+        <button popovertarget="account">Account</button>
+        <button popovertarget="tips" popovertargetaction="show">Show tips</button>
+        <button popovertarget="tips" popovertargetaction="hide">Hide tips</button>
+      </div>
+
+      <div id="account" popover>
+        <h3 style="margin-block-end: var(--nv-space-2)">Hanako Tanaka</h3>
+        <p class="nv-text-muted" style="margin-block-end: var(--nv-space-2)">hanako@example.com</p>
+        <div class="nv-cluster">
+          <a href="dashboard.html">Go to dashboard</a>
+          <button popovertarget="account" popovertargetaction="hide">Close</button>
+        </div>
+      </div>
+
+      <div id="tips" popover>
+        <p>
+          Popoverは軽量なオーバーレイ。Esc・backdropクリック・外部クリックで
+          ネイティブに閉じられる。<code>popovertargetaction</code> で
+          <code>toggle</code> / <code>show</code> / <code>hide</code> を指定できる。
+        </p>
+      </div>
+    </section>
+
+    <section class="nv-stack-sm">
+      <h2>Dropdown (Popover + Anchor Positioning)</h2>
+      <p class="nv-text-muted">
+        トリガーとメニューを同じスコープに置き、<code>--nv-anchor</code> に一意なアンカー名を与える。
+        アンカー非対応環境ではpopoverのデフォルト配置にフォールバックする。
+      </p>
+
+      <div style="--nv-anchor: --nv-anchor-actions" class="nv-cluster">
+        <button class="nv-dropdown-trigger" popovertarget="actions">
+          Actions <span aria-hidden="true">▾</span>
+        </button>
+
+        <div id="actions" class="nv-dropdown" popover>
+          <div class="nv-stack-sm">
+            <a href="#">Edit</a>
+            <a href="#">Duplicate</a>
+            <a href="#">Move to…</a>
+            <hr style="margin-block: var(--nv-space-1)">
+            <a href="#" style="color: var(--nv-color-danger)">Delete</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="--nv-anchor: --nv-anchor-profile" class="nv-cluster">
+        <button class="nv-dropdown-trigger" popovertarget="profile">
+          Profile <span aria-hidden="true">▾</span>
+        </button>
+
+        <div id="profile" class="nv-dropdown nv-dropdown-end" popover>
+          <div class="nv-stack-sm">
+            <strong>Hanako Tanaka</strong>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="#">Settings</a>
+            <a href="#">Sign out</a>
+          </div>
+        </div>
+      </div>
+
+      <p class="nv-text-muted">
+        <code>nv-dropdown-end</code> はメニューの右端をトリガーの右端に揃える。
+        role="menu" はArrow keyによるフルキーボード操作の実装が前提になるため、
+        シンプルなリンクリストには使用しない。
+      </p>
+    </section>
+
+    <div class="nv-notice nv-notice-warning" role="status">
+      スクリーンリーダー利用時、popoverの開閉は <code>popover</code> 属性の有無で通知される。
+      メニューの開閉状態を示す <code>aria-expanded</code> はpopoverトリガーでは利用不可のため、
+      状態表示が必要な場合は <code>aria-describedby</code> で静的な説明を与えること。
+    </div>
+
+    <footer class="nv-stack-sm" style="margin-block-start: 3rem">
+      <hr>
+      <p class="nv-text-muted">Nativum — passive, zero-JavaScript UI system. &copy; 2026</p>
+    </footer>
+  </main>
+</body>
+</html>

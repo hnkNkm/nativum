@@ -1,0 +1,57 @@
+/* Nativum 0.1.0 — Layout primitives */
+/* nv- prefix付きの頻出layout primitiveのみ。utility framework化はしない。 */
+
+@layer nativum.layout {
+  /* --- Stack: 縦方向のflow layout --- */
+  .nv-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nv-space-4);
+  }
+
+  .nv-stack-sm {
+    gap: var(--nv-space-2);
+  }
+
+  .nv-stack-lg {
+    gap: var(--nv-space-6);
+  }
+
+  /* --- Cluster: 横方向のflexible layout --- */
+  .nv-cluster {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nv-space-2) var(--nv-space-4);
+  }
+
+  .nv-cluster-between {
+    justify-content: space-between;
+  }
+
+  .nv-cluster-end {
+    justify-content: flex-end;
+  }
+
+  /* --- Grid: responsive grid --- */
+  /* 列数の代わりに最小列幅(--nv-grid-min)を管理する。
+     コンテナ幅が広くなるほど列数が自動で増える。 */
+  .nv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--nv-grid-min)), 1fr));
+    gap: var(--nv-space-4);
+  }
+
+  /* --- Container: content width管理 --- */
+  .nv-container {
+    width: min(100%, var(--nv-content-width));
+    margin-inline: auto;
+    padding-inline: var(--nv-space-4);
+  }
+
+  .nv-container-narrow {
+    width: min(100%, var(--nv-narrow-width));
+    margin-inline: auto;
+    padding-inline: var(--nv-space-4);
+  }
+}

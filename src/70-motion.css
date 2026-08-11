@@ -1,0 +1,104 @@
+/* Nativum 0.1.0 — Motion */
+/* JavaScript Animation Library は使わない。CSSで宣言できるmotionのみ。 */
+
+/* 同一origin navigationでのcross-document View Transition (enhancement) */
+@view-transition {
+  navigation: auto;
+}
+
+@layer nativum.motion {
+  /* 通常のmotionは prefers-reduced-motion: no-preference の時のみ有効にする */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* インタラクティブ要素の共通transition */
+    :where(a, button, summary, input, textarea, select, [popover], dialog) {
+      transition-property: background-color, border-color, color, opacity,
+        transform, box-shadow;
+      transition-duration: var(--nv-duration-fast);
+      transition-timing-function: var(--nv-ease-standard);
+    }
+
+    /* Disclosure chevron */
+    details > summary::before {
+      transition: transform var(--nv-duration-fast) var(--nv-ease-standard);
+    }
+
+    /* --- Dialog enter / exit --- */
+    dialog {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    dialog[open] {
+      opacity: 1;
+      transform: scale(1);
+      transition:
+        opacity var(--nv-duration-normal) var(--nv-ease-standard),
+        transform var(--nv-duration-normal) var(--nv-ease-standard),
+        overlay var(--nv-duration-normal) var(--nv-ease-standard) allow-discrete,
+        display var(--nv-duration-normal) var(--nv-ease-standard) allow-discrete;
+    }
+
+    @starting-style {
+      dialog[open] {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+    }
+
+    dialog::backdrop {
+      opacity: 0;
+      transition:
+        opacity var(--nv-duration-normal) var(--nv-ease-standard),
+        overlay var(--nv-duration-normal) var(--nv-ease-standard) allow-discrete,
+        display var(--nv-duration-normal) var(--nv-ease-standard) allow-discrete;
+    }
+
+    dialog[open]::backdrop {
+      opacity: 1;
+    }
+
+    @starting-style {
+      dialog[open]::backdrop {
+        opacity: 0;
+      }
+    }
+
+    /* --- Popover enter / exit --- */
+    [popover] {
+      opacity: 0;
+    }
+
+    [popover]:popover-open {
+      opacity: 1;
+      transform: none;
+      transition:
+        opacity var(--nv-duration-normal) var(--nv-ease-standard),
+        transform var(--nv-duration-normal) var(--nv-ease-standard),
+        overlay var(--nv-duration-normal) var(--nv-ease-standard) allow-discrete,
+        display var(--nv-duration-normal) var(--nv-ease-standard) allow-discrete;
+    }
+
+    @starting-style {
+      [popover]:popover-open {
+        opacity: 0;
+        transform: translateY(-0.25rem);
+      }
+    }
+  }
+
+  /* motionが存在しなくても操作・意味・状態を理解できる設計を維持する */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

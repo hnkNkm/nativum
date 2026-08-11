@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nativum — Component Showcase</title>
+  <link rel="stylesheet" href="../dist/nativum.css">
+</head>
+<body>
+  <header class="nv-container">
+    <nav class="nv-nav" aria-label="Examples">
+      <strong>Nativum</strong>
+      <a href="index.html" aria-current="page">Showcase</a>
+      <a href="forms.html">Forms</a>
+      <a href="dialog.html">Dialog</a>
+      <a href="popover.html">Popover</a>
+      <a href="dashboard.html">Dashboard</a>
+    </nav>
+  </header>
+
+  <main class="nv-container nv-stack-lg" style="padding-block: 3rem 4rem">
+    <section class="nv-stack-sm">
+      <h1>Modern UI, by the Web Platform.</h1>
+      <p class="nv-text-muted">
+        このページは <code>&lt;script&gt;</code> を一切含まない。
+        表示されているすべてのUIは HTML + nativum.css のみで動作する。
+      </p>
+    </section>
+
+    <section class="nv-stack-sm">
+      <h2>Buttons</h2>
+      <div class="nv-cluster">
+        <button>Default</button>
+        <button class="nv-primary">Primary</button>
+        <button class="nv-danger">Danger</button>
+        <button disabled>Disabled</button>
+        <input type="submit" value="Input submit">
+      </div>
+    </section>
+
+    <section class="nv-stack-sm">
+      <h2>Badges</h2>
+      <div class="nv-cluster">
+        <span class="nv-badge">Neutral</span>
+        <span class="nv-badge nv-badge-primary">Primary</span>
+        <span class="nv-badge nv-badge-success">Success</span>
+        <span class="nv-badge nv-badge-warning">Warning</span>
+        <span class="nv-badge nv-badge-danger">Danger</span>
+      </div>
+    </section>
+
+    <section class="nv-stack-sm">
+      <h2>Notices</h2>
+      <div class="nv-notice nv-notice-info" role="status">Information notice.</div>
+      <div class="nv-notice nv-notice-success" role="status">Operation completed successfully.</div>
+      <div class="nv-notice nv-notice-warning" role="status">Your session expires soon.</div>
+      <div class="nv-notice nv-notice-danger" role="alert">This action cannot be undone.</div>
+    </section>
+
+    <section class="nv-stack-sm">
+      <h2>Cards &amp; Grid</h2>
+      <div class="nv-grid">
+        <article class="nv-card">
+          <h3>Native First</h3>
+          <p>ブラウザに適切なネイティブ機能が存在する場合、それを使用する。</p>
+          <a href="#buttons">Read more</a>
+        </article>
+        <article class="nv-card">
+          <h3>Security by Absence</h3>
+          <p>依存関係を監査して安全にするのではなく、依存関係そのものを存在させない。</p>
+        </article>
+        <article class="nv-card">
+          <h3>Semantics over Features</h3>
+          <p>実現できるUIの数より、正しいHTML semanticsを優先する。</p>
+        </article>
+        <article class="nv-card">
+          <h3>Zero JavaScript</h3>
+          <p>JavaScript UI Runtimeは存在しない。HTMLそのものがComponent APIである。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="nv-stack-sm">
+      <h2>Table</h2>
+      <div class="nv-table-scroll">
+        <table class="nv-table-striped">
+          <caption>Component status</caption>
+          <thead>
+            <tr>
+              <th scope="col">Component</th>
+              <th scope="col">Primitive</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Dialog</th>
+              <td><code>&lt;dialog&gt;</code></td>
+              <td><span class="nv-badge nv-badge-success">Ready</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Dropdown</th>
+              <td><code>[popover]</code> + Anchor Positioning</td>
+              <td><span class="nv-badge nv-badge-success">Ready</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Tabs</th>
+              <td>— (unsupported)</td>
+              <td><span class="nv-badge nv-badge-danger">Unsupported</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="nv-stack-sm">
+      <h2>Disclosure / Accordion</h2>
+      <details>
+        <summary>Advanced settings</summary>
+        <p>ネイティブの <code>&lt;details&gt;</code> / <code>&lt;summary&gt;</code> を使用する。JavaScript stateは持たない。</p>
+      </details>
+      <div class="nv-accordion">
+        <details open>
+          <summary>General</summary>
+          <p>基本設定についての説明。</p>
+        </details>
+        <details>
+          <summary>Notifications</summary>
+          <p>通知設定についての説明。</p>
+        </details>
+        <details>
+          <summary>Billing</summary>
+          <p>請求設定についての説明。</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="nv-stack-sm">
+      <h2>Typography</h2>
+      <blockquote>
+        Use the platform. Do not reimplement it.
+      </blockquote>
+      <p>
+        Inline code: <code>color: var(--nv-color-primary)</code>,
+        keyboard: <kbd>Cmd</kbd> + <kbd>K</kbd>,
+        and <mark>highlighted text</mark>.
+      </p>
+      <pre><code>/* dist/nativum.css — one file, zero dependencies */
+@layer nativum.reset, nativum.tokens, nativum.base;</code></pre>
+    </section>
+
+    <section class="nv-stack-sm">
+      <h2>Navigation</h2>
+      <nav aria-label="Breadcrumb">
+        <ol class="nv-breadcrumb">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Components</a></li>
+          <li aria-current="page">Showcase</li>
+        </ol>
+      </nav>
+      <div class="nv-cluster-between nv-cluster" style="align-items: center">
+        <nav aria-label="Pagination">
+          <ul class="nv-pagination">
+            <li><a href="#">Prev</a></li>
+            <li><a href="#">1</a></li>
+            <li><span aria-current="page">2</span></li>
+            <li><a href="#">3</a></li>
+            <li><span>…</span></li>
+            <li><a href="#">Next</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="nv-toolbar" role="toolbar" aria-label="Actions">
+        <button class="nv-primary">New</button>
+        <button>Edit</button>
+        <button>Export</button>
+      </div>
+    </section>
+
+    <footer class="nv-stack-sm" style="margin-block-start: 3rem">
+      <hr>
+      <p class="nv-text-muted">
+        Nativum — passive, zero-JavaScript UI system. &copy; 2026
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

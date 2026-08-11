@@ -1,0 +1,119 @@
+/* Nativum 0.1.0 — Design Tokens */
+/* 主要デザイン値はすべてCSS Custom Propertiesとして公開する。 */
+/* アプリケーションは :root でトークンを上書きするだけでテーマを変更できる。 */
+
+@layer nativum.tokens {
+  :root {
+    /* OS設定に従い light/dark の両方をサポートする */
+    color-scheme: light dark;
+
+    /* --- Typography --- */
+    --nv-font-sans: system-ui, -apple-system, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, "Noto Sans", "Hiragino Sans", sans-serif;
+    --nv-font-mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo,
+      Consolas, "Liberation Mono", monospace;
+
+    --nv-font-size-xs: 0.75rem;
+    --nv-font-size-sm: 0.875rem;
+    --nv-font-size-md: 1rem;
+    --nv-font-size-lg: 1.125rem;
+    --nv-font-size-xl: 1.25rem;
+    --nv-font-size-2xl: 1.5rem;
+    --nv-font-size-3xl: 1.875rem;
+    --nv-font-size-4xl: 2.25rem;
+
+    --nv-line-height-tight: 1.25;
+    --nv-line-height-normal: 1.6;
+
+    --nv-font-weight-medium: 500;
+    --nv-font-weight-semibold: 600;
+
+    /* --- Spacing --- */
+    --nv-space-1: 0.25rem;
+    --nv-space-2: 0.5rem;
+    --nv-space-3: 0.75rem;
+    --nv-space-4: 1rem;
+    --nv-space-6: 1.5rem;
+    --nv-space-8: 2rem;
+    --nv-space-12: 3rem;
+    --nv-space-16: 4rem;
+
+    /* --- Border --- */
+    --nv-border-width: 1px;
+    --nv-radius-sm: 0.25rem;
+    --nv-radius-md: 0.5rem;
+    --nv-radius-lg: 0.75rem;
+    --nv-radius-full: 999px;
+
+    /* --- Motion --- */
+    --nv-duration-fast: 120ms;
+    --nv-duration-normal: 180ms;
+    --nv-duration-slow: 300ms;
+    --nv-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --nv-ease-emphasized: cubic-bezier(0.3, 0, 0.2, 1);
+
+    /* --- Sizing --- */
+    --nv-control-height-sm: 1.75rem;
+    --nv-control-height: 2.25rem;
+    --nv-control-height-lg: 2.75rem;
+
+    /* --- Layout --- */
+    --nv-content-width: 64rem;
+    --nv-narrow-width: 40rem;
+    --nv-grid-min: 16rem;
+
+    /* --- Focus --- */
+    --nv-focus-ring-width: 0.125rem;
+    --nv-focus-ring-offset: 0.125rem;
+
+    /* --- Shadow --- */
+    --nv-shadow-sm: 0 1px 2px rgb(15 15 20 / 0.06);
+    --nv-shadow-md: 0 2px 6px rgb(15 15 20 / 0.08), 0 8px 24px rgb(15 15 20 / 0.08);
+    --nv-shadow-lg: 0 4px 12px rgb(15 15 20 / 0.1), 0 16px 48px rgb(15 15 20 / 0.12);
+
+    /* --- Color (light) --- */
+    --nv-color-bg: light-dark(#f7f7f8, #101014);
+    --nv-color-surface: light-dark(#ffffff, #18181d);
+    --nv-color-subtle: light-dark(#ededf1, #222229);
+    --nv-color-text: light-dark(#17171c, #ececf1);
+    --nv-color-text-muted: light-dark(#62626e, #9c9ca9);
+    --nv-color-border: light-dark(#e2e2e8, #2a2a32);
+    --nv-color-border-strong: light-dark(#c9c9d2, #3b3b45);
+
+    --nv-color-primary: light-dark(#1d4ed8, #7c9fff);
+    --nv-color-primary-hover: light-dark(#1e40af, #93adff);
+    --nv-color-primary-active: light-dark(#1e3a8a, #628af2);
+    --nv-color-on-primary: light-dark(#ffffff, #0d0d10);
+
+    --nv-color-danger: light-dark(#dc2626, #e5484d);
+    --nv-color-danger-hover: light-dark(#b91c1c, #ec5d5d);
+    --nv-color-on-danger: light-dark(#ffffff, #ffffff);
+
+    --nv-color-success: light-dark(#15803d, #3fb950);
+    --nv-color-success-hover: light-dark(#166534, #2ea043);
+    --nv-color-on-success: light-dark(#ffffff, #ffffff);
+
+    --nv-color-warning: light-dark(#b45309, #d29922);
+    --nv-color-warning-hover: light-dark(#92400e, #bb8009);
+    --nv-color-on-warning: light-dark(#ffffff, #ffffff);
+
+    --nv-color-link: var(--nv-color-primary);
+    --nv-color-link-hover: var(--nv-color-primary-hover);
+
+    --nv-color-selection: light-dark(rgb(29 78 216 / 0.18), rgb(124 159 255 / 0.28));
+
+    /* <select> のカスタム矢印アイコン (テーマごとに色を焼き込む) */
+    --nv-select-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='16'%20height='16'%20viewBox='0%200%2016%2016'%20fill='none'%3E%3Cpath%20d='M4%206l4%204%204-4'%20stroke='%2362626e'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+
+  /* サーバー側で明示的に dark を強制する場合 */
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --nv-select-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='16'%20height='16'%20viewBox='0%200%2016%2016'%20fill='none'%3E%3Cpath%20d='M4%206l4%204%204-4'%20stroke='%239c9ca9'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+
+  /* サーバー側で明示的に light を強制する場合 */
+  :root[data-theme="light"] {
+    color-scheme: light;
+  }
+}

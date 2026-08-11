@@ -1,0 +1,93 @@
+#!/usr/bin/env sh
+# Nativum verify — executable supply-chain attack surface の検査
+#
+# 検査目的は package manager の存在検出ではなく、
+# Nativum Core に第三者の実行可能な依存グラフが存在しないことの検証。
+#
+# POSIX shell + 標準Unix toolのみ。
+set -eu
+
+cd "$(dirname "$0")/.."
+
+fail() {
+  echo "VERIFY FAIL: $1" >&2
+  exit 1
+}
+
+# 0. dist を最新化
+./tools/build.sh > /dev/null
+
+# 1. Nativum Core は HTML+CSS only — JS/TS runtime file が存在しない
+if find . -path ./.git -prune -o \( -name '*.js' -o -name '*.jsx' -o -name '*.ts' -o -name '*.tsx' \) -print | grep -q .; then
+  fail "JavaScript/TypeScript runtime file found (CoreはHTML+CSS only)"
+fi
+
+# 2. install artifacts / 依存グラフの痕跡が存在しない
+if find . -path ./.git -prune -o -type d -name node_modules -print | grep -q .; then
+  fail "node_modules directory found (installが実行されている)"
+fi
+
+for f in package-lock.json pnpm-lock.yaml yarn.lock npm-shrinkwrap.json; do
+  if find . -path ./.git -prune -o -name "$f" -print | grep -q .; then
+    fail "package manager install artifact found: $f (Nativum Coreは依存を持たない)"
+  fi
+done
+
+# 3. Nativum Core は Node-based build を採用しない
+for f in vite.config.* webpack.config.* postcss.config.*; do
+  if [ -f "$f" ]; then
+    fail "Node build config found: $f"
+  fi
+done
+
+# 4. package.json が存在する場合、passive artifact metadata であること
+#    (将来の npm 配布用。dependencies が空・install hook が無いことを検査する)
+if [ -f package.json ]; then
+  echo "  package.json を検査 (passive artifact metadata)..."
+
+  for key in dependencies optionalDependencies peerDependencies; do
+    if grep -Eq "\"$key\"" package.json; then
+      if ! grep -Eq "\"$key\"[[:space:]]*:[[:space:]]*\{\}" package.json; then
+        fail "package.json の $key が空ではありません (third-party runtime dependency)"
+      fi
+    fi
+  done
+
+  for hook in preinstall install postinstall prepare prepublish; do
+    if grep -Eq "\"$hook\"" package.json; then
+      fail "install lifecycle script ($hook) が package.json に存在します (executable install hook)"
+    fi
+  done
+
+  # runtime JavaScript entry point の禁止 (main は nativum.css のみ許可)
+  if grep -Eq '"(main|module|exports|bin)"[[:space:]]*:[[:space:]]*"[^"]*\.(js|mjs|cjs|ts|tsx)"' package.json; then
+    fail "package.json に runtime JavaScript entry point が存在します"
+  fi
+
+  echo "  package.json: passive artifact metadata OK"
+fi
+
+# 5. remote リソース (stylesheet / import / font / image / script) が存在しない
+if grep -rnE '(@import|url\()["'"'"']?https?://' src/ examples/ | grep -v 'data:image/svg+xml' | grep -q .; then
+  fail "remote URL found in CSS or examples (implicit remote resource loading)"
+fi
+
+if grep -rnE 'font-family:[^;]*(url\()|@font-face[^{]*\{[^}]*url\(' src/ > /dev/null 2>&1; then
+  fail "remote font found"
+fi
+
+if grep -rn '<script' examples/ > /dev/null 2>&1; then
+  fail "<script> found in examples/"
+fi
+
+# 6. ネイティブ要素の div 再実装が存在しない
+if grep -rnE '<(div|span)[^>]*role="button"' examples/ > /dev/null 2>&1; then
+  fail 'role="button" reimplementation found in examples/'
+fi
+
+# 7. dist の再確認
+if ! ./tools/build.sh > /dev/null; then
+  fail "dist rebuild failed"
+fi
+
+echo "VERIFY OK — executable supply-chain attack surface は検出されませんでした"

@@ -1,0 +1,150 @@
+/* Nativum 0.1.0 — Base */
+/* 標準HTML要素の自動スタイル。classを付けなくてもtypographyと基本要素が成立する。 */
+
+@layer nativum.base {
+  /* --- Typography --- */
+  body {
+    font-family: var(--nv-font-sans);
+    font-size: var(--nv-font-size-md);
+    line-height: var(--nv-line-height-normal);
+    color: var(--nv-color-text);
+    background-color: var(--nv-color-bg);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: var(--nv-font-weight-semibold);
+    line-height: var(--nv-line-height-tight);
+    text-wrap: balance;
+    margin-block: 0 var(--nv-space-4);
+  }
+
+  h1 { font-size: var(--nv-font-size-4xl); }
+  h2 { font-size: var(--nv-font-size-3xl); }
+  h3 { font-size: var(--nv-font-size-2xl); }
+  h4 { font-size: var(--nv-font-size-xl); }
+  h5 { font-size: var(--nv-font-size-lg); }
+  h6 { font-size: var(--nv-font-size-md); }
+
+  p {
+    margin-block: 0 var(--nv-space-4);
+    text-wrap: pretty;
+  }
+
+  small {
+    font-size: var(--nv-font-size-sm);
+    color: var(--nv-color-text-muted);
+  }
+
+  strong {
+    font-weight: var(--nv-font-weight-semibold);
+  }
+
+  ul,
+  ol {
+    margin-block: 0 var(--nv-space-4);
+    padding-inline-start: var(--nv-space-6);
+  }
+
+  li {
+    margin-block-end: var(--nv-space-1);
+  }
+
+  /* --- Links --- */
+  a {
+    color: var(--nv-color-link);
+    text-decoration: underline;
+    text-decoration-thickness: 0.06em;
+    text-underline-offset: 0.15em;
+    border-radius: var(--nv-radius-sm);
+  }
+
+  a:hover {
+    color: var(--nv-color-link-hover);
+  }
+
+  /* --- Code --- */
+  code {
+    font-family: var(--nv-font-mono);
+    font-size: 0.9em;
+    background-color: var(--nv-color-subtle);
+    border: var(--nv-border-width) solid var(--nv-color-border);
+    border-radius: var(--nv-radius-sm);
+    padding: 0.1em 0.35em;
+  }
+
+  pre {
+    font-family: var(--nv-font-mono);
+    font-size: var(--nv-font-size-sm);
+    background-color: var(--nv-color-subtle);
+    border: var(--nv-border-width) solid var(--nv-color-border);
+    border-radius: var(--nv-radius-md);
+    padding: var(--nv-space-4);
+    overflow-x: auto;
+    margin-block: 0 var(--nv-space-4);
+  }
+
+  pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: inherit;
+  }
+
+  kbd {
+    font-family: var(--nv-font-mono);
+    font-size: 0.85em;
+    background-color: var(--nv-color-subtle);
+    border: var(--nv-border-width) solid var(--nv-color-border-strong);
+    border-block-end-width: 0.1875rem;
+    border-radius: var(--nv-radius-sm);
+    padding: 0.125em 0.4em;
+  }
+
+  /* --- Blockquote --- */
+  blockquote {
+    border-inline-start: 0.1875rem solid var(--nv-color-border-strong);
+    padding-inline: var(--nv-space-4);
+    margin-block: 0 var(--nv-space-4);
+    color: var(--nv-color-text-muted);
+  }
+
+  /* --- Separator --- */
+  hr {
+    border: none;
+    border-block-start: var(--nv-border-width) solid var(--nv-color-border);
+    margin-block: var(--nv-space-8);
+  }
+
+  /* --- Mark --- */
+  mark {
+    background-color: var(--nv-color-selection);
+    border-radius: var(--nv-radius-sm);
+    padding-inline: 0.125em;
+  }
+
+  /* --- Media --- */
+  figure {
+    margin-block: 0 var(--nv-space-4);
+  }
+
+  figcaption {
+    font-size: var(--nv-font-size-sm);
+    color: var(--nv-color-text-muted);
+    margin-block-start: var(--nv-space-2);
+  }
+
+  /* --- Focus (global) --- */
+  :focus-visible {
+    outline: var(--nv-focus-ring-width) solid var(--nv-color-primary);
+    outline-offset: var(--nv-focus-ring-offset);
+  }
+
+  ::selection {
+    background-color: var(--nv-color-selection);
+  }
+}

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nativum — Form パターン一式</title>
+  <!--
+    アプリケーションに vendor した nativum.css を参照すること。
+    (推奨構成: public/vendor/nativum/nativum.css)
+    <link rel="stylesheet" href="/vendor/nativum/nativum.css">
+    この例は参照パス nativum.css で同ディレクトリに配置した前提で書いている。
+    すべてのクラスは src/*.css に実在するもののみを使用する。
+  -->
+  <link rel="stylesheet" href="nativum.css">
+</head>
+<body>
+  <main class="nv-container-narrow nv-stack-lg" style="padding-block: 3rem 4rem">
+    <section class="nv-stack-sm">
+      <h1>アカウント登録</h1>
+      <p class="nv-text-muted">
+        ネイティブのform controlとネイティブ検証を使用する。
+        JavaScriptは一切使用しない。
+      </p>
+    </section>
+
+    <section class="nv-card">
+      <form action="/signup" method="post">
+        <div class="nv-field">
+          <label for="name">氏名</label>
+          <input id="name" name="name" type="text" autocomplete="name" required
+                 aria-describedby="name-hint" placeholder="例: 山田 太郎">
+          <span class="nv-field-hint" id="name-hint">公開プロフィールに表示されます。</span>
+        </div>
+
+        <div class="nv-field">
+          <label for="email">メールアドレス</label>
+          <input id="email" name="email" type="email" autocomplete="email"
+                 placeholder="you@example.com" required>
+        </div>
+
+        <div class="nv-field">
+          <label for="password">パスワード</label>
+          <input id="password" name="password" type="password"
+                 autocomplete="new-password" minlength="8" required
+                 aria-describedby="password-hint">
+          <span class="nv-field-hint" id="password-hint">8文字以上で入力してください。</span>
+        </div>
+
+        <div class="nv-field">
+          <label for="plan">プラン</label>
+          <select id="plan" name="plan" required>
+            <option value="">選択してください</option>
+            <option value="free">Free</option>
+            <option value="pro" selected>Pro</option>
+            <option value="team">Team</option>
+          </select>
+        </div>
+
+        <fieldset>
+          <legend>アカウントの種類</legend>
+          <div class="nv-stack-sm">
+            <label><input type="radio" name="type" value="personal" checked> 個人</label>
+            <label><input type="radio" name="type" value="business"> 法人</label>
+          </div>
+        </fieldset>
+
+        <div class="nv-field">
+          <label>通知</label>
+          <div class="nv-stack-sm">
+            <label><input type="checkbox" name="digest" checked> ダイジェストメールを受け取る</label>
+            <label><input type="checkbox" name="weekly"> 週次レポートを受け取る</label>
+          </div>
+        </div>
+
+        <div class="nv-cluster">
+          <button class="nv-primary" type="submit">登録する</button>
+          <button type="reset">リセット</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="nv-stack-sm">
+      <h2>サーバー側検証エラー</h2>
+      <p class="nv-text-muted">
+        サーバーが再レンダリングした検証済みエラー。
+        <code>aria-invalid</code> と <code>nv-field-error</code> を対で使う。
+      </p>
+      <div class="nv-card">
+        <form action="/signup" method="post">
+          <div class="nv-field">
+            <label for="server-email">メールアドレス</label>
+            <input id="server-email" name="email" type="email" value="not-an-email"
+                   aria-invalid="true" aria-describedby="server-email-error" required>
+            <span class="nv-field-error" id="server-email-error">
+              このメールアドレスは既に登録されています。
+            </span>
+          </div>
+          <button class="nv-primary" type="submit">再送信</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="nv-stack-sm">
+      <h2>進捗表示</h2>
+      <div class="nv-stack-sm">
+        <label for="upload">アップロード進捗</label>
+        <progress id="upload" max="100" value="65">65%</progress>
+        <label for="disk">ディスク使用量</label>
+        <meter id="disk" min="0" max="100" value="80" low="70" high="90" optimum="20">80%</meter>
+      </div>
+    </section>
+
+    <footer class="nv-stack-sm">
+      <hr>
+      <p class="nv-text-muted">Nativum — passive, zero-JavaScript UI system.</p>
+    </footer>
+  </main>
+</body>
+</html>

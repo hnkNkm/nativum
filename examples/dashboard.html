@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nativum — Admin Dashboard (reference implementation)</title>
+  <link rel="stylesheet" href="../dist/nativum.css">
+  <!--
+    Reference implementation of the Nativum v0.1 demo application.
+    Built from HTML + nativum.css only. No JavaScript.
+
+    Theme: デフォルトではOS設定に追従します (color-scheme: light dark)。
+    サーバー側で <html data-theme="dark"> / <html data-theme="light"> を
+    出力することで強制できます。クライアント側のtheme switchには
+    JavaScriptを使わない方針です。
+  -->
+</head>
+<body>
+  <header class="nv-container" style="padding-block: 1rem">
+    <nav class="nv-nav nv-cluster-between" aria-label="Main">
+      <span class="nv-cluster" style="gap: var(--nv-space-2)">
+        <strong>Acme Admin</strong>
+        <a href="dashboard.html" aria-current="page">Dashboard</a>
+        <a href="index.html">Showcase</a>
+        <a href="forms.html">Forms</a>
+        <a href="dialog.html">Dialog</a>
+        <a href="popover.html">Popover</a>
+      </span>
+
+      <span style="--nv-anchor: --nv-anchor-account">
+        <button class="nv-dropdown-trigger" popovertarget="account-menu" aria-haspopup="true">
+          Hanako
+        </button>
+
+        <div id="account-menu" class="nv-dropdown nv-dropdown-end" popover>
+          <div class="nv-stack-sm">
+            <strong>Hanako Tanaka</strong>
+            <span class="nv-text-muted" style="font-size: var(--nv-font-size-xs)">hanako@example.com</span>
+            <button commandfor="settings" command="show-modal">Settings</button>
+            <a href="#">Sign out</a>
+          </div>
+        </div>
+      </span>
+    </nav>
+  </header>
+
+  <main class="nv-container nv-stack-lg" style="padding-block: 1rem 4rem">
+    <!-- Page header -->
+    <section class="nv-cluster nv-cluster-between">
+      <div class="nv-stack-sm">
+        <h1 style="margin-block-end: 0">Dashboard</h1>
+        <p class="nv-text-muted">Overview of your workspace</p>
+      </div>
+      <div class="nv-cluster">
+        <button commandfor="settings" command="show-modal">Settings</button>
+        <button class="nv-primary" commandfor="settings" command="show-modal">New project</button>
+      </div>
+    </section>
+
+    <!-- Dashboard cards -->
+    <section class="nv-grid" aria-label="Metrics">
+      <article class="nv-card nv-stack-sm">
+        <span class="nv-text-muted" style="font-size: var(--nv-font-size-sm)">Projects</span>
+        <strong style="font-size: var(--nv-font-size-3xl)">24</strong>
+        <span class="nv-badge nv-badge-success">+3 this month</span>
+      </article>
+      <article class="nv-card nv-stack-sm">
+        <span class="nv-text-muted" style="font-size: var(--nv-font-size-sm)">Active members</span>
+        <strong style="font-size: var(--nv-font-size-3xl)">18</strong>
+        <span class="nv-badge nv-badge-primary">2 pending</span>
+      </article>
+      <article class="nv-card nv-stack-sm">
+        <span class="nv-text-muted" style="font-size: var(--nv-font-size-sm)">Storage</span>
+        <strong style="font-size: var(--nv-font-size-3xl)">82%</strong>
+        <meter min="0" max="100" value="82" low="70" high="90">82%</meter>
+      </article>
+      <article class="nv-card nv-stack-sm">
+        <span class="nv-text-muted" style="font-size: var(--nv-font-size-sm)">Invoices due</span>
+        <strong style="font-size: var(--nv-font-size-3xl)">3</strong>
+        <span class="nv-badge nv-badge-warning">2 overdue</span>
+      </article>
+    </section>
+
+    <!-- Form + Table -->
+    <section class="nv-grid" style="--nv-grid-min: 22rem">
+      <article class="nv-card">
+        <h2 style="font-size: var(--nv-font-size-xl)">New project</h2>
+        <form action="#" method="post">
+          <div class="nv-field">
+            <label for="p-name">Project name</label>
+            <input id="p-name" name="name" type="text" required placeholder="e.g. nativum">
+          </div>
+          <div class="nv-field">
+            <label for="p-desc">Description</label>
+            <textarea id="p-desc" name="description" rows="3" placeholder="What is this project about?"></textarea>
+          </div>
+          <div class="nv-field">
+            <label for="p-owner">Owner</label>
+            <select id="p-owner" name="owner">
+              <option selected>Hanako Tanaka</option>
+              <option>Taro Yamada</option>
+              <option>Jiro Sato</option>
+            </select>
+          </div>
+          <div class="nv-cluster">
+            <button class="nv-primary" type="submit">Create project</button>
+          </div>
+        </form>
+      </article>
+
+      <article class="nv-card">
+        <div class="nv-cluster-between nv-cluster">
+          <h2 style="font-size: var(--nv-font-size-xl)">Team</h2>
+          <span class="nv-badge">4 members</span>
+        </div>
+        <div class="nv-table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Member</th>
+                <th scope="col">Role</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Hanako Tanaka</th>
+                <td>Owner</td>
+                <td><span class="nv-badge nv-badge-success">Active</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Taro Yamada</th>
+                <td>Developer</td>
+                <td><span class="nv-badge nv-badge-success">Active</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Jiro Sato</th>
+                <td>Designer</td>
+                <td><span class="nv-badge nv-badge-warning">Invited</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Kenji Ito</th>
+                <td>Developer</td>
+                <td><span class="nv-badge nv-badge-danger">Suspended</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <!-- Accordion -->
+    <section class="nv-stack-sm">
+      <h2 style="font-size: var(--nv-font-size-xl)">Workspace settings</h2>
+      <div class="nv-accordion">
+        <details open>
+          <summary>Billing</summary>
+          <p>
+            現在のプランは <strong>Pro</strong> (¥2,000/月) です。
+            次回の請求は 9月1日 に予定されています。
+          </p>
+        </details>
+        <details>
+          <summary>Security</summary>
+          <p>
+            二段階認証が有効です。SSOは現在準備中です。パスワードは90日ごとに更新を推奨しています。
+          </p>
+        </details>
+        <details>
+          <summary>Notifications</summary>
+          <p>
+            Slack通知、メール通知、月次レポートの配信設定は
+            <a href="forms.html">Forms</a> のパターンで構成できます。
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Pagination -->
+    <nav aria-label="Project history">
+      <ul class="nv-pagination">
+        <li><a href="#">Prev</a></li>
+        <li><a href="#">1</a></li>
+        <li><span aria-current="page">2</span></li>
+        <li><a href="#">3</a></li>
+        <li><span>…</span></li>
+        <li><a href="#">8</a></li>
+        <li><a href="#">Next</a></li>
+      </ul>
+    </nav>
+  </main>
+
+  <!-- Settings dialog -->
+  <dialog id="settings">
+    <header>
+      <h2>Settings</h2>
+    </header>
+    <form action="#" method="post">
+      <div class="nv-field">
+        <label for="s-name">Display name</label>
+        <input id="s-name" name="name" type="text" value="Hanako Tanaka" required>
+      </div>
+      <div class="nv-field">
+        <label for="s-email">Email</label>
+        <input id="s-email" name="email" type="email" value="hanako@example.com" required>
+      </div>
+      <div class="nv-field">
+        <label for="s-plan">Plan</label>
+        <select id="s-plan" name="plan">
+          <option>Free</option>
+          <option selected>Pro</option>
+          <option>Team</option>
+        </select>
+      </div>
+      <div class="nv-field">
+        <label>Email notifications</label>
+        <label><input type="checkbox" name="notify" checked> Digest</label>
+      </div>
+    </form>
+    <footer>
+      <button commandfor="settings" command="close">Cancel</button>
+      <button class="nv-primary" type="submit" form="settings">Save changes</button>
+    </footer>
+  </dialog>
+
+  <footer class="nv-container">
+    <hr>
+    <p class="nv-text-muted" style="font-size: var(--nv-font-size-sm)">
+      Nativum reference implementation — HTML + nativum.css only. &copy; 2026
+    </p>
+  </footer>
+</body>
+</html>

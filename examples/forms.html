@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nativum — Forms</title>
+  <link rel="stylesheet" href="../dist/nativum.css">
+</head>
+<body>
+  <header class="nv-container">
+    <nav class="nv-nav" aria-label="Examples">
+      <strong>Nativum</strong>
+      <a href="index.html">Showcase</a>
+      <a href="forms.html" aria-current="page">Forms</a>
+      <a href="dialog.html">Dialog</a>
+      <a href="popover.html">Popover</a>
+      <a href="dashboard.html">Dashboard</a>
+    </nav>
+  </header>
+
+  <main class="nv-container-narrow nv-stack-lg" style="padding-block: 3rem 4rem">
+    <section class="nv-stack-sm">
+      <h1>Forms</h1>
+      <p class="nv-text-muted">
+        ネイティブのform controlとネイティブvalidationを使用する。
+        送信には通常の <code>&lt;form method="post" action="..."&gt;</code> を使う。
+      </p>
+    </section>
+
+    <section>
+      <h2>Text fields</h2>
+      <form action="#" method="post">
+        <div class="nv-field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Your name" required>
+          <span class="nv-field-hint">必須です。空欄のまま送信するとネイティブ検証が働きます。</span>
+        </div>
+
+        <div class="nv-field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required>
+        </div>
+
+        <div class="nv-field">
+          <label for="pw">Password</label>
+          <input id="pw" name="pw" type="password" minlength="8" required>
+        </div>
+
+        <div class="nv-field">
+          <label for="bio">Bio</label>
+          <textarea id="bio" name="bio" placeholder="Tell us about yourself…"></textarea>
+        </div>
+
+        <div class="nv-field">
+          <label for="plan">Plan</label>
+          <select id="plan" name="plan">
+            <option value="free">Free</option>
+            <option value="pro" selected>Pro</option>
+            <option value="team">Team</option>
+          </select>
+        </div>
+
+        <div class="nv-field">
+          <label for="slider">Volume</label>
+          <input id="slider" name="slider" type="range" min="0" max="100" value="40">
+        </div>
+
+        <div class="nv-field">
+          <label>Notification</label>
+          <div class="nv-stack-sm">
+            <label><input type="checkbox" name="notify" checked> Email digest</label>
+            <label><input type="checkbox" name="notify2"> Weekly report</label>
+          </div>
+        </div>
+
+        <fieldset>
+          <legend>Account type</legend>
+          <div class="nv-stack-sm">
+            <label><input type="radio" name="type" value="personal" checked> Personal</label>
+            <label><input type="radio" name="type" value="business"> Business</label>
+          </div>
+        </fieldset>
+
+        <div class="nv-cluster">
+          <button class="nv-primary" type="submit">Submit</button>
+          <button type="reset">Reset</button>
+        </div>
+      </form>
+    </section>
+
+    <section>
+      <h2>Server-side validation states</h2>
+      <form action="#" method="post">
+        <div class="nv-field">
+          <label for="server-email">Email</label>
+          <input id="server-email" name="email" type="email" value="not-an-email"
+                 aria-invalid="true" aria-describedby="server-email-error" required>
+          <span class="nv-field-error" id="server-email-error">このメールアドレスは既に登録されています。</span>
+        </div>
+        <button class="nv-primary" type="submit">Save</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Progress &amp; Meter</h2>
+      <div class="nv-stack-sm">
+        <label for="upload">Upload progress</label>
+        <progress id="upload" max="100" value="65">65%</progress>
+        <label for="disk">Disk usage</label>
+        <meter id="disk" min="0" max="100" value="80" low="70" high="90" optimum="20">80%</meter>
+      </div>
+    </section>
+
+    <section>
+      <h2>Disabled</h2>
+      <div class="nv-stack-sm">
+        <input type="text" value="Read only" disabled>
+        <button disabled>Disabled button</button>
+        <fieldset disabled>
+          <legend>Locked group</legend>
+          <div class="nv-field">
+            <label for="locked">API key</label>
+            <input id="locked" type="text" placeholder="sk-…">
+          </div>
+        </fieldset>
+      </div>
+    </section>
+
+    <footer class="nv-stack-sm" style="margin-block-start: 3rem">
+      <hr>
+      <p class="nv-text-muted">Nativum — passive, zero-JavaScript UI system. &copy; 2026</p>
+    </footer>
+  </main>
+</body>
+</html>

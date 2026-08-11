@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nativum — Dialog</title>
+  <link rel="stylesheet" href="../dist/nativum.css">
+</head>
+<body>
+  <header class="nv-container">
+    <nav class="nv-nav" aria-label="Examples">
+      <strong>Nativum</strong>
+      <a href="index.html">Showcase</a>
+      <a href="forms.html">Forms</a>
+      <a href="dialog.html" aria-current="page">Dialog</a>
+      <a href="popover.html">Popover</a>
+      <a href="dashboard.html">Dashboard</a>
+    </nav>
+  </header>
+
+  <main class="nv-container-narrow nv-stack-lg" style="padding-block: 3rem 4rem">
+    <section class="nv-stack-sm">
+      <h1>Dialog</h1>
+      <p class="nv-text-muted">
+        ネイティブの <code>&lt;dialog&gt;</code> を使用する。カスタムmodal実装は禁止。
+        開閉はHTML Standardの <code>command</code> / <code>commandfor</code> 属性で宣言的に行う。
+      </p>
+    </section>
+
+    <section class="nv-stack-sm">
+      <h2>Modal dialog (commandfor)</h2>
+      <div class="nv-cluster">
+        <button commandfor="settings" command="show-modal">Open settings</button>
+      </div>
+
+      <dialog id="settings">
+        <header>
+          <h2>Settings</h2>
+        </header>
+
+        <form action="#" method="post">
+          <div class="nv-field">
+            <label for="d-name">Display name</label>
+            <input id="d-name" name="name" type="text" value="Hanako" required>
+          </div>
+          <div class="nv-field">
+            <label for="d-theme">Theme</label>
+            <select id="d-theme" name="theme">
+              <option value="system" selected>System</option>
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select>
+          </div>
+        </form>
+
+        <footer>
+          <button commandfor="settings" command="close">Close</button>
+          <button class="nv-primary" type="submit" form="settings">Save</button>
+        </footer>
+      </dialog>
+
+      <p class="nv-text-muted">
+        Escキーでのキャンセル、<code>::backdrop</code> クリックでの破棄、フォーカストラップはすべてブラウザが提供する。
+      </p>
+    </section>
+
+    <section class="nv-stack-sm">
+      <h2>Form dialog (method="dialog")</h2>
+      <div class="nv-cluster">
+        <button commandfor="confirm" command="show-modal">Request confirmation</button>
+      </div>
+
+      <dialog id="confirm">
+        <header>
+          <h2>Delete project?</h2>
+        </header>
+        <p>この操作は取り消せません。プロジェクトと全データが削除されます。</p>
+        <footer>
+          <button type="submit" form="confirm-form">Cancel</button>
+          <button class="nv-danger" type="submit" form="confirm-form" name="action" value="delete">Delete</button>
+        </footer>
+      </dialog>
+      <form method="dialog" id="confirm-form" hidden></form>
+
+      <p class="nv-text-muted">
+        <code>&lt;form method="dialog"&gt;</code> のsubmitボタンはフォームの値を <code>close()</code> に渡してdialogを閉じる。
+      </p>
+    </section>
+
+    <section>
+      <h2>Non-modal dialog</h2>
+      <div class="nv-cluster">
+        <button commandfor="inspector" command="show">Show inspector</button>
+        <button commandfor="inspector" command="hide">Hide inspector</button>
+      </div>
+
+      <dialog id="inspector">
+        <header>
+          <h2>Inspector</h2>
+        </header>
+        <p>モーダルではないため、背後にあるページと並行して操作できる。</p>
+        <footer>
+          <button commandfor="inspector" command="close">Close</button>
+        </footer>
+      </dialog>
+    </section>
+
+    <div class="nv-notice nv-notice-info" role="status">
+      <code>commandfor</code> に対応しない環境では、<code>&lt;dialog&gt;</code> はフォールバックとして
+      <code>open</code> 属性付きでサーバーレンダリングし、操作対象をページ内のフォームへ置き換えることを推奨する。
+    </div>
+
+    <footer class="nv-stack-sm" style="margin-block-start: 3rem">
+      <hr>
+      <p class="nv-text-muted">Nativum — passive, zero-JavaScript UI system. &copy; 2026</p>
+    </footer>
+  </main>
+</body>
+</html>
