@@ -20,7 +20,8 @@
 
           buildPhase = ''
             runHook preBuild
-            ./tools/build.sh
+            # shebang (/usr/bin/env) は Nix sandbox (Linux) に存在しないため明示的に sh で実行する
+            sh tools/build.sh
             runHook postBuild
           '';
 
