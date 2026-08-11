@@ -76,7 +76,8 @@ package managerは配送手段であり、実行時アーキテクチャでは�
 ```text
 JS/TS runtime files
 <script> in official examples (examples/ と skills/ の全HTML)
-remote resource attributes in official HTML (link/img/iframe/video/audio 等の http(s):// 参照)
+remote resource attributes in official HTML (src/href/data/srcset/poster 属性と
+inline style の url() による http(s):// 参照)
 remote CSS imports / fonts / url()
 node_modules / package manager lock files
 install hooks / third-party dependencies (package.json がある場合)

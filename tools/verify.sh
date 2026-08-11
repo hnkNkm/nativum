@@ -95,14 +95,21 @@ fi
 
 # 7. remote リソースが存在しない (HTML側 — 全公式exampleを走査)
 #    <script src="http..."> <link rel=stylesheet href="http..."> <img src="http...">
-#    <iframe src="http..."> <video src> <audio src> <source src> など
+#    <iframe src> <video poster> <source srcset> など
+#    正規表現は POSIX ERE のみを使用する (\b や \s は使わない)
 HTML_FILES="$(find examples skills -name '*.html' 2>/dev/null || true)"
 if [ -z "$HTML_FILES" ]; then
   fail "official example HTML が見つかりません"
 fi
 
-if grep -rEn '(script|link|img|iframe|video|audio|source|embed|object|input)[^>]*\b(src|href|data)\s*=\s*["'"'"']https?://' $HTML_FILES > /dev/null 2>&1; then
+# src / href / data / srcset / poster 属性の http(s):// 参照
+if grep -rEn '(script|link|img|iframe|video|audio|source|embed|object|input)[^>]*[[:space:]](src|href|data|srcset|poster)[[:space:]]*=[[:space:]]*["'"'"']https?://' $HTML_FILES > /dev/null 2>&1; then
   fail "remote resource attribute found in official examples"
+fi
+
+# inline style 内の url(https://...) 参照
+if grep -rEn 'style=["'"'"'][^"'"'"']*url\([[:space:]]*["'"'"']?https?://' $HTML_FILES > /dev/null 2>&1; then
+  fail "remote url() found in inline style of official examples"
 fi
 
 if grep -rn '<script' $HTML_FILES > /dev/null 2>&1; then
