@@ -70,27 +70,30 @@
 
 ## `method="dialog"` の正しい使い方
 
-`<form method="dialog">` は**サーバーへ送信しない**。ダイアログを閉じてフォーム値を `returnValue` に渡すだけであり、値の読み取りにはJavaScriptが必要になる。
+`<form method="dialog">` は**サーバーへ送信しない**。HTTP送信を行わず、直近のdialog祖先を閉じて、**submitterボタンの `value`** を `dialog.returnValue` に渡す。フォーム内の入力値が `returnValue` に自動で入るわけではない（入力値の読み取りはホストアプリケーション側のJavaScript / FormDataの責務）。
 
 そのため:
 
 - 状態変更（削除・保存等）には `<form method="dialog">` を使わず、通常の `<form method="post" action="...">` をサーバーへの送信に使う（`docs/patterns/server-actions.md` 参照）
-- `<form method="dialog">` は「閉じる際に値を渡す」用途（例: 選択結果を返すピッカー）に限る
+- `<form method="dialog">` は「閉じる際に submitter の値で結果を伝える」用途に限る
 - フォームはダイアログの**子孫**に置く（`method="dialog"` は直近のdialog祖先を閉じるため、ダイアログ外のフォームでは動作しない）
 
 ```html
 <dialog id="picker">
   <header><h2>Pick a plan</h2></header>
   <form method="dialog">
-    <div class="nv-stack-sm">
-      <label><input type="radio" name="plan" value="pro" checked> Pro</label>
-      <label><input type="radio" name="plan" value="team"> Team</label>
+    <div class="nv-cluster">
+      <button value="cancel">Cancel</button>
+      <button class="nv-primary" value="pro">Pro</button>
+      <button class="nv-primary" value="team">Team</button>
     </div>
-    <button class="nv-primary" type="submit">OK</button>
   </form>
 </dialog>
-<!-- returnValue の読み取り (host JavaScript) -->
+<!-- 閉じた後、dialog.returnValue にはクリックしたボタンの value ("pro" 等) が入る。
+     読み取りはホストアプリケーション側のJavaScriptの責務 -->
 ```
+
+radio / select 等の入力値を使いたい場合は、`returnValue` ではなくホストアプリケーション側でフォームデータを読む（`new FormData(form)` 等。Nativumの範囲外）。
 
 ## Accessibility
 
