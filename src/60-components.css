@@ -67,19 +67,19 @@
   }
 
   .nv-danger {
-    background-color: var(--nv-color-danger);
-    border-color: var(--nv-color-danger);
+    background-color: var(--nv-color-danger-strong);
+    border-color: var(--nv-color-danger-strong);
     color: var(--nv-color-on-danger);
   }
 
   .nv-danger:hover {
-    background-color: var(--nv-color-danger-hover);
-    border-color: var(--nv-color-danger-hover);
+    background-color: var(--nv-color-danger-strong-hover);
+    border-color: var(--nv-color-danger-strong-hover);
   }
 
   .nv-danger:active {
-    background-color: var(--nv-color-danger-hover);
-    border-color: var(--nv-color-danger-hover);
+    background-color: var(--nv-color-danger-strong-hover);
+    border-color: var(--nv-color-danger-strong-hover);
   }
 
   /* ============================================================
@@ -179,20 +179,20 @@
 
   .nv-badge-success {
     color: var(--nv-color-on-success);
-    background-color: var(--nv-color-success);
-    border-color: var(--nv-color-success);
+    background-color: var(--nv-color-success-strong);
+    border-color: var(--nv-color-success-strong);
   }
 
   .nv-badge-warning {
     color: var(--nv-color-on-warning);
-    background-color: var(--nv-color-warning);
-    border-color: var(--nv-color-warning);
+    background-color: var(--nv-color-warning-strong);
+    border-color: var(--nv-color-warning-strong);
   }
 
   .nv-badge-danger {
     color: var(--nv-color-on-danger);
-    background-color: var(--nv-color-danger);
-    border-color: var(--nv-color-danger);
+    background-color: var(--nv-color-danger-strong);
+    border-color: var(--nv-color-danger-strong);
   }
 
   /* ============================================================
