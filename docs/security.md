@@ -75,13 +75,24 @@ package managerは配送手段であり、実行時アーキテクチャでは�
 
 ```text
 JS/TS runtime files
-<script> in official examples
-runtime JavaScript imports
-third-party / transitive runtime dependencies
-install hooks
-remote code download
-remote stylesheet imports / fonts / images
-telemetry
+<script> in official examples (examples/ と skills/ の全HTML)
+remote resource attributes in official HTML (link/img/iframe/video/audio 等の http(s):// 参照)
+remote CSS imports / fonts / url()
+node_modules / package manager lock files
+install hooks / third-party dependencies (package.json がある場合)
+div + role="button" によるネイティブ要素の再実装
+コミット済み dist/nativum.css と src/ の整合性 (dist drift)
+dist/SHA256SUMS の整合性
+```
+
+**制約の正直な範囲**: このスクリプトはNativum Coreと公式exampleの静的解析であり、「実行時に全く通信しない」ことの証明ではない。検査は `src/` / `examples/` / `skills/` の静的成果物に対するもので、`tools/verify.sh` 自体の実行環境（POSIX shell等）の健全性は対象外である。
+
+CIでは以下を実行する:
+
+```sh
+./tools/build.sh
+git diff --exit-code -- dist/
+./tools/verify.sh
 ```
 
 ## 脆弱性報告
