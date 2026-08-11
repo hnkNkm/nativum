@@ -45,8 +45,8 @@
 
       <div id="tips" popover>
         <p>
-          Popoverは軽量なオーバーレイ。Esc・backdropクリック・外部クリックで
-          ネイティブに閉じられる。<code>popovertargetaction</code> で
+          Popoverは軽量なオーバーレイ。Escやpopover外のクリック等で
+          ネイティブにlight dismissできる。<code>popovertargetaction</code> で
           <code>toggle</code> / <code>show</code> / <code>hide</code> を指定できる。
         </p>
       </div>
@@ -55,7 +55,7 @@
     <section class="nv-stack-sm">
       <h2>Dropdown (Popover + Anchor Positioning)</h2>
       <p class="nv-text-muted">
-        トリガーとメニューを同じスコープに置き、<code>--nv-anchor</code> に一意なアンカー名を与える。
+        トリガーとdropdownを同じスコープに置き、<code>--nv-anchor</code> に一意なアンカー名を与える。
         アンカー非対応環境ではpopoverのデフォルト配置にフォールバックする。
       </p>
 
@@ -91,16 +91,17 @@
       </div>
 
       <p class="nv-text-muted">
-        <code>nv-dropdown-end</code> はメニューの右端をトリガーの右端に揃える。
-        role="menu" はArrow keyによるフルキーボード操作の実装が前提になるため、
+        <code>nv-dropdown-end</code> はdropdownの右端をトリガーの右端に揃える。
+        <code>role="menu"</code> はmenu widget固有のキーボード操作が前提になるため、
         シンプルなリンクリストには使用しない。
       </p>
     </section>
 
-    <div class="nv-notice nv-notice-warning" role="status">
-      スクリーンリーダー利用時、popoverの開閉は <code>popover</code> 属性の有無で通知される。
-      メニューの開閉状態を示す <code>aria-expanded</code> はpopoverトリガーでは利用不可のため、
-      状態表示が必要な場合は <code>aria-describedby</code> で静的な説明を与えること。
+    <div class="nv-notice" role="status">
+      <code>popovertarget</code> を使うと、ブラウザがトリガーとpopoverの関連付けと
+      expanded stateを支援技術へ公開する。独自の <code>aria-expanded</code> stateを
+      手動同期しない。<code>popover</code> 属性自体も開閉状態として付け外しせず、
+      表示状態はブラウザのpopover showing stateに任せる。
     </div>
 
     <footer class="nv-stack-sm" style="margin-block-start: 3rem">
