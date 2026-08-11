@@ -62,7 +62,7 @@
 
 ## 完成例
 
-`examples/dashboard.html` の要旨:
+`examples/dashboard.html` の要旨（構成は同ファイルが正。冒頭のテーマコメントも確認すること）:
 
 ```html
 <!doctype html>
@@ -91,7 +91,9 @@
         <div id="account-menu" class="nv-dropdown nv-dropdown-end" popover>
           <div class="nv-stack-sm">
             <strong>Hanako Tanaka</strong>
-            <span class="nv-text-muted" style="font-size: var(--nv-font-size-xs)">hanako@example.com</span>
+            <span class="nv-text-muted" style="font-size: var(--nv-font-size-xs)">
+              hanako@example.com
+            </span>
             <button commandfor="settings" command="show-modal">Settings</button>
             <a href="/signout">Sign out</a>
           </div>
@@ -108,24 +110,37 @@
       </div>
       <div class="nv-cluster">
         <button commandfor="settings" command="show-modal">Settings</button>
-        <button class="nv-primary" commandfor="settings" command="show-modal">New project</button>
+        <button class="nv-primary" commandfor="settings" command="show-modal">
+          New project
+        </button>
       </div>
     </section>
 
+    <!-- 統計カード -->
     <section class="nv-grid" aria-label="Metrics">
       <article class="nv-card nv-stack-sm">
-        <span class="nv-text-muted">Projects</span>
-        <strong>24</strong>
+        <span class="nv-text-muted" style="font-size: var(--nv-font-size-sm)">Projects</span>
+        <strong style="font-size: var(--nv-font-size-3xl)">24</strong>
         <span class="nv-badge nv-badge-success">+3 this month</span>
       </article>
       <article class="nv-card nv-stack-sm">
-        <span class="nv-text-muted">Storage</span>
-        <strong>82%</strong>
+        <span class="nv-text-muted" style="font-size: var(--nv-font-size-sm)">Active members</span>
+        <strong style="font-size: var(--nv-font-size-3xl)">18</strong>
+        <span class="nv-badge nv-badge-primary">2 pending</span>
+      </article>
+      <article class="nv-card nv-stack-sm">
+        <span class="nv-text-muted" style="font-size: var(--nv-font-size-sm)">Storage</span>
+        <strong style="font-size: var(--nv-font-size-3xl)">82%</strong>
         <meter min="0" max="100" value="82" low="70" high="90">82%</meter>
       </article>
     </section>
 
+    <!-- チームテーブル -->
     <section class="nv-card">
+      <div class="nv-cluster-between nv-cluster">
+        <h2 style="font-size: var(--nv-font-size-xl)">Team</h2>
+        <span class="nv-badge">4 members</span>
+      </div>
       <div class="nv-table-scroll">
         <table>
           <thead>
@@ -141,26 +156,46 @@
               <td>Owner</td>
               <td><span class="nv-badge nv-badge-success">Active</span></td>
             </tr>
+            <tr>
+              <th scope="row">Taro Yamada</th>
+              <td>Developer</td>
+              <td><span class="nv-badge nv-badge-warning">Invited</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Kenji Ito</th>
+              <td>Developer</td>
+              <td><span class="nv-badge nv-badge-danger">Suspended</span></td>
+            </tr>
           </tbody>
         </table>
       </div>
     </section>
 
+    <!-- ページネーション -->
     <nav aria-label="Project history">
       <ul class="nv-pagination">
         <li><a href="/projects?page=1">Prev</a></li>
+        <li><a href="/projects?page=1">1</a></li>
         <li><span aria-current="page">2</span></li>
+        <li><a href="/projects?page=3">3</a></li>
         <li><a href="/projects?page=3">Next</a></li>
       </ul>
     </nav>
   </main>
 
+  <!-- 設定ダイアログ -->
   <dialog id="settings">
-    <header><h2>Settings</h2></header>
+    <header>
+      <h2>Settings</h2>
+    </header>
     <form id="settings-form" action="/settings" method="post">
       <div class="nv-field">
         <label for="s-name">Display name</label>
         <input id="s-name" name="name" type="text" value="Hanako Tanaka" required>
+      </div>
+      <div class="nv-field">
+        <label for="s-email">Email</label>
+        <input id="s-email" name="email" type="email" value="hanako@example.com" required>
       </div>
     </form>
     <footer>
@@ -174,15 +209,16 @@
 
 ## フォールバック
 
-- **アンカー非対応環境**: `@supports` ガードによりアンカー配置が無効になり、popover のデフォルト配置にフォールバックする。開閉とリンク操作は維持される
-- **popover 非対応環境**: `[popover]` 要素はドキュメントフロー内の通常コンテンツとして表示される
+- **アンカー非対応環境**（Anchor Positioning なし）: `@supports` ガードにより絶対配置が無効になり、popover のデフォルト配置にフォールバックする。開閉とリンク操作は維持される
+- **popover 非対応環境**: `[popover]` 要素はドキュメントフロー内の通常コンテンツとして表示される。アカウントメニューがフロー内に見えても意味が通るよう、リンクリストとして設計する
 - `commandfor` 未対応環境: `<dialog>` を `open` 属性付きでサーバーレンダリングする（`docs/components/dialog.md`）
 - `nv-grid` は `minmax` + `auto-fit` により、横幅が狭い環境では自動的に1列に折りたたまれる
 
 ## アンチパターン
 
-- 統計カードの変化量を色だけに頼って伝える
-- ページネーションの現在ページを `<a>` にする
-- 通常リンクリストpopupへ `role="menu"` / `aria-haspopup="true"` を付ける
+- 統計カードの変化量を色（`nv-badge-success` 等）だけに頼って伝える。バッジはテキスト付きで使用する
+- ページネーションの現在ページを `<a>` にする（`<span aria-current="page">` を使う、`docs/components/navigation.md`）
+- 通常リンクリストpopupへ `role="menu"` / `aria-haspopup="true"` を付ける（`docs/components/dropdown.md`）
 - ネイティブ `popovertarget` のexpanded stateを独自 `aria-expanded` で手動同期する
-- 存在しない Nativum クラス（`nv-stat` 等）を発明する
+- ダッシュボードの状態更新（新規プロジェクト作成等）を fetch / WebSocket で行う（form submission を使う、`docs/patterns/server-actions.md`）
+- 存在しない Nativum クラス（`nv-stat` 等）を発明する。`src/*.css` に実在するクラスのみを使う
