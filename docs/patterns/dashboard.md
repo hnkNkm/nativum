@@ -20,11 +20,11 @@
 
 ## アカウント popover
 
-トリガーとメニューを同じ `--nv-anchor` スコープに置く。アンカー非対応環境では popover のデフォルト配置にフォールバックする（`docs/components/dropdown.md`）。
+トリガーとdropdownを同じ `--nv-anchor` スコープに置く。アンカー非対応環境では popover のデフォルト配置にフォールバックする（`docs/components/dropdown.md`）。
 
 ```html
 <span style="--nv-anchor: --nv-anchor-account">
-  <button class="nv-dropdown-trigger" popovertarget="account-menu" aria-haspopup="true">
+  <button class="nv-dropdown-trigger" popovertarget="account-menu">
     Hanako
   </button>
 
@@ -39,7 +39,7 @@
 </span>
 ```
 
-`--nv-anchor` の値はページ内で一意にする（`--nv-anchor-*` の形式）。`role="menu"` は付けない（Arrow key によるフルキーボード操作の実装が前提になるため。`docs/components/dropdown.md` の Anti-patterns 参照）。
+`--nv-anchor` の値はページ内で一意にする（`--nv-anchor-*` の形式）。このpopupは通常のリンク / ボタンの集合でありARIA menu widgetではないため、`role="menu"` / `aria-haspopup="true"` は付けない。`popovertarget` のネイティブinvoker relationshipがexpanded stateを支援技術へ公開する。
 
 ## 統計カード（`nv-grid`）
 
@@ -84,7 +84,7 @@
       </span>
 
       <span style="--nv-anchor: --nv-anchor-account">
-        <button class="nv-dropdown-trigger" popovertarget="account-menu" aria-haspopup="true">
+        <button class="nv-dropdown-trigger" popovertarget="account-menu">
           Hanako
         </button>
 
@@ -218,6 +218,7 @@
 
 - 統計カードの変化量を色（`nv-badge-success` 等）だけに頼って伝える。バッジはテキスト付きで使用する
 - ページネーションの現在ページを `<a>` にする（`<span aria-current="page">` を使う、`docs/components/navigation.md`）
-- `role="menu"` 付きのメニュー構造でアカウントメニューを実装する（`docs/components/dropdown.md`）
+- 通常リンクリストpopupへ `role="menu"` / `aria-haspopup="true"` を付ける（`docs/components/dropdown.md`）
+- ネイティブ `popovertarget` のexpanded stateを独自 `aria-expanded` で手動同期する
 - ダッシュボードの状態更新（新規プロジェクト作成等）を fetch / WebSocket で行う（form submission を使う、`docs/patterns/server-actions.md`）
 - 存在しない Nativum クラス（`nv-stat` 等）を発明する。`src/*.css` に実在するクラスのみを使う

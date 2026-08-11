@@ -2,22 +2,23 @@
 
 ## 目的
 
-Popover API + CSS Anchor Positioningで、トリガーに紐付いたアンカー配置のメニューを実現する。リンクリストをpopoverとして表示し、アンカー非対応環境ではpopoverのデフォルト配置にフォールバックする。
+Popover API + CSS Anchor Positioningで、トリガーに紐付いたアンカー配置のdropdownを実現する。Nativumの標準パターンは通常のリンク / ボタンをpopoverに並べるものであり、ARIA `menu` widgetではない。
 
 ## ネイティブprimitive
 
 - `[popover]` + `popovertarget` (Popover API)
+- `popovertarget` のネイティブinvoker relationship (暗黙のexpanded stateを含む)
 - CSS Anchor Positioning: `anchor-name` / `position-anchor` / `anchor(...)`
 - `--nv-anchor` カスタムプロパティ (一意なアンカー名を指定するNativum規約)
 - `@supports (anchor-name: ...) and (top: anchor(top))` による機能検出
 
 ## Required markup
 
-トリガーとメニューを、アンカー名を共有する同じ親要素に置く。
+トリガーとdropdownを、アンカー名を共有する同じ親要素に置く。
 
 ```html
 <div style="--nv-anchor: --nv-anchor-actions">
-  <button class="nv-dropdown-trigger" popovertarget="actions" aria-haspopup="true">
+  <button class="nv-dropdown-trigger" popovertarget="actions">
     Actions
   </button>
 
@@ -31,23 +32,32 @@ Popover API + CSS Anchor Positioningで、トリガーに紐付いたアンカ�
 ```
 
 `--nv-anchor` の値はページ内で一意 (`--nv-anchor-*` の形式) にする。
+通常のリンクリストpopupへ `aria-haspopup="true"` は付けない。ARIAでは `true` は `menu` と同義で、Nativum標準dropdownはmenu widgetではない。
 
 ## Nativum classes
 
 このSkillの references/ に記載されたもののみ:
 
 - `nv-dropdown-trigger` — トリガー側 (`anchor-name: var(--nv-anchor)`)
-- `nv-dropdown` — メニュー側 (`min-width: 12rem`、アンカー配置)
-- `nv-dropdown-end` — メニューの右端をトリガーの右端に揃える
+- `nv-dropdown` — dropdown側 (`min-width: 12rem`、アンカー配置)
+- `nv-dropdown-end` — dropdownの右端をトリガーの右端に揃える
 
 内部レイアウト: `nv-stack-sm` (リンクリスト), `nv-text-muted` (補足テキスト)。
 
 ## 動作 (ネイティブのinteraction)
 
 - トリガーのクリックで開閉 (`popovertarget` の `toggle`)
-- light dismiss: Esc / 外部クリック / 他のpopover表示
-- アンカー対応環境ではトリガー直下 (`top: anchor(bottom)`, `inset-inline-start: anchor(left)`) に配置
-- メニュー内のリンク・ボタンは通常のタブフォーカスでアクセス可能
+- デフォルトのauto popoverはlight dismissに対応
+- invoker relationshipによりexpanded stateはブラウザが支援技術へ公開する
+- アンカー対応環境ではトリガー直下に配置
+- リンク・ボタンは通常のタブフォーカスでアクセス可能
+
+## Accessibility
+
+- 通常のリンク / ボタンの集合として扱い、`role="menu"` / `role="menuitem"` を付けない
+- ネイティブinvokerのexpanded stateを独自 `aria-expanded` で手動同期しない
+- `aria-haspopup="true"` はmenu popupを意味するため、role-lessなリンクリストpopupでは使わない
+- 本物のARIA menu widgetに必要なmenu rolesとArrow key等のキーボード実装はNativum Coreの標準dropdownパターン外
 
 ## フォールバック
 
@@ -57,9 +67,10 @@ Popover API + CSS Anchor Positioningで、トリガーに紐付いたアンカ�
 
 ## Anti-patterns
 
-- `role="menu"` を付与 (Arrow key / Home / End / Esc のフルキーボード操作実装が前提。JSなしでは成立せず、`<a>` のタブナビゲーションで十分)
-- トリガーに `aria-expanded` を付与 (popoverトリガーでは利用不可)
-- 複数のdropdownで同じ `--nv-anchor` 名を使う (衝突で配置が壊れる)
+- 通常リンクリストに `role="menu"` を付与する
+- 通常リンクリストpopupのトリガーへ `aria-haspopup="true"` を付ける (`true` は `menu` と同義)
+- ネイティブinvokerのexpanded stateを手動 `aria-expanded` で複製する
+- 複数のdropdownで同じ `--nv-anchor` 名を使う
 - `position: fixed` + クリック検知JSで自作dropdownを実装
 
 ## 詳細
