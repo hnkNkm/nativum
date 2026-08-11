@@ -495,14 +495,14 @@
       position: absolute;
       position-anchor: var(--nv-anchor);
       top: anchor(bottom);
-      inset-inline-start: anchor(left);
+      inset-inline-start: anchor(start);
       margin-block-start: var(--nv-space-2);
       margin-inline: 0;
     }
 
     .nv-dropdown-end {
       inset-inline-start: auto;
-      inset-inline-end: anchor(right);
+      inset-inline-end: anchor(end);
     }
   }
 }

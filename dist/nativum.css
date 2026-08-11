@@ -1076,14 +1076,14 @@
       position: absolute;
       position-anchor: var(--nv-anchor);
       top: anchor(bottom);
-      inset-inline-start: anchor(left);
+      inset-inline-start: anchor(start);
       margin-block-start: var(--nv-space-2);
       margin-inline: 0;
     }
 
     .nv-dropdown-end {
       inset-inline-start: auto;
-      inset-inline-end: anchor(right);
+      inset-inline-end: anchor(end);
     }
   }
 }
@@ -1115,20 +1115,19 @@
 
 /* Nativum 0.1.0 — Motion */
 /* JavaScript Animation Library は使わない。CSSで宣言できるmotionのみ。 */
-
-/* 同一origin navigationでのcross-document View Transition (enhancement) */
-@view-transition {
-  navigation: auto;
-}
+/*
+ * cross-document View Transition はCoreでは有効にしない。
+ * ホストアプリケーションが明示的に opt-in する場合のみ使用する:
+ *
+ *   @view-transition { navigation: auto; }
+ *
+ * (Nativumを読み込むだけで全documentのナビゲーション挙動を変えないため)
+ */
 
 @layer nativum.motion {
   /* 通常のmotionは prefers-reduced-motion: no-preference の時のみ有効にする */
   @media (prefers-reduced-motion: no-preference) {
-    html {
-      scroll-behavior: smooth;
-    }
-
-    /* インタラクティブ要素の共通transition */
+    /* インタラクティブ要素の共通transition (Nativumがスタイルするネイティブ要素のみ) */
     :where(a, button, summary, input, textarea, select, [popover], dialog) {
       transition-property: background-color, border-color, color, opacity,
         transform, box-shadow;
@@ -1142,19 +1141,21 @@
     }
 
     /* --- Dialog enter / exit --- */
+    /* transitionは基底セレクタに置き、enter (via @starting-style) と
+       exit (open状態の解除時) の双方で適用されるようにする */
     dialog {
       opacity: 0;
       transform: scale(0.95);
-    }
-
-    dialog[open] {
-      opacity: 1;
-      transform: scale(1);
       transition:
         opacity var(--nv-duration-normal) var(--nv-ease-standard),
         transform var(--nv-duration-normal) var(--nv-ease-standard),
         overlay var(--nv-duration-normal) var(--nv-ease-standard) allow-discrete,
         display var(--nv-duration-normal) var(--nv-ease-standard) allow-discrete;
+    }
+
+    dialog[open] {
+      opacity: 1;
+      transform: scale(1);
     }
 
     @starting-style {
@@ -1185,16 +1186,16 @@
     /* --- Popover enter / exit --- */
     [popover] {
       opacity: 0;
-    }
-
-    [popover]:popover-open {
-      opacity: 1;
-      transform: none;
       transition:
         opacity var(--nv-duration-normal) var(--nv-ease-standard),
         transform var(--nv-duration-normal) var(--nv-ease-standard),
         overlay var(--nv-duration-normal) var(--nv-ease-standard) allow-discrete,
         display var(--nv-duration-normal) var(--nv-ease-standard) allow-discrete;
+    }
+
+    [popover]:popover-open {
+      opacity: 1;
+      transform: none;
     }
 
     @starting-style {
@@ -1205,15 +1206,14 @@
     }
   }
 
-  /* motionが存在しなくても操作・意味・状態を理解できる設計を維持する */
+  /* motionが存在しなくても操作・意味・状態を理解できる設計を維持する。
+     Nativumのmotion durationトークンを0にする方式をとるため、
+     ホストアプリケーションのアニメーションを無効化しない。 */
   @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
+    :root {
+      --nv-duration-fast: 0.01ms;
+      --nv-duration-normal: 0.01ms;
+      --nv-duration-slow: 0.01ms;
     }
   }
 }
