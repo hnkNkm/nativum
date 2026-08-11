@@ -2,18 +2,19 @@
 
 ## Purpose
 
-Popover API + CSS Anchor Positioning で、トリガーに紐付いたアンカー配置のメニューを実現する。シンプルなリンクリスト（またはボタンリスト）をpopoverとして表示し、アンカー非対応環境ではpopoverのデフォルト配置にフォールバックする。
+Popover API + CSS Anchor Positioning で、トリガーに紐付いたアンカー配置のdropdownを実現する。Nativumの標準パターンは、シンプルなリンクリスト（またはボタンリスト）をpopoverとして表示するものであり、ARIA `menu` widgetを実装するものではない。アンカー非対応環境ではpopoverのデフォルト配置にフォールバックする。
 
 ## Native primitive
 
 - `[popover]` + `popovertarget`（Popover API）
+- `popovertarget` が作るネイティブinvoker relationship（暗黙のexpanded stateを含む）
 - CSS Anchor Positioning: `anchor-name` / `position-anchor` / `anchor(...)`
 - `--nv-anchor` カスタムプロパティ（一意なアンカー名を指定するNativum規約）
 - `@supports (anchor-name: ...) and (top: anchor(top))` による機能検出（`src/60-components.css`）
 
 ## Required markup
 
-トリガーとメニューを同じスコープ（アンカー名を共有する親要素）に置く。
+トリガーとdropdown内容を同じスコープ（アンカー名を共有する親要素）に置く。
 
 ```html
 <div style="--nv-anchor: --nv-anchor-actions">
@@ -33,14 +34,15 @@ Popover API + CSS Anchor Positioning で、トリガーに紐付いたアンカ�
 - `--nv-anchor` の値はページ内で一意なアンカー名（`--nv-anchor-*` の形式）にする
 - `nv-dropdown-trigger` は `anchor-name: var(--nv-anchor)` でトリガーをアンカー登録する
 - `nv-dropdown` は `position-anchor: var(--nv-anchor)` でアンカー配置される
+- 通常リンクリストのpopupには `aria-haspopup="true"` を付けない。ARIAでは `true` は `menu` と同義であり、popup側がmenu widgetではないため
 
 ## Optional classes
 
 `src/60-components.css` に存在するクラスのみを使用する。
 
 - `nv-dropdown-trigger` — トリガー側（アンカー名の登録）
-- `nv-dropdown` — メニュー側（`min-width: 12rem`、アンカー配置）
-- `nv-dropdown-end` — メニューの右端をトリガーの右端に揃える（`inset-inline-end: anchor(right)`）
+- `nv-dropdown` — dropdown側（`min-width: 12rem`、アンカー配置）
+- `nv-dropdown-end` — dropdownの右端をトリガーの右端に揃える（`inset-inline-end: anchor(right)`）
 
 内部レイアウトには `nv-stack-sm`（リンクリスト）、`nv-text-muted`（補足テキスト）、`nv-cluster` を併用できる。
 
@@ -49,36 +51,38 @@ Popover API + CSS Anchor Positioning で、トリガーに紐付いたアンカ�
 すべてブラウザのネイティブ動作である。
 
 - トリガーのクリックで開閉（`popovertarget` の `toggle`）
-- light dismiss: Esc / 外部クリック / 他のpopover表示
+- デフォルトのauto popoverはlight dismissに対応
+- `popovertarget` のinvoker relationshipにより、開閉状態はブラウザが支援技術へ公開する
 - アンカー対応環境ではトリガーの直下（`top: anchor(bottom)`、`inset-inline-start: anchor(left)`）に配置される
 - `nv-dropdown-end` 付きでは右端がトリガーの右端に揃う
-- メニュー内のリンク・ボタンは通常のタブフォーカスでアクセス可能
+- リンク・ボタンは通常のタブフォーカスでアクセス可能
 
 ## Accessibility
 
-- メニューはリンクリストとして `<a>`（または `<button>`）を並べる。`role="menu"` は**付けない**（理由は Anti-patterns 参照）
-- トリガーには `aria-haspopup="true"` を付与する（`examples/dashboard.html` のパターン）
-- popoverトリガーでは `aria-expanded` が利用できないため、開閉状態のARIA補完はできない。状態表示が必要な場合は `aria-describedby` で静的な説明を与える
-- 破壊的アクション（Delete等）のリンクは色だけに頼らず、文言で危険性を伝える
+- Nativumの標準dropdownは通常のリンク / ボタンの集合であり、`role="menu"` / `role="menuitem"` を使わない
+- `<button popovertarget="...">` のネイティブinvoker relationshipを使い、独自 `aria-expanded` stateを手動同期しない
+- `aria-haspopup` はpopupのARIA roleを宣言する属性である。`aria-haspopup="true"` は `menu` と同義なので、role-lessな通常リンクリストpopupへは付けない
+- 本当にARIA menu widgetを実装する場合はpopup側の `role="menu"` とmenuitem roles、Arrow key/Home/End等を含む対応するキーボード操作が必要であり、Nativum Coreの標準dropdownパターン外とする
+- 破壊的アクション（Delete等）は色だけに頼らず、文言で危険性を伝える
 
 ## Progressive enhancements
 
-- CSS Anchor Positioningは `@supports` ガード内（`src/60-components.css`）でのみ有効。非対応環境では `position: absolute` のアンカー配置を行わず、popoverのデフォルト配置にフォールバックする
-- アンカー配置の有無に関わらず、メニューの開閉とリンク操作はすべてのpopover対応環境で機能する
+- CSS Anchor Positioningは `@supports` ガード内（`src/60-components.css`）でのみ有効。非対応環境ではアンカー配置を行わず、popoverのデフォルト配置にフォールバックする
+- アンカー配置の有無に関わらず、popoverの開閉とリンク操作は維持される
 
 ## Fallback behavior
 
 1. **アンカー非対応だがpopover対応**: popoverはトップレイヤーにデフォルト配置される。コンテンツと操作は維持される
 2. **popover非対応**: `[popover]` 要素はドキュメントフロー内の通常コンテンツとして表示される。フォールバック時も意味のあるリンクリストになるよう設計する
-3. いずれの場合も、トリガーからメニュー内容が「永久に隠れる」ような設計にしない
+3. いずれの場合も内容が「永久に隠れる」設計にしない
 
 ## Examples
 
-アクションメニュー（`examples/popover.html` のパターン）:
+アクションdropdown（`examples/popover.html` のパターン）:
 
 ```html
 <div style="--nv-anchor: --nv-anchor-actions" class="nv-cluster">
-  <button class="nv-dropdown-trigger" popovertarget="actions" aria-haspopup="true">
+  <button class="nv-dropdown-trigger" popovertarget="actions">
     Actions <span aria-hidden="true">▾</span>
   </button>
 
@@ -94,11 +98,11 @@ Popover API + CSS Anchor Positioning で、トリガーに紐付いたアンカ�
 </div>
 ```
 
-右揃えメニュー（`nv-dropdown-end`、`examples/dashboard.html` のアカウントメニュー）:
+右揃えdropdown（`nv-dropdown-end`）:
 
 ```html
 <span style="--nv-anchor: --nv-anchor-account">
-  <button class="nv-dropdown-trigger" popovertarget="account-menu" aria-haspopup="true">
+  <button class="nv-dropdown-trigger" popovertarget="account-menu">
     Hanako
   </button>
 
@@ -115,10 +119,10 @@ Popover API + CSS Anchor Positioning で、トリガーに紐付いたアンカ�
 
 ## Anti-patterns
 
-- **`role="menu"` を付与する** — menuロールはArrow key・Home/End・Escなどのフルキーボード操作の実装が前提になる。それはJavaScriptなしでは成立しない。リンクリストはネイティブの `<a>` のタブナビゲーションで十分であり、`role="menu"` を付けるとスクリーンリーダーが「正しく動かないメニュー」として扱う
-- トリガーに `aria-expanded` を付与する（popoverトリガーでは利用不可。誤った状態通知になる）
+- 通常リンクリストに **`role="menu"` を付与する**（menu widget固有のフォーカス・キーボード操作を実装していないため）
+- role-lessな通常リンクリストpopupのトリガーへ `aria-haspopup="true"` を付ける（`true` は `menu` と同義で、popup semanticsと一致しない）
+- ネイティブ `popovertarget` のexpanded stateを独自 `aria-expanded` で手動同期する
 - 複数のdropdownに同じ `--nv-anchor` 名を使う（アンカー名の衝突で配置が壊れる。一意な名前を付ける）
-- `tabindex` を手動管理してメニュー内をフォーカス順で辿れなくする
+- `tabindex` を手動管理して通常のリンク / ボタンのフォーカス順を壊す
 - トリガーをdiv / spanで作り `role="button"` を付ける（`<button>` を使う）
 - `position: fixed` + クリック検知JSで自作のdropdownを実装する
-- メニューを「開いた状態」でサーバーレンダリングし続ける（`popover` 属性の意味がなくなる。初期表示はpopover非対応環境のフォールバックにのみ `popover` を外す等で対応する）
