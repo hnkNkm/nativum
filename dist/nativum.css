@@ -150,8 +150,8 @@
     --nv-color-primary-active: light-dark(#1e3a8a, #628af2);
     --nv-color-on-primary: light-dark(#ffffff, #0d0d10);
 
-    --nv-color-danger: light-dark(#dc2626, #e5484d);
-    --nv-color-danger-hover: light-dark(#b91c1c, #ec5d5d);
+    --nv-color-danger: light-dark(#dc2626, #f06a6a);
+    --nv-color-danger-hover: light-dark(#b91c1c, #f08383);
     --nv-color-on-danger: light-dark(#ffffff, #ffffff);
 
     --nv-color-success: light-dark(#15803d, #3fb950);
@@ -161,6 +161,15 @@
     --nv-color-warning: light-dark(#b45309, #d29922);
     --nv-color-warning-hover: light-dark(#92400e, #bb8009);
     --nv-color-on-warning: light-dark(#ffffff, #ffffff);
+
+    /* ソリッドなstatus背景色 (badge / 破壊的ボタン用)。
+       白文字とのコントラストが light / dark 双方で WCAG AA (4.5:1) を満たす。 */
+    --nv-color-danger-strong: #dc2626;
+    --nv-color-danger-strong-hover: #b91c1c;
+    --nv-color-success-strong: #15803d;
+    --nv-color-success-strong-hover: #166534;
+    --nv-color-warning-strong: #b45309;
+    --nv-color-warning-strong-hover: #92400e;
 
     --nv-color-link: var(--nv-color-primary);
     --nv-color-link-hover: var(--nv-color-primary-hover);
@@ -175,6 +184,13 @@
   :root[data-theme="dark"] {
     color-scheme: dark;
     --nv-select-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='16'%20height='16'%20viewBox='0%200%2016%2016'%20fill='none'%3E%3Cpath%20d='M4%206l4%204%204-4'%20stroke='%239c9ca9'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+
+  /* OSがdark設定の場合も矢印アイコンをdark用に切り替える (data-theme 指定なし時) */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --nv-select-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='16'%20height='16'%20viewBox='0%200%2016%2016'%20fill='none'%3E%3Cpath%20d='M4%206l4%204%204-4'%20stroke='%239c9ca9'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
   }
 
   /* サーバー側で明示的に light を強制する場合 */
@@ -648,19 +664,19 @@
   }
 
   .nv-danger {
-    background-color: var(--nv-color-danger);
-    border-color: var(--nv-color-danger);
+    background-color: var(--nv-color-danger-strong);
+    border-color: var(--nv-color-danger-strong);
     color: var(--nv-color-on-danger);
   }
 
   .nv-danger:hover {
-    background-color: var(--nv-color-danger-hover);
-    border-color: var(--nv-color-danger-hover);
+    background-color: var(--nv-color-danger-strong-hover);
+    border-color: var(--nv-color-danger-strong-hover);
   }
 
   .nv-danger:active {
-    background-color: var(--nv-color-danger-hover);
-    border-color: var(--nv-color-danger-hover);
+    background-color: var(--nv-color-danger-strong-hover);
+    border-color: var(--nv-color-danger-strong-hover);
   }
 
   /* ============================================================
@@ -760,20 +776,20 @@
 
   .nv-badge-success {
     color: var(--nv-color-on-success);
-    background-color: var(--nv-color-success);
-    border-color: var(--nv-color-success);
+    background-color: var(--nv-color-success-strong);
+    border-color: var(--nv-color-success-strong);
   }
 
   .nv-badge-warning {
     color: var(--nv-color-on-warning);
-    background-color: var(--nv-color-warning);
-    border-color: var(--nv-color-warning);
+    background-color: var(--nv-color-warning-strong);
+    border-color: var(--nv-color-warning-strong);
   }
 
   .nv-badge-danger {
     color: var(--nv-color-on-danger);
-    background-color: var(--nv-color-danger);
-    border-color: var(--nv-color-danger);
+    background-color: var(--nv-color-danger-strong);
+    border-color: var(--nv-color-danger-strong);
   }
 
   /* ============================================================
