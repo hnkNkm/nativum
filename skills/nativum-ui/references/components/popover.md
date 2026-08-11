@@ -6,11 +6,12 @@ Popover APIで軽量なオーバーレイ (ヘルプ、アカウント情報等)
 
 ## ネイティブprimitive
 
-- `[popover]` 属性 (popover要素)
+- `[popover]` 属性 (popover要素。開閉時に付け外ししない)
 - `popovertarget` (トリガーが対象の `id` を指定)
 - `popovertargetaction="toggle"` / `"show"` / `"hide"` (デフォルトは `toggle`)
-- トップレイヤー + light dismiss (Esc / 外部クリック)
-- `:popover-open` 疑似クラス
+- popover showing state / `:popover-open`
+- トップレイヤー + light dismiss (デフォルトの `popover="auto"`)
+- `popovertarget` が作るinvoker relationship (暗黙の `aria-details` / `aria-expanded` 関係を含む)
 
 ## Required markup
 
@@ -33,21 +34,29 @@ popover固有のクラスは `nv-dropdown-*` (別コンポーネント) のみ�
 ## 動作 (ネイティブのinteraction)
 
 - トリガーのクリックで `toggle` / `show` / `hide`
-- light dismiss: Escキー、popover外クリック、他のpopover表示で閉じる
-- トップレイヤー表示 (z-index管理は不要)
-- `:popover-open` でスタイル可能
+- デフォルトのauto popoverはlight dismissに対応
+- トップレイヤー表示
+- 開いている状態はブラウザがpopover showing stateとして管理し、CSSでは `:popover-open` を使う
+- `popover` content attribute自体は表示状態を表すtoggle属性ではない
+
+## Accessibility
+
+- `<button popovertarget="...">` のネイティブinvoker relationshipを使う
+- ブラウザが対象popoverとの暗黙の関連付けとexpanded stateを支援技術へ公開するため、独自の `aria-expanded` stateを手動同期しない
+- popover内は本来の意味を持つHTMLで構成する。通常のリンクリストへ `role="menu"` を付けない
 
 ## フォールバック
 
-- Popover API非対応環境では `[popover]` 要素はドキュメントフロー内の通常要素として表示される
-- フォールバック時も意味のある内容を保つ (「隠れたまま」にしない)
+- Popover API非対応環境では `[popover]` 要素は通常のドキュメントフロー内コンテンツとして表示される
+- フォールバック時も意味のある内容を保つ
 
 ## Anti-patterns
 
-- popover内のリンクリストに `role="menu"` を付与 (Arrow key等のフルキーボード操作実装が必要になり、JSなしでは成立しない。素の `<a>` リストでよい)
-- トリガーに `aria-expanded` を付与 (popoverトリガーでは利用不可)
+- popover内の通常リンクリストに `role="menu"` を付与する
+- ネイティブinvokerのexpanded stateを手動 `aria-expanded` で複製する
+- `popover` 属性を開閉状態として付け外しする
 - `position: fixed` 等で自作オーバーレイを実装
-- 保存結果等の重要な状態をpopoverのみで伝える (light dismissで閉じるため。`nv-notice` を使う)
+- 保存結果等の重要な状態をpopoverのみで伝える (`nv-notice` を使う)
 
 ## 詳細
 
