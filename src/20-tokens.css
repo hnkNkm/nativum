@@ -1,6 +1,7 @@
 /* Nativum 0.1.0 — Design Tokens */
 /* 主要デザイン値はすべてCSS Custom Propertiesとして公開する。 */
 /* アプリケーションは :root でトークンを上書きするだけでテーマを変更できる。 */
+/* Core が消費しないトークンは override-only (ホストアプリ用の予約) として公開する。 */
 
 @layer nativum.tokens {
   :root {
@@ -35,7 +36,9 @@
     --nv-space-4: 1rem;
     --nv-space-6: 1.5rem;
     --nv-space-8: 2rem;
+    /* override-only: Core では未使用。ホストアプリ用の予約トークン */
     --nv-space-12: 3rem;
+    /* override-only: Core では未使用。ホストアプリ用の予約トークン */
     --nv-space-16: 4rem;
 
     /* --- Border --- */
@@ -50,11 +53,14 @@
     --nv-duration-normal: 180ms;
     --nv-duration-slow: 300ms;
     --nv-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    /* override-only: Core では未使用。ホストアプリ用の予約トークン */
     --nv-ease-emphasized: cubic-bezier(0.3, 0, 0.2, 1);
 
     /* --- Sizing --- */
+    /* override-only: Core では未使用。ホストアプリ用の予約トークン */
     --nv-control-height-sm: 1.75rem;
     --nv-control-height: 2.25rem;
+    /* override-only: Core では未使用。ホストアプリ用の予約トークン */
     --nv-control-height-lg: 2.75rem;
 
     /* --- Layout --- */
@@ -68,6 +74,7 @@
 
     /* --- Shadow --- */
     --nv-shadow-sm: 0 1px 2px rgb(15 15 20 / 0.06);
+    /* override-only: Core では未使用。ホストアプリ用の予約トークン */
     --nv-shadow-md: 0 2px 6px rgb(15 15 20 / 0.08), 0 8px 24px rgb(15 15 20 / 0.08);
     --nv-shadow-lg: 0 4px 12px rgb(15 15 20 / 0.1), 0 16px 48px rgb(15 15 20 / 0.12);
 
@@ -87,14 +94,17 @@
     --nv-color-on-primary: #ffffff;
 
     --nv-color-danger: #dc2626;
+    /* override-only: Core では未使用。ホストアプリ用の予約トークン */
     --nv-color-danger-hover: #b91c1c;
     --nv-color-on-danger: #ffffff;
 
     --nv-color-success: #15803d;
+    /* override-only: Core では未使用。ホストアプリ用の予約トークン */
     --nv-color-success-hover: #166534;
     --nv-color-on-success: #ffffff;
 
     --nv-color-warning: #b45309;
+    /* override-only: Core では未使用。ホストアプリ用の予約トークン */
     --nv-color-warning-hover: #92400e;
     --nv-color-on-warning: #ffffff;
 
@@ -103,8 +113,10 @@
     --nv-color-danger-strong: #dc2626;
     --nv-color-danger-strong-hover: #b91c1c;
     --nv-color-success-strong: #15803d;
+    /* override-only: Core では未使用。ホストアプリ用の予約トークン */
     --nv-color-success-strong-hover: #166534;
     --nv-color-warning-strong: #b45309;
+    /* override-only: Core では未使用。ホストアプリ用の予約トークン */
     --nv-color-warning-strong-hover: #92400e;
 
     --nv-color-link: var(--nv-color-primary);

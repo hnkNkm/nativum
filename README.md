@@ -49,6 +49,16 @@ Release済みの `nativum.css` を読み込むだけです。
 
 配布方法は制限しません (Git clone / vendoring / GitHub Releases / npm / JSR / Cargo / CDN など、自由)。どの配布形式でもNativum CoreはHTML+CSSのみで、実行時依存は存在しません。npm package等で配布する場合も、中身はpassive artifactのみ (空のdependencies、install hookなし) とします。
 
+## ブラウザサポート
+
+Nativum CoreのCSS primitive（Cascade Layers、`:focus-visible`、`color-scheme`、CSS Grid / Flexbox、CSS Custom Properties）は、2022年以降のモダンブラウザ（Chrome / Edge / Firefox / Safari の最新2世代程度）を前提としています。
+
+機能は Core / Enhancement / Experimental の3段階に分類され、各機能のフォールバックは [docs/browser-policy.md](docs/browser-policy.md) にまとめています。
+
+- `command` / `commandfor`（Invoker Commands）は Baseline Newly Available（2025-12-12、Chrome 135 / Firefox 144 / Safari 26.2）で、上記 Core CSS baseline より新しい機能です
+- 非対応環境ではダイアログの宣言的開閉が動作しないため、`<dialog open>` 属性付きのサーバーレンダリング + ページ内フォーム置換へフォールバックします（[docs/components/dialog.md](docs/components/dialog.md) の Fallback behavior 参照）
+- JS runtime は追加しません（フォールバックもサーバーレンダリング + HTML / CSS の範囲）
+
 ## 例
 
 ```html
@@ -67,6 +77,8 @@ Release済みの `nativum.css` を読み込むだけです。
   </footer>
 </dialog>
 ```
+
+> **注意**: この例の `command` / `commandfor` は Invoker Commands 対応ブラウザ（Chrome 135 / Firefox 144 / Safari 26.2 以降）でのみ動作します。非対応環境では `<dialog open>` のサーバーレンダリング + ページ内フォームにフォールバックしてください（「ブラウザサポート」参照）。
 
 ## Host Applicationから利用する
 
@@ -120,7 +132,7 @@ tools/      build.sh / verify.sh / serve.sh
 
 ## セキュリティ
 
-Nativum CoreのSecurity Contractは「実行時に第三者の実行可能な依存グラフを持たない」ことです。詳細は [docs/security.md](docs/security.md) を参照してください。
+Nativum CoreのSecurity Contractは「実行時に第三者の実行可能な依存グラフを持たない」ことです。詳細は [docs/SECURITY.md](docs/SECURITY.md) を参照してください。
 
 - CoreはHTML+CSSのみ。JS/TS runtime・install hook・remote runtime asset・telemetryはゼロ
 - 契約の充足は `./tools/verify.sh` で機械検査できます

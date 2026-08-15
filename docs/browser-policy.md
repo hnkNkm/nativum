@@ -31,6 +31,8 @@ Core は「その機能なしでは component が成立しない」層である�
 | CSS Cascade Layers（`@layer`） | `src/00-layer.css`（layer 順序の宣言）、全ファイルの `@layer` ブロック | `@layer` 非対応環境では `@layer` ルール全体が無視されるため Nativum スタイルが適用されない。2022年以降の全モダンブラウザで対応済みのため、実質的なリスクなし |
 | `:focus-visible` | `src/30-base.css`（グローバルフォーカスリング） | フォーカスリングが描画されないだけ。ネイティブのフォーカス順序・キーボード操作は維持される |
 
+Core CSS primitive は 2022年以降の全モダンブラウザで利用可能です。一方 `command` / `commandfor`（Invoker Commands）は Baseline Newly Available（2025-12-12、Chrome 135 / Firefox 144 / Safari 26.2）で、Core CSS baseline より新しい機能です。非対応環境では上記 Core 表のフォールバック（`<dialog open>` + ページ内フォーム）が必須です。
+
 ## Enhancement
 
 Enhancement は「利用可能なら UI・positioning・motion を改善するが、なくても利用可能」な層である。motion系の機能は `@media (prefers-reduced-motion: no-preference)` 内でのみ有効になる（`src/70-motion.css`）。
