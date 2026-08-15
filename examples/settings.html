@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nativum — Settings (reference implementation)</title>
+  <link rel="stylesheet" href="../dist/nativum.css">
+</head>
+<body>
+  <header class="nv-container">
+    <nav class="nv-nav" aria-label="Examples">
+      <strong>Nativum</strong>
+      <a href="index.html">Showcase</a>
+      <a href="forms.html">Forms</a>
+      <a href="dialog.html">Dialog</a>
+      <a href="popover.html">Popover</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="login.html">Login</a>
+      <a href="settings.html" aria-current="page">Settings</a>
+    </nav>
+  </header>
+
+  <main class="nv-container-narrow nv-stack-lg" style="padding-block: 3rem 4rem">
+    <section class="nv-stack-sm">
+      <h1>Account settings</h1>
+      <p class="nv-text-muted">
+        変更はサーバーで検証され、このページに再レンダリングされます。
+      </p>
+    </section>
+
+    <!-- プロフィール編集 (dialog) -->
+    <section class="nv-card nv-cluster nv-cluster-between">
+      <div class="nv-stack-sm">
+        <strong>Hanako Tanaka</strong>
+        <span class="nv-text-muted" style="font-size: var(--nv-font-size-sm)">
+          hanako@example.com
+        </span>
+      </div>
+      <button commandfor="profile-edit" command="show-modal">Edit profile</button>
+    </section>
+
+    <!-- 設定グループ (accordion) -->
+    <div class="nv-accordion">
+      <details open>
+        <summary>Notifications</summary>
+        <form action="/settings/notifications" method="post">
+          <div class="nv-field">
+            <label>Email notifications</label>
+            <div class="nv-stack-sm">
+              <label><input type="checkbox" name="digest" checked> Weekly digest</label>
+              <label><input type="checkbox" name="alerts"> Security alerts</label>
+            </div>
+          </div>
+          <div class="nv-cluster">
+            <button class="nv-primary" type="submit">Save notifications</button>
+          </div>
+        </form>
+      </details>
+
+      <details>
+        <summary>Security</summary>
+        <form action="/settings/security" method="post">
+          <div class="nv-field">
+            <label for="s-password">New password</label>
+            <input id="s-password" name="password" type="password"
+                   minlength="8" autocomplete="new-password">
+          </div>
+          <div class="nv-cluster">
+            <button class="nv-primary" type="submit">Update password</button>
+          </div>
+        </form>
+      </details>
+    </div>
+
+    <!-- 危険操作 -->
+    <section class="nv-cluster nv-cluster-between">
+      <div class="nv-stack-sm">
+        <strong>Danger zone</strong>
+        <p class="nv-text-muted">アカウント削除は取り消せません。</p>
+      </div>
+      <button class="nv-danger" commandfor="delete-account" command="show-modal">
+        Delete account
+      </button>
+    </section>
+  </main>
+
+  <!-- プロフィール編集ダイアログ -->
+  <dialog id="profile-edit">
+    <header>
+      <h2>Edit profile</h2>
+    </header>
+    <form id="profile-form" action="/settings/profile" method="post">
+      <div class="nv-field">
+        <label for="pe-name">Display name</label>
+        <input id="pe-name" name="name" type="text" value="Hanako Tanaka" required>
+      </div>
+      <div class="nv-field">
+        <label for="pe-email">Email</label>
+        <input id="pe-email" name="email" type="email" value="hanako@example.com" required>
+      </div>
+    </form>
+    <footer>
+      <button commandfor="profile-edit" command="close">Cancel</button>
+      <button class="nv-primary" type="submit" form="profile-form">Save changes</button>
+    </footer>
+  </dialog>
+
+  <!-- 削除確認ダイアログ -->
+  <dialog id="delete-account">
+    <header>
+      <h2>Delete account?</h2>
+    </header>
+    <p>この操作は取り消せません。プロジェクトと全データが削除されます。</p>
+    <footer>
+      <button commandfor="delete-account" command="close">Cancel</button>
+      <button class="nv-danger" type="submit" form="delete-form"
+              name="action" value="delete">Delete</button>
+    </footer>
+  </dialog>
+  <form id="delete-form" method="post" action="/settings/account" hidden></form>
+
+  <footer class="nv-container">
+    <hr>
+    <p class="nv-text-muted" style="font-size: var(--nv-font-size-sm)">
+      Nativum — passive, zero-JavaScript UI system. &copy; 2026
+    </p>
+  </footer>
+</body>
+</html>
