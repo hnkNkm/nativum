@@ -28,17 +28,17 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  button:hover,
-  input[type="submit"]:hover,
-  input[type="reset"]:hover,
-  input[type="button"]:hover {
+  button:hover:not(:disabled),
+  input[type="submit"]:hover:not(:disabled),
+  input[type="reset"]:hover:not(:disabled),
+  input[type="button"]:hover:not(:disabled) {
     background-color: var(--nv-color-subtle);
   }
 
-  button:active,
-  input[type="submit"]:active,
-  input[type="reset"]:active,
-  input[type="button"]:active {
+  button:active:not(:disabled),
+  input[type="submit"]:active:not(:disabled),
+  input[type="reset"]:active:not(:disabled),
+  input[type="button"]:active:not(:disabled) {
     background-color: var(--nv-color-border);
   }
 
@@ -56,12 +56,12 @@
     color: var(--nv-color-on-primary);
   }
 
-  .nv-primary:hover {
+  .nv-primary:hover:not(:disabled) {
     background-color: var(--nv-color-primary-hover);
     border-color: var(--nv-color-primary-hover);
   }
 
-  .nv-primary:active {
+  .nv-primary:active:not(:disabled) {
     background-color: var(--nv-color-primary-active);
     border-color: var(--nv-color-primary-active);
   }
@@ -72,12 +72,12 @@
     color: var(--nv-color-on-danger);
   }
 
-  .nv-danger:hover {
+  .nv-danger:hover:not(:disabled) {
     background-color: var(--nv-color-danger-strong-hover);
     border-color: var(--nv-color-danger-strong-hover);
   }
 
-  .nv-danger:active {
+  .nv-danger:active:not(:disabled) {
     background-color: var(--nv-color-danger-strong-hover);
     border-color: var(--nv-color-danger-strong-hover);
   }

@@ -36,21 +36,21 @@
     border-radius: var(--nv-radius-md);
   }
 
-  input:not([type]):hover,
-  input[type="text"]:hover,
-  input[type="email"]:hover,
-  input[type="password"]:hover,
-  input[type="url"]:hover,
-  input[type="tel"]:hover,
-  input[type="search"]:hover,
-  input[type="number"]:hover,
-  input[type="date"]:hover,
-  input[type="datetime-local"]:hover,
-  input[type="month"]:hover,
-  input[type="week"]:hover,
-  input[type="time"]:hover,
-  textarea:hover,
-  select:hover {
+  input:not([type]):hover:not(:disabled),
+  input[type="text"]:hover:not(:disabled),
+  input[type="email"]:hover:not(:disabled),
+  input[type="password"]:hover:not(:disabled),
+  input[type="url"]:hover:not(:disabled),
+  input[type="tel"]:hover:not(:disabled),
+  input[type="search"]:hover:not(:disabled),
+  input[type="number"]:hover:not(:disabled),
+  input[type="date"]:hover:not(:disabled),
+  input[type="datetime-local"]:hover:not(:disabled),
+  input[type="month"]:hover:not(:disabled),
+  input[type="week"]:hover:not(:disabled),
+  input[type="time"]:hover:not(:disabled),
+  textarea:hover:not(:disabled),
+  select:hover:not(:disabled) {
     border-color: var(--nv-color-primary);
   }
 
@@ -121,10 +121,6 @@
 
   fieldset:disabled {
     opacity: 0.6;
-  }
-
-  fieldset:disabled > * {
-    pointer-events: none;
   }
 
   /* --- Disabled --- */
