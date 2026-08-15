@@ -42,7 +42,7 @@ Popover API + CSS Anchor Positioning で、トリガーに紐付いたアンカ�
 
 - `nv-dropdown-trigger` — トリガー側（アンカー名の登録）
 - `nv-dropdown` — dropdown側（`min-width: 12rem`、アンカー配置）
-- `nv-dropdown-end` — dropdownの右端をトリガーの右端に揃える（`inset-inline-end: anchor(right)`）
+- `nv-dropdown-end` — dropdownの右端をトリガーの右端に揃える（`inset-inline-end: anchor(end)`）
 
 内部レイアウトには `nv-stack-sm`（リンクリスト）、`nv-text-muted`（補足テキスト）、`nv-cluster` を併用できる。
 
@@ -53,7 +53,7 @@ Popover API + CSS Anchor Positioning で、トリガーに紐付いたアンカ�
 - トリガーのクリックで開閉（`popovertarget` の `toggle`）
 - デフォルトのauto popoverはlight dismissに対応
 - `popovertarget` のinvoker relationshipにより、開閉状態はブラウザが支援技術へ公開する
-- アンカー対応環境ではトリガーの直下（`top: anchor(bottom)`、`inset-inline-start: anchor(left)`）に配置される
+- アンカー対応環境ではトリガーの直下（`top: anchor(bottom)`、`inset-inline-start: anchor(start)`）に配置される
 - `nv-dropdown-end` 付きでは右端がトリガーの右端に揃う
 - リンク・ボタンは通常のタブフォーカスでアクセス可能
 
