@@ -373,10 +373,14 @@
   }
 
   .nv-stack-sm {
+    display: flex;
+    flex-direction: column;
     gap: var(--nv-space-2);
   }
 
   .nv-stack-lg {
+    display: flex;
+    flex-direction: column;
     gap: var(--nv-space-6);
   }
 
