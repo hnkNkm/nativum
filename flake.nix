@@ -10,11 +10,12 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
+        version = pkgs.lib.strings.trim (builtins.readFile ./.release/version);
       in
       {
         packages.default = pkgs.stdenv.mkDerivation {
           pname = "nativum";
-          version = "0.1.0";
+          inherit version;
 
           src = ./.;
 
@@ -31,7 +32,7 @@
             install -D -m 0644 dist/nativum.css $out/nativum.css
             install -D -m 0644 dist/SHA256SUMS $out/SHA256SUMS
             install -D -m 0644 LICENSE $out/LICENSE
-            install -D -m 0644 docs/security.md $out/SECURITY.md
+            install -D -m 0644 docs/SECURITY.md $out/SECURITY.md
             runHook postInstall
           '';
         };
