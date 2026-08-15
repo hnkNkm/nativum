@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nativum — 設定 (reference implementation)</title>
+  <!--
+    アプリケーションに vendor した nativum.css を参照すること。
+    (推奨構成: public/vendor/nativum/nativum.css)
+    <link rel="stylesheet" href="/vendor/nativum/nativum.css">
+    この例は参照パス nativum.css で同ディレクトリに配置した前提で書いている。
+    すべてのクラス・トークンはこの Skill の references/ に記載されたもののみを使用する。
+  -->
+  <link rel="stylesheet" href="nativum.css">
+</head>
+<body>
+  <header class="nv-container" style="padding-block: 1rem">
+    <nav class="nv-nav nv-cluster-between" aria-label="Main">
+      <span class="nv-cluster" style="gap: var(--nv-space-2)">
+        <strong>Acme Admin</strong>
+        <a href="/dashboard">ダッシュボード</a>
+        <a href="/settings" aria-current="page">設定</a>
+      </span>
+      <a href="/signout">サインアウト</a>
+    </nav>
+  </header>
+
+  <main class="nv-container-narrow nv-stack-lg" style="padding-block: 2rem 4rem">
+    <section class="nv-stack-sm">
+      <h1>アカウント設定</h1>
+      <p class="nv-text-muted">
+        変更はサーバーで検証され、このページに再レンダリングされます。
+      </p>
+    </section>
+
+    <!-- プロフィール編集 (dialog) -->
+    <section class="nv-card nv-cluster nv-cluster-between">
+      <div class="nv-stack-sm">
+        <strong>田中 花子</strong>
+        <span class="nv-text-muted" style="font-size: var(--nv-font-size-sm)">
+          hanako@example.com
+        </span>
+      </div>
+      <button commandfor="profile-edit" command="show-modal">プロフィールを編集</button>
+    </section>
+
+    <!-- 設定グループ (accordion) -->
+    <div class="nv-accordion">
+      <details open>
+        <summary>通知</summary>
+        <form action="/settings/notifications" method="post">
+          <div class="nv-field">
+            <label>メール通知</label>
+            <div class="nv-stack-sm">
+              <label><input type="checkbox" name="digest" checked> 毎週のダイジェスト</label>
+              <label><input type="checkbox" name="alerts"> セキュリティアラート</label>
+            </div>
+          </div>
+          <div class="nv-cluster">
+            <button class="nv-primary" type="submit">変更を保存</button>
+          </div>
+        </form>
+      </details>
+
+      <details>
+        <summary>セキュリティ</summary>
+        <form action="/settings/security" method="post">
+          <div class="nv-field">
+            <label for="s-password">新しいパスワード</label>
+            <input id="s-password" name="password" type="password"
+                   minlength="8" autocomplete="new-password">
+          </div>
+          <div class="nv-cluster">
+            <button class="nv-primary" type="submit">パスワードを更新</button>
+          </div>
+        </form>
+      </details>
+    </div>
+
+    <!-- 危険操作 -->
+    <section class="nv-cluster nv-cluster-between">
+      <div class="nv-stack-sm">
+        <strong>危険な操作</strong>
+        <p class="nv-text-muted">アカウント削除は取り消せません。</p>
+      </div>
+      <button class="nv-danger" commandfor="delete-account" command="show-modal">
+        アカウントを削除
+      </button>
+    </section>
+  </main>
+
+  <!-- プロフィール編集ダイアログ -->
+  <dialog id="profile-edit">
+    <header>
+      <h2>プロフィールを編集</h2>
+    </header>
+    <form id="profile-form" action="/settings/profile" method="post">
+      <div class="nv-field">
+        <label for="pe-name">表示名</label>
+        <input id="pe-name" name="name" type="text" value="田中 花子" required>
+      </div>
+      <div class="nv-field">
+        <label for="pe-email">メールアドレス</label>
+        <input id="pe-email" name="email" type="email" value="hanako@example.com" required>
+      </div>
+    </form>
+    <footer>
+      <button commandfor="profile-edit" command="close">キャンセル</button>
+      <button class="nv-primary" type="submit" form="profile-form">変更を保存</button>
+    </footer>
+  </dialog>
+
+  <!-- 削除確認ダイアログ -->
+  <dialog id="delete-account">
+    <header>
+      <h2>アカウントを削除しますか?</h2>
+    </header>
+    <p>この操作は取り消せません。プロジェクトと全データが削除されます。</p>
+    <footer>
+      <button commandfor="delete-account" command="close">キャンセル</button>
+      <button class="nv-danger" type="submit" form="delete-form"
+              name="action" value="delete">削除する</button>
+    </footer>
+  </dialog>
+  <form id="delete-form" method="post" action="/settings/account" hidden></form>
+
+  <footer class="nv-container">
+    <hr>
+    <p class="nv-text-muted" style="font-size: var(--nv-font-size-sm)">
+      Nativum reference implementation — HTML + nativum.css only.
+    </p>
+  </footer>
+</body>
+</html>

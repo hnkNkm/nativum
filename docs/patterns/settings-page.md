@@ -2,6 +2,8 @@
 
 ## Purpose
 
+`examples/settings.html` が本パターンの reference implementation である。
+
 Admin / Settings 画面の構成パターン。ヘッダーの `nv-nav`、設定グループの `nv-accordion`、編集用の `<dialog>`、サーバー側 `data-theme` を組み合わせる。状態変更はすべてサーバー側の form submission で行い、再レンダリングされる。
 
 ## 構成要素

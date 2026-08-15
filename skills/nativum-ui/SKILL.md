@@ -77,6 +77,10 @@ Explain that Nativum does not provide this behavior
 | `references/compatibility.md` | 高度なCSS機能を使う判断をしたとき。Core / Enhancement / Experimentalの分類 |
 | `references/anti-patterns.md` | 実装がUnsupported componentに該当しないか疑わしいとき。negative specification |
 | `references/components/*.md` | 個別コンポーネントの公式markup・クラス・フォールバックを確認するとき |
+| `references/components/layout.md` | レイアウト (stack / cluster / grid / container) を使うとき |
+| `references/components/card.md` | カードで自己完結コンテンツをまとめるとき |
+| `references/components/badge.md` | 状態ラベル (ステータス・件数) を表示するとき |
+| `references/components/notice.md` | 状態メッセージ (情報・成功・警告・エラー) を表示するとき |
 | `references/patterns/*.md` | ページ全体の組み立て方 (settings / login / dashboard / server actions) を確認するとき |
 | `examples/*.html` | コンポーネントの正しい組み合わせ方・reference implementationを確認するとき |
 
