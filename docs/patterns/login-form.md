@@ -2,6 +2,8 @@
 
 ## Purpose
 
+`examples/login.html` が本パターンの reference implementation である。
+
 ログインフォームのパターン。通常の `<form method="post" action="...">` によるサーバー送信、ネイティブ validation（`required` / `type="email"`）、サーバー側検証エラーの `aria-invalid` + `nv-field-error` による再レンダリング、`nv-container-narrow` による中央配置を組み合わせる。
 
 ログインは状態変更であるため、JavaScript を使った AJAX 送信は行わない。ブラウザのネイティブ送信 → サーバーが成功時はリダイレクト、失敗時はエラー付きでフォームを再レンダリングする。

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nativum — Login (reference implementation)</title>
+  <link rel="stylesheet" href="../dist/nativum.css">
+</head>
+<body>
+  <header class="nv-container">
+    <nav class="nv-nav" aria-label="Examples">
+      <strong>Nativum</strong>
+      <a href="index.html">Showcase</a>
+      <a href="forms.html">Forms</a>
+      <a href="dialog.html">Dialog</a>
+      <a href="popover.html">Popover</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="login.html" aria-current="page">Login</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+  </header>
+
+  <main class="nv-container-narrow" style="padding-block: 3rem 4rem">
+    <section class="nv-card nv-stack">
+      <header class="nv-stack-sm">
+        <h1 style="margin-block-end: 0">Sign in</h1>
+        <p class="nv-text-muted">Acme Admin</p>
+      </header>
+
+      <!-- サーバーが認証失敗時に再レンダリングするフォーム全体のエラー -->
+      <div class="nv-notice nv-notice-danger" role="status">
+        メールアドレスまたはパスワードが正しくありません。
+      </div>
+
+      <form action="/login" method="post">
+        <div class="nv-field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required
+                 aria-invalid="true" aria-describedby="email-error">
+          <span class="nv-field-error" id="email-error">
+            このメールアドレスは登録されていません。
+          </span>
+        </div>
+
+        <div class="nv-field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password"
+                 autocomplete="current-password" minlength="8" required>
+        </div>
+
+        <div class="nv-field nv-cluster nv-cluster-between">
+          <label><input type="checkbox" name="remember"> Remember me</label>
+          <a href="/forgot-password">Forgot password?</a>
+        </div>
+
+        <button class="nv-primary" type="submit" style="width: 100%">Sign in</button>
+      </form>
+
+      <p class="nv-text-muted" style="font-size: var(--nv-font-size-sm)">
+        未入力・形式エラーは送信前にブラウザのネイティブ検証がブロックします。
+      </p>
+    </section>
+
+    <footer class="nv-stack-sm" style="margin-block-start: 3rem">
+      <hr>
+      <p class="nv-text-muted">Nativum — passive, zero-JavaScript UI system. &copy; 2026</p>
+    </footer>
+  </main>
+</body>
+</html>
