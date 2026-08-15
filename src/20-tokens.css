@@ -79,33 +79,34 @@
     --nv-shadow-lg: 0 4px 12px rgb(15 15 20 / 0.1), 0 16px 48px rgb(15 15 20 / 0.12);
 
     /* --- Color (light) --- */
-    --nv-color-bg: light-dark(#f7f7f8, #101014);
-    --nv-color-surface: light-dark(#ffffff, #18181d);
-    --nv-color-subtle: light-dark(#ededf1, #222229);
-    --nv-color-text: light-dark(#17171c, #ececf1);
-    --nv-color-text-muted: light-dark(#62626e, #9c9ca9);
-    --nv-color-border: light-dark(#e2e2e8, #2a2a32);
-    --nv-color-border-strong: light-dark(#c9c9d2, #3b3b45);
+    /* light-dark() 非対応環境向けの静的フォールバック(ライト値) */
+    --nv-color-bg: #f7f7f8;
+    --nv-color-surface: #ffffff;
+    --nv-color-subtle: #ededf1;
+    --nv-color-text: #17171c;
+    --nv-color-text-muted: #62626e;
+    --nv-color-border: #e2e2e8;
+    --nv-color-border-strong: #c9c9d2;
 
-    --nv-color-primary: light-dark(#1d4ed8, #7c9fff);
-    --nv-color-primary-hover: light-dark(#1e40af, #93adff);
-    --nv-color-primary-active: light-dark(#1e3a8a, #628af2);
-    --nv-color-on-primary: light-dark(#ffffff, #0d0d10);
+    --nv-color-primary: #1d4ed8;
+    --nv-color-primary-hover: #1e40af;
+    --nv-color-primary-active: #1e3a8a;
+    --nv-color-on-primary: #ffffff;
 
-    --nv-color-danger: light-dark(#dc2626, #f06a6a);
+    --nv-color-danger: #dc2626;
     /* override-only: Core では未使用。ホストアプリ用の予約トークン */
-    --nv-color-danger-hover: light-dark(#b91c1c, #f08383);
-    --nv-color-on-danger: light-dark(#ffffff, #ffffff);
+    --nv-color-danger-hover: #b91c1c;
+    --nv-color-on-danger: #ffffff;
 
-    --nv-color-success: light-dark(#15803d, #3fb950);
+    --nv-color-success: #15803d;
     /* override-only: Core では未使用。ホストアプリ用の予約トークン */
-    --nv-color-success-hover: light-dark(#166534, #2ea043);
-    --nv-color-on-success: light-dark(#ffffff, #ffffff);
+    --nv-color-success-hover: #166534;
+    --nv-color-on-success: #ffffff;
 
-    --nv-color-warning: light-dark(#b45309, #d29922);
+    --nv-color-warning: #b45309;
     /* override-only: Core では未使用。ホストアプリ用の予約トークン */
-    --nv-color-warning-hover: light-dark(#92400e, #bb8009);
-    --nv-color-on-warning: light-dark(#ffffff, #ffffff);
+    --nv-color-warning-hover: #92400e;
+    --nv-color-on-warning: #ffffff;
 
     /* ソリッドなstatus背景色 (badge / 破壊的ボタン用)。
        白文字とのコントラストが light / dark 双方で WCAG AA (4.5:1) を満たす。 */
@@ -121,10 +122,37 @@
     --nv-color-link: var(--nv-color-primary);
     --nv-color-link-hover: var(--nv-color-primary-hover);
 
-    --nv-color-selection: light-dark(rgb(29 78 216 / 0.18), rgb(124 159 255 / 0.28));
+    --nv-color-selection: rgb(29 78 216 / 0.18);
 
     /* <select> のカスタム矢印アイコン (テーマごとに色を焼き込む) */
     --nv-select-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='16'%20height='16'%20viewBox='0%200%2016%2016'%20fill='none'%3E%3Cpath%20d='M4%206l4%204%204-4'%20stroke='%2362626e'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+
+  /* light-dark() 対応環境のみ、ライト/ダーク自動切替を有効化 */
+  @supports (color: light-dark(#000, #fff)) {
+    :root {
+      --nv-color-bg: light-dark(#f7f7f8, #101014);
+      --nv-color-surface: light-dark(#ffffff, #18181d);
+      --nv-color-subtle: light-dark(#ededf1, #222229);
+      --nv-color-text: light-dark(#17171c, #ececf1);
+      --nv-color-text-muted: light-dark(#62626e, #9c9ca9);
+      --nv-color-border: light-dark(#e2e2e8, #2a2a32);
+      --nv-color-border-strong: light-dark(#c9c9d2, #3b3b45);
+      --nv-color-primary: light-dark(#1d4ed8, #7c9fff);
+      --nv-color-primary-hover: light-dark(#1e40af, #93adff);
+      --nv-color-primary-active: light-dark(#1e3a8a, #628af2);
+      --nv-color-on-primary: light-dark(#ffffff, #0d0d10);
+      --nv-color-danger: light-dark(#dc2626, #f06a6a);
+      --nv-color-danger-hover: light-dark(#b91c1c, #f08383);
+      --nv-color-on-danger: light-dark(#ffffff, #ffffff);
+      --nv-color-success: light-dark(#15803d, #3fb950);
+      --nv-color-success-hover: light-dark(#166534, #2ea043);
+      --nv-color-on-success: light-dark(#ffffff, #ffffff);
+      --nv-color-warning: light-dark(#b45309, #d29922);
+      --nv-color-warning-hover: light-dark(#92400e, #bb8009);
+      --nv-color-on-warning: light-dark(#ffffff, #ffffff);
+      --nv-color-selection: light-dark(rgb(29 78 216 / 0.18), rgb(124 159 255 / 0.28));
+    }
   }
 
   /* サーバー側で明示的に dark を強制する場合 */

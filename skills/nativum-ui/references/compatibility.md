@@ -34,7 +34,7 @@ Nativumのcomponent API / native interactionの土台として扱うprimitive。
 - CSS Anchor Positioning (`anchor-name` / `position-anchor` / `anchor()`)
 - CSS Transitions / `@starting-style` / discrete transitions (`allow-discrete`)
 - `accent-color`
-- `light-dark()`
+- `light-dark()`（`src/20-tokens.css` のカラートークン。`@supports (color: light-dark(#000, #fff))` ガード内で使用し、ガード外に静的なライト値フォールバックを宣言。未対応環境ではライト配色へフォールバック）
 - `text-wrap: balance` / `text-wrap: pretty`
 - `dvh`
 - `appearance: none` によるselectのカスタム表示
