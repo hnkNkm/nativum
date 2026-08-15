@@ -37,11 +37,13 @@ jobs:
         run: |
           set -eu
           VERSION="${{ steps.release.outputs.version }}"
-          grep -Fq "VERSION=\"$VERSION\"" tools/build.sh
-          grep -Fq "version = \"$VERSION\";" flake.nix
           grep -Fq "Nativum $VERSION" skills/nativum-ui/SKILL.md
           grep -Fq "nativum.css       $VERSION" skills/nativum-ui/SKILL.md
           grep -Fq "nativum-ui Skill  $VERSION" skills/nativum-ui/SKILL.md
+          for f in src/*.css; do
+            grep -Fq "Nativum $VERSION" "$f" || exit 1
+          done
+          grep -Fq "## Nativum v$VERSION" ".github/release-notes/v$VERSION.md"
 
       - name: Build dist
         run: ./tools/build.sh

@@ -132,7 +132,7 @@ tools/      build.sh / verify.sh / serve.sh
 
 ## セキュリティ
 
-Nativum CoreのSecurity Contractは「実行時に第三者の実行可能な依存グラフを持たない」ことです。詳細は [docs/security.md](docs/security.md) を参照してください。
+Nativum CoreのSecurity Contractは「実行時に第三者の実行可能な依存グラフを持たない」ことです。詳細は [docs/SECURITY.md](docs/SECURITY.md) を参照してください。
 
 - CoreはHTML+CSSのみ。JS/TS runtime・install hook・remote runtime asset・telemetryはゼロ
 - 契約の充足は `./tools/verify.sh` で機械検査できます
