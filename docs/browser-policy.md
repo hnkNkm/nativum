@@ -42,7 +42,7 @@ Enhancement は「利用可能なら UI・positioning・motion を改善する�
 | CSS Anchor Positioning（`anchor-name` / `position-anchor` / `anchor()`） | `src/60-components.css`（`@supports (anchor-name: ...) and (top: anchor(top))` ガード内の `.nv-dropdown-trigger` / `.nv-dropdown` / `.nv-dropdown-end`） | `@supports` によりこのルール群自体が無効化され、popover のデフォルト配置にフォールバックする（`docs/components/dropdown.md`） |
 | Container Queries（`@container`） | **v0.1 の `src/` では未使用**。方針として「Nativum の responsive design は viewport だけでなく Container Queries を積極的に利用する」としているが、v0.1 では `.nv-grid` の `--nv-grid-min`（`minmax` + `auto-fit`）グリッドがコンテナ幅追従の役割を代替している | 使用していないためフォールバック不要。今後のバージョンで導入する場合は必ず Enhancement として扱う |
 | `accent-color` | `src/50-forms.css`（`input[type="checkbox"]` / `input[type="radio"]` / `input[type="range"]` / `progress` / `meter`） | ブラウザ既定のアクセントカラーで描画される |
-| `light-dark()` | `src/20-tokens.css`（全 `--nv-color-*` トークンの値） | 未対応環境ではカスタムプロパティの値が invalid-at-computed-value となり、各要素は UA 既定色へフォールバックする。`color-scheme` による form control の配色はそのまま機能する |
+| `light-dark()` | `src/20-tokens.css`（`@supports` ガード内のカラートークン `--nv-color-*` の `light-dark()` 値。ガード外に静的なライト値フォールバックを宣言） | 未対応環境では `@supports (color: light-dark(#000, #fff))` ガードが偽となり、`:root` に宣言した静的なライト値が適用される。テキスト・背景は UA 既定色ではなく Nativum のライト配色で維持される。`color-scheme` による form control の配色はそのまま機能する |
 | `text-wrap: balance` / `text-wrap: pretty` | `src/30-base.css`（`h1`–`h6` / `p`） | 通常の折り返しにフォールバック |
 | `dvh`（`max-height: 80dvh`） | `src/60-components.css`（`dialog`） | 宣言が無視され `max-height` 指定なし。`overflow: auto` により内容はスクロール可能 |
 | `appearance: none`（select のカスタム矢印） | `src/50-forms.css`（`select`）+ `src/20-tokens.css`（`--nv-select-icon` データURI） | ネイティブの select 矢印が表示される。アイコンはデータURIで焼き込まれており外部依存はない |
