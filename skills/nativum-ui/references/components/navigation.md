@@ -11,6 +11,8 @@
 - `<ol>` / `<ul>` + `<li>`
 - `aria-current="page"` (現在位置のマーキング)
 - `<button>` (ツールバーの操作)
+- `<div>` (ボタングループ)
+- `<nav aria-label>` (名前付きボタングループ)
 
 ## Required markup
 
@@ -38,7 +40,7 @@
 - `nv-nav` — 横並びのナビゲーションバー (`flex-wrap`、`aria-current="page"` のアクティブ表示)
 - `nv-breadcrumb` — パンくずリスト (`<ol>` に付与。`/` 区切りをCSSで描画)
 - `nv-pagination` — ページネーション (`<ul>` に付与。現在ページは `<span aria-current="page">`)
-- `nv-toolbar` — ボタングループのバー (`role="toolbar"` + `aria-label` と併用)
+- `nv-toolbar` — スタイル付きボタングループのバー (`role="toolbar"` は付けない。名前が必要なら `<nav class="nv-toolbar" aria-label="...">` を使う)
 
 レイアウト補助: `nv-cluster` / `nv-cluster-between`, `nv-stack-sm`。
 
@@ -59,6 +61,7 @@
 - 現在ページのマーキングをクラス (`.active` 等) で行う (`aria-current="page"` を使う)
 - パンくずに `<ul>` を使う (順序があるため `<ol>`)
 - ページネーションの現在ページを `<a>` にする (`<span aria-current="page">`)
+- JSフリーのボタングループに `role="toolbar"` を付ける (矢印キーでのフォーカス管理を要求するため)
 - タブUI (Tabs) をナビゲーションの見た目で提供する (Unsupported)
 
 ## 詳細
