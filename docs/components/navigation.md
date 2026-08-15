@@ -11,7 +11,8 @@
 - `<ol>` / `<ul>` + `<li>`
 - `aria-current="page"`（現在位置のマーキング）
 - `<button>`（ツールバーの操作）
-- `role="toolbar"` + `aria-label`
+- `<div>`（ボタングループ）
+- `<nav aria-label>`（名前付きボタングループ）
 
 ## Required markup
 
@@ -55,12 +56,14 @@
 ツールバー:
 
 ```html
-<div class="nv-toolbar" role="toolbar" aria-label="Actions">
+<div class="nv-toolbar">
   <button class="nv-primary">New</button>
   <button>Edit</button>
   <button>Export</button>
 </div>
 ```
+
+名前が必要な場合は `<nav class="nv-toolbar" aria-label="Actions">` を使う（generic な `<div>` の `aria-label` は支援技術に公開されない）。
 
 ## Optional classes
 
@@ -69,7 +72,7 @@
 - `nv-nav` — 横並びのナビゲーションバー（`flex-wrap` + `aria-current="page"` のアクティブ表示）
 - `nv-breadcrumb` — パンくずリスト（`<ol>` に付与。項目間の `/` 区切りをCSSで描画）
 - `nv-pagination` — ページネーション（`<ul>` に付与。現在ページは `<span aria-current="page">`）
-- `nv-toolbar` — ボタングループのバー（`role="toolbar"` + `aria-label` と併用）
+- `nv-toolbar` — スタイル付きボタングループのバー（`role="toolbar"` は付けない。名前が必要なら `<nav class="nv-toolbar" aria-label="...">` を使う）
 
 レイアウト補助として `nv-cluster` / `nv-cluster-between`（ナビとコンテンツの両端配置）、`nv-stack-sm` を併用できる。
 
@@ -86,7 +89,7 @@
 - 現在ページには `aria-current="page"` を使う。`aria-current` は真偽値でなく値を持つ属性であり、`aria-current="true"` ではなく `aria-current="page"` と書く
 - パンくずは順序が意味を持つため `<ol>` を使う
 - ページネーションは `nav` で包み、現在ページは `aria-current="page"` の `<span>`（リンクにしない）で表す
-- ツールバーの `role="toolbar"` はフォーカス管理を伴うロールである。ツールバー内をタブ順で走査できる構成（ボタンのみ）なら安全に使える。`role="toolbar"` を付けない場合は `aria-label` 付きの `<div class="nv-toolbar">` として使う
+- `.nv-toolbar` は `role="toolbar"` を付けないスタイル付きボタングループ。ボタンは通常のタブ順で操作できる。グループ名が必要な場合は `<nav class="nv-toolbar" aria-label="...">` を使う（generic な `<div>` の `aria-label` は支援技術に公開されないため）
 - リンクのテキストは行き先を説明する（「詳細を見る」等の曖昧な文言は避ける）
 
 ## Progressive enhancements
@@ -134,7 +137,7 @@
       </ul>
     </nav>
 
-    <div class="nv-toolbar" role="toolbar" aria-label="Actions">
+    <div class="nv-toolbar">
       <button class="nv-primary">New</button>
       <button>Edit</button>
       <button>Export</button>
@@ -150,5 +153,5 @@
 - 現在ページのマーキングをクラスやCSS（`.active` 等）で行う。`aria-current="page"` が状態の唯一の真実源であり、スタイルはそれにのみ依存する（`src/60-components.css` の `a[aria-current="page"]` セレクタ）
 - パンくずに `<ul>`（順序なしリスト）を使う（順序を持つため `<ol>`）
 - ページネーションの現在ページを `<a>` にする（`<span aria-current="page">` を使う）
-- `role="toolbar"` にフォーカス管理が必要な要素（セレクト等）を入れる
+- JS フリーのボタングループに `role="toolbar"` を付ける（toolbar ロールは矢印キーによるフォーカス管理を要求する。タブ順で操作するボタングループには付けない）
 - タブUI（Tabs）をナビゲーションリンクの見た目で「実装できる」と誤解させる。TabsはUnsupported
