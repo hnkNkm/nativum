@@ -1,0 +1,17 @@
+{
+  "name": "Nativum",
+  "install": "./tools/build.sh",
+  "terminals": [
+    {
+      "name": "examples",
+      "command": "./tools/serve.sh",
+      "description": "Nativum example server (python3 http.server) — http://localhost:8080/examples/ で全exampleページと dist/nativum.css を配信"
+    }
+  ],
+  "ports": [
+    {
+      "name": "examples",
+      "port": 8080
+    }
+  ]
+}
