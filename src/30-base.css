@@ -144,6 +144,12 @@
     outline-offset: var(--nv-focus-ring-offset);
   }
 
+  @media (forced-colors: active) {
+    :focus-visible {
+      outline-color: Highlight;
+    }
+  }
+
   ::selection {
     background-color: var(--nv-color-selection);
   }

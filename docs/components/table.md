@@ -54,7 +54,7 @@
 
 ## Supported interactions
 
-- テーブル自体に独自のインタラクションはない。行のhoverハイライト（`tbody tr:hover`）が `src/60-components.css` で定義される
+- テーブル自体に独自のインタラクションはない。行のhoverハイライト（`tbody tr:hover`、色は `--nv-color-border`。ストライプ奇数行でもhoverが勝つ）が `src/60-components.css` で定義される
 - 横スクロールは `nv-table-scroll` のラッパーによるネイティブスクロール
 - セル内にリンク・ボタン・バッジ等を置ける（ネイティブ要素のまま）
 

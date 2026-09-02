@@ -116,12 +116,17 @@
     border-block-end: var(--nv-border-width) solid var(--nv-color-border-strong);
   }
 
-  tbody tr:hover {
+  .nv-table-striped tbody tr:nth-child(odd) {
     background-color: var(--nv-color-subtle);
   }
 
-  .nv-table-striped tbody tr:nth-child(odd) {
-    background-color: var(--nv-color-subtle);
+  tbody tr:hover {
+    background-color: var(--nv-color-border);
+  }
+
+  /* stripe と同色にならないよう、hover を後段・同等以上の特異性で勝たせる */
+  .nv-table-striped tbody tr:hover {
+    background-color: var(--nv-color-border);
   }
 
   /* テーブルを横スクロールさせる場合のラッパー */
@@ -506,6 +511,25 @@
     .nv-dropdown-end {
       inset-inline-start: auto;
       inset-inline-end: anchor(end);
+    }
+  }
+
+  /* --- Forced colors --- */
+  @media (forced-colors: active) {
+    button,
+    input[type="submit"],
+    input[type="reset"],
+    input[type="button"] {
+      border-color: ButtonText;
+      color: ButtonText;
+      background-color: Canvas;
+    }
+
+    .nv-card,
+    dialog {
+      border-color: CanvasText;
+      color: CanvasText;
+      background-color: Canvas;
     }
   }
 }
