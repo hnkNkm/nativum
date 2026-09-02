@@ -3,7 +3,7 @@
 # 使用法: tools/serve.sh [port]  →  http://localhost:8080/examples/
 set -eu
 
-cd "$(dirname "$0")/.."
+ROOT=$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)
 PORT="${1:-8080}"
 
 if ! command -v python3 > /dev/null 2>&1; then
@@ -11,5 +11,12 @@ if ! command -v python3 > /dev/null 2>&1; then
   exit 1
 fi
 
+STAGE=$(mktemp -d "${TMPDIR:-/tmp}/nativum-serve.XXXXXX")
+trap 'rm -rf "$STAGE"' EXIT
+
+ln -s "$ROOT/examples" "$STAGE/examples"
+ln -s "$ROOT/dist" "$STAGE/dist"
+
 echo "Nativum examples → http://localhost:$PORT/examples/"
-exec python3 -m http.server "$PORT"
+cd "$STAGE"
+python3 -m http.server --bind 127.0.0.1 "$PORT"
