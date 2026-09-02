@@ -18,8 +18,9 @@
     <section class="nv-stack-sm">
       <h1>Dialog</h1>
       <p class="nv-text-muted">
-        ネイティブの <code>&lt;dialog&gt;</code> を使用する。カスタムmodal実装は禁止。
-        開閉はHTML Standardの <code>command</code> / <code>commandfor</code> 属性で宣言的に行う。
+        ネイティブの <code>&lt;dialog&gt;</code> / <code>&lt;dialog open&gt;</code> が Core。
+        対応環境では <code>command</code> / <code>commandfor</code> で宣言的に開閉する (Enhancement)。
+        カスタムmodal実装は禁止。
       </p>
     </section>
 
@@ -85,6 +86,33 @@
         <code>&lt;form method="dialog"&gt;</code> は <code>returnValue</code> を
         JavaScriptで読み取る用途のみで、サーバー送信はしない。
       </p>
+    </section>
+
+    <section class="nv-stack-sm">
+      <h2>フォールバック: dialog[open] + ページ内フォーム</h2>
+      <p class="nv-text-muted">
+        Invoker Commands 非対応環境では、サーバーが <code>open</code> を付けてレンダリングし、
+        操作はページ内の通常フォームで行う。この節は <code>commandfor</code> なしで操作できる。
+      </p>
+
+      <dialog id="profile-fallback" open>
+        <header>
+          <h2>プロフィールを編集</h2>
+        </header>
+        <form action="/settings/profile" method="post" id="profile-fallback-form">
+          <div class="nv-field">
+            <label for="fb-name">表示名</label>
+            <input id="fb-name" name="name" type="text" value="Hanako" required>
+          </div>
+          <div class="nv-field">
+            <label for="fb-email">メール</label>
+            <input id="fb-email" name="email" type="email" value="hanako@example.com" required>
+          </div>
+        </form>
+        <footer>
+          <button class="nv-primary" type="submit" form="profile-fallback-form">保存</button>
+        </footer>
+      </dialog>
     </section>
 
     <div class="nv-notice nv-notice-info" role="status">

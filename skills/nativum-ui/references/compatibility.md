@@ -16,8 +16,7 @@ Nativumのcomponent API / native interactionの土台として扱うprimitive。
 - `<form>` とネイティブ検証属性 (`required` / `minlength` / `type="email"` 等)
 - `:user-invalid` と `[aria-invalid="true"]` による検証状態表現
 - `<details>` / `<summary>` + `open` 属性 + `name` 属性によるネイティブ排他グループ
-- `<dialog>` / `::backdrop`
-- `command` / `commandfor` (`show-modal` / `close` / `request-close`)
+- `<dialog>` / `<dialog open>` / `::backdrop`
 - Popover API (`[popover]` / `popovertarget` / `popovertargetaction` / `:popover-open`)
 - `<table>` / `<caption>` / `<th scope>`
 - `<nav>` / `<ol>` / `<ul>` / `<a>` / `aria-current="page"`
@@ -31,6 +30,7 @@ Nativumのcomponent API / native interactionの土台として扱うprimitive。
 
 代表例:
 
+- `command` / `commandfor` (`show-modal` / `close` / `request-close`) — Dialog の宣言的開閉。未対応では `<dialog open>` + ページ内フォーム
 - CSS Anchor Positioning (`anchor-name` / `position-anchor` / `anchor()`)
 - CSS Transitions / `@starting-style` / discrete transitions (`allow-discrete`)
 - `accent-color`
@@ -68,7 +68,7 @@ Nativumのcomponent API / native interactionの土台として扱うprimitive。
 | コンポーネント | Core | Enhancement | Fallback |
 |---|---|---|---|
 | Disclosure / Accordion | `<details>` / `<summary>` / `open` / `name` | chevron transition | `details[name]` 非対応の古い環境でも独立disclosureとして操作可能 |
-| Dialog | `<dialog>` + `command` / `commandfor` | enter/exit transition | `<dialog open>` のサーバーレンダリング + 通常フォーム |
+| Dialog | `<dialog>` / `<dialog open>` | `command` / `commandfor`、enter/exit transition | `<dialog open>` + ページ内フォーム (`examples/dialog.html` フォールバック節) |
 | Popover | Popover API | enter/exit transition | フロー内コンテンツとして表示 |
 | Dropdown | Popover API + 通常リンク/ボタン | CSS Anchor Positioning | popoverのデフォルト配置 |
 | Form | native controls + validation + `:user-invalid` / `[aria-invalid]` | `accent-color` 等 | サーバー側再検証、UA既定表示 |
