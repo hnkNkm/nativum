@@ -513,28 +513,36 @@
 @layer nativum.components {
   /* --- Label --- */
   label {
-    display: block;
     font-size: var(--nv-font-size-sm);
     font-weight: var(--nv-font-weight-medium);
+  }
+
+  /* ブロック配置は .nv-field 直下のラベルのみ。
+     checkbox/radio を包む label はインラインのままにする */
+  .nv-field > label {
+    display: block;
     margin-block-end: var(--nv-space-2);
   }
 
   /* --- Text fields (input / textarea / select) --- */
-  input:not([type]),
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
-  input[type="url"],
-  input[type="tel"],
-  input[type="search"],
-  input[type="number"],
-  input[type="date"],
-  input[type="datetime-local"],
-  input[type="month"],
-  input[type="week"],
-  input[type="time"],
-  textarea,
-  select {
+  /* タイプ列は :where() で特異性を 0 にする。input:not([type]) も同じリストに含める */
+  :where(
+    input:not([type]),
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="url"],
+    input[type="tel"],
+    input[type="search"],
+    input[type="number"],
+    input[type="date"],
+    input[type="datetime-local"],
+    input[type="month"],
+    input[type="week"],
+    input[type="time"],
+    textarea,
+    select
+  ) {
     width: 100%;
     min-height: var(--nv-control-height);
     padding: var(--nv-space-2) var(--nv-space-3);
@@ -545,21 +553,23 @@
     border-radius: var(--nv-radius-md);
   }
 
-  input:not([type]):hover:not(:disabled),
-  input[type="text"]:hover:not(:disabled),
-  input[type="email"]:hover:not(:disabled),
-  input[type="password"]:hover:not(:disabled),
-  input[type="url"]:hover:not(:disabled),
-  input[type="tel"]:hover:not(:disabled),
-  input[type="search"]:hover:not(:disabled),
-  input[type="number"]:hover:not(:disabled),
-  input[type="date"]:hover:not(:disabled),
-  input[type="datetime-local"]:hover:not(:disabled),
-  input[type="month"]:hover:not(:disabled),
-  input[type="week"]:hover:not(:disabled),
-  input[type="time"]:hover:not(:disabled),
-  textarea:hover:not(:disabled),
-  select:hover:not(:disabled) {
+  :where(
+    input:not([type]),
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="url"],
+    input[type="tel"],
+    input[type="search"],
+    input[type="number"],
+    input[type="date"],
+    input[type="datetime-local"],
+    input[type="month"],
+    input[type="week"],
+    input[type="time"],
+    textarea,
+    select
+  ):hover:not(:disabled) {
     border-color: var(--nv-color-primary);
   }
 
@@ -574,13 +584,20 @@
   }
 
   /* --- Select (custom chevron) --- */
-  select {
+  /* multiple / size 付きはネイティブ矢印のまま */
+  select:not([multiple]):not([size]) {
     appearance: none;
     background-image: var(--nv-select-icon);
     background-repeat: no-repeat;
     background-position: right var(--nv-space-3) center;
     background-size: 1em auto;
     padding-inline-end: calc(var(--nv-space-3) * 2 + 1em);
+  }
+
+  @supports (background-position: inline-end var(--nv-space-3) center) {
+    select:not([multiple]):not([size]) {
+      background-position: inline-end var(--nv-space-3) center;
+    }
   }
 
   /* --- Checkbox / Radio --- */
@@ -639,6 +656,13 @@
     opacity: 0.55;
     cursor: not-allowed;
     background-color: var(--nv-color-subtle);
+  }
+
+  /* fieldset の opacity と二重にならないよう内側コントロールは 1 に戻す */
+  fieldset:disabled input,
+  fieldset:disabled textarea,
+  fieldset:disabled select {
+    opacity: 1;
   }
 
   /* --- Form field wrapper --- */

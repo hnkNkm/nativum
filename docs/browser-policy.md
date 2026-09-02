@@ -47,7 +47,7 @@ Enhancement は「利用可能なら UI・positioning・motion を改善する�
 | `light-dark()` | `src/20-tokens.css`（`@supports` ガード内のカラートークン `--nv-color-*` の `light-dark()` 値。ガード外に静的なライト値フォールバックを宣言） | 未対応環境では `@supports (color: light-dark(#000, #fff))` ガードが偽となり、`:root` に宣言した静的なライト値が適用される。テキスト・背景は UA 既定色ではなく Nativum のライト配色で維持される。`color-scheme` による form control の配色はそのまま機能する |
 | `text-wrap: balance` / `text-wrap: pretty` | `src/30-base.css`（`h1`–`h6` / `p`） | 通常の折り返しにフォールバック |
 | `dvh`（`max-height: 80dvh`） | `src/60-components.css`（`dialog`） | 宣言が無視され `max-height` 指定なし。`overflow: auto` により内容はスクロール可能 |
-| `appearance: none`（select のカスタム矢印） | `src/50-forms.css`（`select`）+ `src/20-tokens.css`（`--nv-select-icon` データURI） | ネイティブの select 矢印が表示される。アイコンはデータURIで焼き込まれており外部依存はない |
+| `appearance: none`（select のカスタム矢印） | `src/50-forms.css`（`select:not([multiple]):not([size])`）+ `src/20-tokens.css`（`--nv-select-icon` データURI） | ネイティブの select 矢印が表示される。`multiple` / `size` 付き select には付けない。アイコンはデータURIで焼き込まれており外部依存はない |
 
 ## Experimental
 
