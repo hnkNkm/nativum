@@ -8,6 +8,14 @@ VERSION="$(tr -d '[:space:]' < .release/version)"
 # 出力先は NATIVUM_DIST で上書き可能 (verify.sh が一時ディレクトリへビルドして比較するため)
 DIST="${NATIVUM_DIST:-dist}"
 FILES="src/00-layer.css src/10-reset.css src/20-tokens.css src/30-base.css src/40-layout.css src/50-forms.css src/60-components.css src/70-motion.css"
+# FILES に列挙されていない src/[0-9]*.css が存在すれば失敗させる
+# (明示的な順序リストが唯一の真実であるため、漏れを検出する)
+for f in src/[0-9]*.css; do
+  case " $FILES " in
+    *" $f "*) ;;
+    *) echo "ERROR: src/[0-9]*.css 未列挙ファイルを検出: $f (FILES に追加してください)" >&2; exit 1 ;;
+  esac
+done
 
 mkdir -p "$DIST"
 

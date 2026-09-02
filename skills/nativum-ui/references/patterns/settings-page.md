@@ -9,7 +9,7 @@
 - `forms` — `nv-field` / `nv-field-hint` / `nv-field-error`
 - `button` — `nv-primary` (保存), `nv-danger` (削除等)
 - `details` — `nv-accordion` (セクションの折りたたみ)
-- `dialog` — 確認ダイアログ (`form method="dialog"`)
+- `dialog` — 破壊的操作の確認 (キャンセルのみ `method="dialog"`、実行は隠し `method="post"` フォーム + ボタンの `form` 属性)
 - レイアウト: `nv-container-narrow` / `nv-stack-lg` / `nv-cluster`
 
 ## 構造の要点
@@ -55,7 +55,7 @@
 - 各セクションを独立した `<form method="post">` にする (1フォームで全部送るより失敗範囲が狭い)
 - サーバー側検証エラーは `aria-invalid="true"` + `nv-field-error` で再レンダリング
 - 保存結果のフィードバックは `nv-notice` (popoverはlight dismissで閉じるため不可)
-- 破壊的操作は `dialog` + `form method="dialog"` の確認を挟む
+- 破壊的操作は `<dialog>` で確認し、実行は隠し `<form method="post">` + ボタンの `form` 属性でサーバーへPOST (`method="dialog"` はダイアログを閉じる用途のみ。`server-actions.md` 参照)
 
 ## Nativum外の実装境界
 

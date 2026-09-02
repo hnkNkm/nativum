@@ -159,23 +159,13 @@
     --nv-color-primary-active: #1e3a8a;
     --nv-color-on-primary: #ffffff;
 
-    --nv-color-danger: #dc2626;
-    /* override-only: Core では未使用。ホストアプリ用の予約トークン */
-    --nv-color-danger-hover: #b91c1c;
-    --nv-color-on-danger: #ffffff;
-
-    --nv-color-success: #15803d;
-    /* override-only: Core では未使用。ホストアプリ用の予約トークン */
-    --nv-color-success-hover: #166534;
-    --nv-color-on-success: #ffffff;
-
-    --nv-color-warning: #b45309;
-    /* override-only: Core では未使用。ホストアプリ用の予約トークン */
-    --nv-color-warning-hover: #92400e;
-    --nv-color-on-warning: #ffffff;
-
     /* ソリッドなstatus背景色 (badge / 破壊的ボタン用)。
-       白文字とのコントラストが light / dark 双方で WCAG AA (4.5:1) を満たす。 */
+       この strong セットは意図的にテーマ不変 (dark でも値を変えない):
+       白文字とのコントラストを light / dark 双方で WCAG AA (4.5:1) に保つため。
+       .nv-danger / .nv-badge-danger 等は strong セットを直接消費する点に注意 —
+       --nv-color-danger だけを上書きしてもこれらは再スタイルされない。
+       ホストが完全にテーマを差し替える場合は --nv-color-* と
+       --nv-color-*-strong の両セットを上書きすること。 */
     --nv-color-danger-strong: #dc2626;
     --nv-color-danger-strong-hover: #b91c1c;
     --nv-color-success-strong: #15803d;
@@ -184,6 +174,23 @@
     --nv-color-warning-strong: #b45309;
     /* override-only: Core では未使用。ホストアプリ用の予約トークン */
     --nv-color-warning-strong-hover: #92400e;
+
+    /* light 値は strong セットと同一なので var() で一元化する (重複排除)。
+       定義済みの strong を参照するため上流に配置している */
+    --nv-color-danger: var(--nv-color-danger-strong);
+    /* override-only: Core では未使用。ホストアプリ用の予約トークン */
+    --nv-color-danger-hover: var(--nv-color-danger-strong-hover);
+    --nv-color-on-danger: #ffffff;
+
+    --nv-color-success: var(--nv-color-success-strong);
+    /* override-only: Core では未使用。ホストアプリ用の予約トークン */
+    --nv-color-success-hover: var(--nv-color-success-strong-hover);
+    --nv-color-on-success: #ffffff;
+
+    --nv-color-warning: var(--nv-color-warning-strong);
+    /* override-only: Core では未使用。ホストアプリ用の予約トークン */
+    --nv-color-warning-hover: var(--nv-color-warning-strong-hover);
+    --nv-color-on-warning: #ffffff;
 
     --nv-color-link: var(--nv-color-primary);
     --nv-color-link-hover: var(--nv-color-primary-hover);
@@ -208,21 +215,25 @@
       --nv-color-primary-hover: light-dark(#1e40af, #93adff);
       --nv-color-primary-active: light-dark(#1e3a8a, #628af2);
       --nv-color-on-primary: light-dark(#ffffff, #0d0d10);
-      --nv-color-danger: light-dark(#dc2626, #f06a6a);
-      --nv-color-danger-hover: light-dark(#b91c1c, #f08383);
+      /* light 側は strong セットへの var() 参照で一元化 (値は不変)。
+         dark 側のみリテラルを焼き込む */
+      --nv-color-danger: light-dark(var(--nv-color-danger-strong), #f06a6a);
+      --nv-color-danger-hover: light-dark(var(--nv-color-danger-strong-hover), #f08383);
       --nv-color-on-danger: light-dark(#ffffff, #ffffff);
-      --nv-color-success: light-dark(#15803d, #3fb950);
-      --nv-color-success-hover: light-dark(#166534, #2ea043);
+      --nv-color-success: light-dark(var(--nv-color-success-strong), #3fb950);
+      --nv-color-success-hover: light-dark(var(--nv-color-success-strong-hover), #2ea043);
       --nv-color-on-success: light-dark(#ffffff, #ffffff);
-      --nv-color-warning: light-dark(#b45309, #d29922);
-      --nv-color-warning-hover: light-dark(#92400e, #bb8009);
+      --nv-color-warning: light-dark(var(--nv-color-warning-strong), #d29922);
+      --nv-color-warning-hover: light-dark(var(--nv-color-warning-strong-hover), #bb8009);
       --nv-color-on-warning: light-dark(#ffffff, #ffffff);
       --nv-color-selection: light-dark(rgb(29 78 216 / 0.18), rgb(124 159 255 / 0.28));
     }
   }
 
   /* サーバー側で明示的に dark を強制する場合。
-     color-scheme だけでなく、light-dark() 非対応でも使えるよう色トークンを代入する */
+     color-scheme だけでなく、light-dark() 非対応でも使えるよう色トークンを代入する。
+     この data-theme ブロックは light-dark() 非対応環境でも確定値が当たるよう、
+     status を含む全トークンをリテラルで代入する (var() 間接参照を置かない) */
   :root[data-theme="dark"] {
     color-scheme: dark;
     --nv-color-bg: #101014;
@@ -265,6 +276,7 @@
   /* サーバー側で明示的に light を強制する場合。
      OS が dark でも light-dark() 非対応環境を含めライトの色トークンを代入する */
   :root[data-theme="light"] {
+    /* status を含む全トークンをリテラルで代入する (data-theme="dark" と同じ理由) */
     color-scheme: light;
     --nv-color-bg: #f7f7f8;
     --nv-color-surface: #ffffff;
