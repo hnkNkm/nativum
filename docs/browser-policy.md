@@ -30,7 +30,8 @@ Core は「その機能なしでは component が成立しない」層である�
 | CSS Cascade Layers（`@layer`） | `src/00-layer.css`（layer 順序の宣言）、全ファイルの `@layer` ブロック | `@layer` 非対応環境では `@layer` ルール全体が無視されるため Nativum スタイルが適用されない。2022年以降の全モダンブラウザで対応済みのため、実質的なリスクなし |
 | `:focus-visible` | `src/30-base.css`（グローバルフォーカスリング） | フォーカスリングが描画されないだけ。ネイティブのフォーカス順序・キーボード操作は維持される |
 
-Core CSS primitive は 2022年以降の全モダンブラウザで利用可能です。`command` / `commandfor`（Invoker Commands）は Baseline Newly Available（2025-12-12、Chrome 135 / Firefox 144 / Safari 26.2）で Core CSS baseline より新しいため **Enhancement** です。非対応環境では `<dialog open>` + ページ内フォーム（`examples/dialog.html` のフォールバック節）で操作します。
+なお、Core のうち `:user-invalid`（Chrome 119（2023-11）/ Safari 16.5（2023-03））と `<details name>` の排他 accordion（Chrome 120 / Safari 17.2）は 2022年以降の baseline より後に実装された。これらは上記 Core 表のフォールバック（赤ボーダーなしで検証は機能 / 各 `<details>` が独立 disclosure として開閉）で劣化なく動作するため、Core のまま据え置いている。
+それ以外の Core CSS primitive は 2022年以降の全モダンブラウザで利用可能です。`command` / `commandfor`（Invoker Commands）は Baseline Newly Available（2025-12-12、Chrome 135 / Firefox 144 / Safari 26.2）で Core CSS baseline より新しいため **Enhancement** です。非対応環境では `<dialog open>` + ページ内フォーム（`examples/dialog.html` のフォールバック節）で操作します。
 
 ## Enhancement
 
