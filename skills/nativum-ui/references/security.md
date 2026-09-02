@@ -79,19 +79,22 @@ background-image: url("https://...");
 ./tools/verify.sh
 ```
 
-検査内容:
+検査内容 (静的解析。実行時にネットワークが無いことの証明ではない):
 
-1. `dist/` が最新であること (自動build)
-2. JS/TS runtime file (`*.js` `*.jsx` `*.ts` `*.tsx`) が存在しない
+1. コミット済み `dist/` が `src/` と一致すること — 一時ディレクトリへ `build.sh` して `cmp` する。`dist/` は書き込まない (自動上書きしない)
+2. JS/TS runtime file (`*.js` `*.jsx` `*.ts` `*.tsx` `*.mjs` `*.cjs` `*.mts` `*.cts`、大小文字無視) が存在しない (`.git` / `.direnv` / `.opencode` は除外)
 3. `node_modules/`・lockファイルが存在しない
 4. Node build config (`vite.config.*` 等) が存在しない
 5. package.jsonが存在する場合、passive artifact metadataであること (空dependencies / install hookなし)
-6. CSSのremote import / remote URL が存在しない (`data:image/svg+xml` は除外)
-7. `examples/` に `<script>` が存在しない
-8. `examples/` に `role="button"` の div / span 再実装が存在しない
-9. 外部Web Font / 外部Icon Font が存在しない
+6. CSSの remote `@import` / `url()` (`http(s)://` および `//host`。`data:` URI は除外対象ではなく、パターンが `url(` 直後のプロトコルだけを見る)
+7. `examples/` と `skills/` の HTML に `<script>` / `<style>` が存在しない
+8. 同 HTML に `onclick` / `onload` 等のインラインイベントハンドラ (`on[a-z]+="` / `on[a-z]+='`) と `javascript:` URL が存在しない
+9. 同 HTML の form `action` / button `formaction` に `https?://` または `//host` が存在しない (相対パスや `action="#"` は許可)
+10. 同 HTML のランタイム資源タグ (script/link/img/iframe 等) に remote / protocol-relative の src/href 等が存在しない。通常の `<a href="https://...">` は対象外
+11. 同 HTML に `role="button"` / `role='button'` の div / span 再実装が存在しない
+12. 外部Web Font / 外部Icon Font が存在しない
 
-`VERIFY OK` が出力されれば契約を満たしている。失敗した場合は出力される `VERIFY FAIL: ...` の内容に従って修正する。
+`VERIFY OK` は上記の静的検査を通過したことであり、Security Contract 全体や実行時の非通信を証明しない。失敗した場合は出力される `VERIFY FAIL: ...` の内容に従って修正する。
 
 ## 生成物の確認手順
 

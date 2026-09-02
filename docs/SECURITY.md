@@ -74,19 +74,29 @@ package managerは配送手段であり、実行時アーキテクチャでは�
 は、executable supply-chain attack surfaceの検出を目的とし、以下を機械検査する。
 
 ```text
-JS/TS runtime files
-<script> in official examples (examples/ と skills/ の全HTML)
-remote resource attributes in official HTML (src/href/data/srcset/poster 属性と
-inline style の url() による http(s):// 参照)
-remote CSS imports / fonts / url()
+JS/TS runtime files (*.js *.jsx *.ts *.tsx *.mjs *.cjs *.mts *.cts, -iname, -type f;
+  .git / .direnv / .opencode を prune)
+<script> / <style> in official HTML (examples/ と skills/ の全HTML。docs/ は対象外)
+onclick / onload / onerror 等のインラインイベントハンドラ (on[a-z]+=" および on[a-z]+=' )
+javascript: URL
+remote form action / button formaction (https?:// および protocol-relative //host)
+remote resource attributes on script/link/img/iframe/video/audio/source/embed/object/
+  input/form/button/base/meta (src/href/data/srcset/poster/action/formaction/content の
+  http(s):// と //host)。通常の <a href="https://..."> はランタイム資源とみなさない
+meta refresh の remote URL
+inline style の url() による http(s):// および // 参照
+remote CSS @import / url() (http(s):// および //。大小文字無視。data: URI は対象外)
 node_modules / package manager lock files
 install hooks / third-party dependencies (package.json がある場合)
-div + role="button" によるネイティブ要素の再実装
-コミット済み dist/nativum.css と src/ の整合性 (dist drift)
+div/span + role=button (単一・二重引用符) によるネイティブ要素の再実装
+コミット済み dist/nativum.css と src/ の整合性 (一時ディレクトリへ build して cmp。
+  dist/ は上書きしない)
 dist/SHA256SUMS の整合性
 ```
 
-**制約の正直な範囲**: このスクリプトはNativum Coreと公式exampleの静的解析であり、「実行時に全く通信しない」ことの証明ではない。検査は `src/` / `examples/` / `skills/` の静的成果物に対するもので、`tools/verify.sh` 自体の実行環境（POSIX shell等）の健全性は対象外である。
+相対パスおよび同一文書の form action (`action="#"` / `action="/login"`) は許可する。
+
+**制約の正直な範囲**: このスクリプトはNativum Coreと公式exampleの静的解析であり、「実行時に全く通信しない」ことの証明ではない。検査は `src/` の CSS と `examples/` / `skills/` の HTML に対するもので、`docs/` の markdown や `tools/verify.sh` 自体の実行環境（POSIX shell等）の健全性は対象外である。`VERIFY OK` は上記の静的検査を通過したことであり、Security Contract 全体の実行時証明ではない。
 
 CIでは以下を実行する:
 
@@ -94,6 +104,7 @@ CIでは以下を実行する:
 ./tools/build.sh
 git diff --exit-code -- dist/
 ./tools/verify.sh
+./tools/check-skill-examples.sh
 ```
 
 ## 脆弱性報告
