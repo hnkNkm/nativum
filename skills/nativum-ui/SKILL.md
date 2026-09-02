@@ -94,12 +94,14 @@ Explain that Nativum does not provide this behavior
 乖離の検出は CI で機械検査する:
 
 ```sh
-./tools/check-skill-examples.sh   # skill の examples / references のクラス・トークンと src/ の整合
+./tools/check-skill-examples.sh   # class="..." / class='...' の nv-* と var(--nv-*) が src/ に実在すること、および examples/popover.html の存在
 ```
 
 **保証範囲**: この検査は `examples/*.html` と `references/**/*.md` のコード例が
-参照するクラス (`nv-*`) とトークン (`--nv-*`) が `src/` に実在することを検証する。
-非対象: md 内の散文 (anti-pattern の禁止例言及) と、コマンド・属性・説明の意味論
+`class="..."` および `class='...'` で参照するクラス (`nv-*`) と、`var(--nv-*)` トークンが
+`src/` に実在することを検証する。あわせて `examples/popover.html` の存在を検査する。
+公式 `examples/` とのバイト一致や日英コピーの同一は要求しない。
+非対象: md 内の散文 (class 属性の外にある anti-pattern の禁止例言及) と、コマンド・属性・説明の意味論
 (マークアップの正しさはこの Skill の記述と実ブラウザでの動作確認で担保する)。
 CSSのクラス・トークンが変更された場合は、この Skill の `references/` と `examples/` も同じリリースで更新する (CSSとSkillは同一バージョン)。
 

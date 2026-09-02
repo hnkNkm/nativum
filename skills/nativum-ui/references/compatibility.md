@@ -2,7 +2,7 @@
 
 Nativumの3段階分類。機能を「必須」「任意」「実験的」に分けて、各primitiveの利用可否を判断するためのガイドライン。
 
-**分類の正本はリポジトリの `docs/browser-policy.md`。** このSkillはvendor後に単独で使えるよう、その分類をここへ同期している。
+**分類の正本はこのファイル。** vendor 後もこの Skill 単体で判断できる。
 
 ## 3段階分類
 
@@ -34,7 +34,7 @@ Nativumのcomponent API / native interactionの土台として扱うprimitive。
 - CSS Anchor Positioning (`anchor-name` / `position-anchor` / `anchor()`)
 - CSS Transitions / `@starting-style` / discrete transitions (`allow-discrete`)
 - `accent-color`
-- `light-dark()`（`src/20-tokens.css` のカラートークン。`@supports (color: light-dark(#000, #fff))` ガード内で使用し、ガード外に静的なライト値フォールバックを宣言。未対応環境ではライト配色へフォールバック）
+- `light-dark()`（カラートークン。`@supports (color: light-dark(#000, #fff))` ガード内で使用し、ガード外に静的なライト値フォールバックを宣言。未対応環境ではライト配色へフォールバック）
 - `text-wrap: balance` / `text-wrap: pretty`
 - `dvh`
 - `appearance: none` によるselectのカスタム表示
