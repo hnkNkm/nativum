@@ -131,7 +131,7 @@ Do not: 表示順はサーバー側で決定して <table> / リストでレン�
 
 ## その他の禁止パターン
 
-- `<details>` をタブUIの代用に使う (`docs/components/details.md` Anti-patterns)
+- `<details>` をタブUIの代用に使う (`references/components/details.md` Anti-patterns)
 - `<div role="button" tabindex="0">` でボタンを再実装する
 - `<div role="dialog">` + `aria-modal` でモーダルを自作する
 - `position: fixed` + 自作クリック検知JSでオーバーレイ・dropdownを再実装する

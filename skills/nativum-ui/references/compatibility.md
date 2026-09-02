@@ -2,7 +2,7 @@
 
 Nativumの3段階分類。機能を「必須」「任意」「実験的」に分けて、各primitiveの利用可否を判断するためのガイドライン。
 
-**分類の正本はリポジトリの `docs/browser-policy.md`。** このSkillはvendor後に単独で使えるよう、その分類をここへ同期している。
+**分類の正本はこのファイル。** vendor 後もこの Skill 単体で判断できる。
 
 ## 3段階分類
 
@@ -16,8 +16,7 @@ Nativumのcomponent API / native interactionの土台として扱うprimitive。
 - `<form>` とネイティブ検証属性 (`required` / `minlength` / `type="email"` 等)
 - `:user-invalid` と `[aria-invalid="true"]` による検証状態表現
 - `<details>` / `<summary>` + `open` 属性 + `name` 属性によるネイティブ排他グループ
-- `<dialog>` / `::backdrop`
-- `command` / `commandfor` (`show-modal` / `close` / `request-close`)
+- `<dialog>` / `<dialog open>` / `::backdrop`
 - Popover API (`[popover]` / `popovertarget` / `popovertargetaction` / `:popover-open`)
 - `<table>` / `<caption>` / `<th scope>`
 - `<nav>` / `<ol>` / `<ul>` / `<a>` / `aria-current="page"`
@@ -31,10 +30,11 @@ Nativumのcomponent API / native interactionの土台として扱うprimitive。
 
 代表例:
 
+- `command` / `commandfor` (`show-modal` / `close` / `request-close`) — Dialog の宣言的開閉。未対応では `<dialog open>` + ページ内フォーム
 - CSS Anchor Positioning (`anchor-name` / `position-anchor` / `anchor()`)
 - CSS Transitions / `@starting-style` / discrete transitions (`allow-discrete`)
 - `accent-color`
-- `light-dark()`（`src/20-tokens.css` のカラートークン。`@supports (color: light-dark(#000, #fff))` ガード内で使用し、ガード外に静的なライト値フォールバックを宣言。未対応環境ではライト配色へフォールバック）
+- `light-dark()`（カラートークン。`@supports (color: light-dark(#000, #fff))` ガード内で使用し、ガード外に静的なライト値フォールバックを宣言。未対応環境ではライト配色へフォールバック）
 - `text-wrap: balance` / `text-wrap: pretty`
 - `dvh`
 - `appearance: none` によるselectのカスタム表示
@@ -68,7 +68,7 @@ Nativumのcomponent API / native interactionの土台として扱うprimitive。
 | コンポーネント | Core | Enhancement | Fallback |
 |---|---|---|---|
 | Disclosure / Accordion | `<details>` / `<summary>` / `open` / `name` | chevron transition | `details[name]` 非対応の古い環境でも独立disclosureとして操作可能 |
-| Dialog | `<dialog>` + `command` / `commandfor` | enter/exit transition | `<dialog open>` のサーバーレンダリング + 通常フォーム |
+| Dialog | `<dialog>` / `<dialog open>` | `command` / `commandfor`、enter/exit transition | `<dialog open>` + ページ内フォーム (`examples/dialog.html` フォールバック節) |
 | Popover | Popover API | enter/exit transition | フロー内コンテンツとして表示 |
 | Dropdown | Popover API + 通常リンク/ボタン | CSS Anchor Positioning | popoverのデフォルト配置 |
 | Form | native controls + validation + `:user-invalid` / `[aria-invalid]` | `accent-color` 等 | サーバー側再検証、UA既定表示 |

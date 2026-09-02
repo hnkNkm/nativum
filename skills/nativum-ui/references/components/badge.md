@@ -49,4 +49,4 @@ variantはソリッドな背景色と `--nv-color-on-*` の文字色を組み合
 
 ## 詳細
 
-この Skill 内の該当 section が正本。リポジトリの `docs/components/` は人間向けの詳細版。
+この Skill 内の該当 section が正本。

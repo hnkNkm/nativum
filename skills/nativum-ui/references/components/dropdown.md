@@ -75,4 +75,4 @@ Popover API + CSS Anchor Positioningで、トリガーに紐付いたアンカ�
 
 ## 詳細
 
-この Skill 内の該当 section が正本。リポジトリの `docs/components/` は人間向けの詳細版。
+この Skill 内の該当 section が正本。

@@ -55,9 +55,9 @@ Nativum CoreのCSS primitive（Cascade Layers、`:focus-visible`、`color-scheme
 
 機能は Core / Enhancement / Experimental の3段階に分類され、各機能のフォールバックは [docs/browser-policy.md](docs/browser-policy.md) にまとめています。
 
-- `command` / `commandfor`（Invoker Commands）は Baseline Newly Available（2025-12-12、Chrome 135 / Firefox 144 / Safari 26.2）で、上記 Core CSS baseline より新しい機能です
-- 非対応環境ではダイアログの宣言的開閉が動作しないため、`<dialog open>` 属性付きのサーバーレンダリング + ページ内フォーム置換へフォールバックします（[docs/components/dialog.md](docs/components/dialog.md) の Fallback behavior 参照）
-- JS runtime は追加しません（フォールバックもサーバーレンダリング + HTML / CSS の範囲）
+- `command` / `commandfor`（Invoker Commands）は **Enhancement** である。Baseline Newly Available（2025-12-12、Chrome 135 / Firefox 144 / Safari 26.2）で、上記 Core CSS baseline より新しい
+- Dialog の Core は `<dialog>` / `<dialog open>`。Invoker Commands 非対応環境では `<dialog open>` + ページ内フォームがそのまま使える（[examples/dialog.html](examples/dialog.html) のフォールバック節、[docs/components/dialog.md](docs/components/dialog.md)）
+- JS runtime は追加しない（フォールバックもサーバーレンダリング + HTML / CSS の範囲）
 
 ## 例
 

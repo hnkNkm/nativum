@@ -69,7 +69,7 @@
 
 `src/60-components.css` に存在するクラスのみを使用する。
 
-- `nv-nav` — 横並びのナビゲーションバー（`flex-wrap` + `aria-current="page"` のアクティブ表示）
+- `nv-nav` — 横並びのナビゲーションバー（`flex-wrap` + `aria-current="page"` のアクティブ表示）。リンクスタイルは `.nv-nav > a` と `.nv-nav > .nv-cluster a` のみ。ネストした `[popover] a` / `.nv-dropdown a` には適用しない
 - `nv-breadcrumb` — パンくずリスト（`<ol>` に付与。項目間の `/` 区切りをCSSで描画）
 - `nv-pagination` — ページネーション（`<ul>` に付与。現在ページは `<span aria-current="page">`）
 - `nv-toolbar` — スタイル付きボタングループのバー（`role="toolbar"` は付けない。名前が必要なら `<nav class="nv-toolbar" aria-label="...">` を使う）
@@ -129,11 +129,11 @@
   <div class="nv-cluster-between nv-cluster">
     <nav aria-label="Pagination">
       <ul class="nv-pagination">
-        <li><a href="#">Prev</a></li>
-        <li><a href="#">1</a></li>
+        <li><a href="index.html">Prev</a></li>
+        <li><a href="index.html">1</a></li>
         <li><span aria-current="page">2</span></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">Next</a></li>
+        <li><a href="forms.html">3</a></li>
+        <li><a href="dialog.html">Next</a></li>
       </ul>
     </nav>
 
@@ -150,7 +150,7 @@
 
 - `<div>` + クリックハンドラでナビゲーションを再実装する（`<a href>` を使う）
 - `href="#"` のダミーリンクを量産する（実URLをサーバー側で生成する）
-- 現在ページのマーキングをクラスやCSS（`.active` 等）で行う。`aria-current="page"` が状態の唯一の真実源であり、スタイルはそれにのみ依存する（`src/60-components.css` の `a[aria-current="page"]` セレクタ）
+- 現在ページのマーキングをクラスやCSS（`.active` 等）で行う。`aria-current="page"` が状態の唯一の真実源であり、スタイルはそれにのみ依存する（`src/60-components.css` の `.nv-nav > a[aria-current="page"]` / `.nv-nav > .nv-cluster a[aria-current="page"]` セレクタ）
 - パンくずに `<ul>`（順序なしリスト）を使う（順序を持つため `<ol>`）
 - ページネーションの現在ページを `<a>` にする（`<span aria-current="page">` を使う）
 - JS フリーのボタングループに `role="toolbar"` を付ける（toolbar ロールは矢印キーによるフォーカス管理を要求する。タブ順で操作するボタングループには付けない）

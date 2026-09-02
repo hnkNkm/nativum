@@ -48,7 +48,6 @@ variantはソリッドな背景色と `--nv-color-on-*` の文字色を組み合
 ## Progressive enhancements
 
 - `border-radius: var(--nv-radius-full)` によるピル型
-- `src/70-motion.css` により `prefers-reduced-motion: no-preference` 時のみトランジションが付く
 
 ## Fallback behavior
 

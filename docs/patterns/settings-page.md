@@ -25,7 +25,7 @@ Nativum のテーマはサーバーが決定する。デフォルトは `color-s
 <html lang="en" data-theme="dark">
 ```
 
-を出力すると `:root[data-theme="dark"]`（`src/20-tokens.css`）により `color-scheme: dark` に固定される。テーマ選択 UI がある場合も、通常の `<form method="post">` で送信し、サーバーが `data-theme` 付きの HTML を再出力する。
+を出力すると `:root[data-theme="dark"]`（`src/20-tokens.css`）が `color-scheme` だけでなく色トークン（`--nv-color-*` / `--nv-shadow-*`）をダーク値へ明示的に割り当てる。`data-theme="light"` も同様にライトの色トークンを強制する。テーマ選択 UI がある場合も、通常の `<form method="post">` で送信し、サーバーが `data-theme` 付きの HTML を再出力する。
 
 ```html
 <form action="/settings/theme" method="post">

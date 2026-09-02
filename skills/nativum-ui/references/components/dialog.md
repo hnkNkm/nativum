@@ -2,14 +2,14 @@
 
 ## 目的
 
-ネイティブの `<dialog>` でモーダルダイアログを実現する。開閉はHTML Standardの `command` / `commandfor` 属性で宣言的に行う。カスタムモーダル実装は禁止。
+ネイティブの `<dialog>` でモーダルダイアログを実現する。Core は `<dialog>` / `<dialog open>`。対応環境では `command` / `commandfor` で宣言的に開閉する (Enhancement)。カスタムモーダル実装は禁止。
 
 **注意**: 非モーダルのオーバーレイには `<dialog>` ではなく **Popover API** が適切なprimitiveである (`popover.md` 参照)。
 
 ## ネイティブprimitive
 
 - `<dialog>` / `<dialog open>`
-- `commandfor` + `command="show-modal"` / `command="close"` / `command="request-close"`
+- `commandfor` + `command="show-modal"` / `command="close"` / `command="request-close"` (Enhancement)
 - `<form method="dialog">` (submitで閉じ、**submitterボタンの `value`** を `close(returnValue)` へ渡す。読み取りにはJavaScriptが必要)
 - `::backdrop` / Escキー (`cancel` イベント)
 
@@ -63,10 +63,10 @@
 
 ## フォールバック
 
-`commandfor` 未対応環境では:
+`commandfor` 未対応環境では (Core 経路):
 
 1. `<dialog>` を `open` 属性付きでサーバーレンダリング (初期表示を保証)
-2. 操作対象をページ内の通常フォーム (`<form method="post">`) へ置き換える
+2. 操作対象をページ内の通常フォーム (`<form method="post">`) へ置き換える。`examples/dialog.html` のフォールバック節に実マークアップがある
 
 高度なCSS (transition / `@starting-style`) がなくても表示・操作・意味は維持される。
 
@@ -82,4 +82,4 @@
 
 ## 詳細
 
-この Skill 内の該当 section が正本。リポジトリの `docs/components/` は人間向けの詳細版。
+この Skill 内の該当 section が正本。

@@ -44,8 +44,8 @@
 - 検証は `required` / `type` / `minlength` 等の属性で行われ、送信時にブラウザがブロックする
 - `:user-invalid` はユーザーが操作した後にのみ適用されるネイティブ疑似クラス（`src/50-forms.css` が赤いボーダーを付与）
 - `[aria-invalid="true"]` はサーバー側で検証済みエラーをレンダリングする場合のスタイル
-- `fieldset[disabled]` はグループ全体を非活性化（opacity低下 + `pointer-events: none`）
-- `<select>` は `appearance: none` + トークン `--nv-select-icon` のデータURI矢印で描画される
+- `fieldset[disabled]` はグループ全体を非活性化（fieldset の opacity 低下。操作はネイティブの `disabled` で止まる）
+- `<select>` は単一選択（`:not([multiple]):not([size])`）のみ `appearance: none` + トークン `--nv-select-icon` のデータURI矢印で描画される
 - checkbox / radio / range / progress / meter は `accent-color` でテーマ色になる
 
 ## Accessibility
@@ -86,13 +86,13 @@
     <input id="email" name="email" type="email" required>
   </div>
 
-  <div class="nv-field">
-    <label>Notification</label>
+  <fieldset>
+    <legend>Notification</legend>
     <div class="nv-stack-sm">
       <label><input type="checkbox" name="digest" checked> Email digest</label>
       <label><input type="checkbox" name="weekly"> Weekly report</label>
     </div>
-  </div>
+  </fieldset>
 
   <fieldset>
     <legend>Account type</legend>

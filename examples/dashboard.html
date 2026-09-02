@@ -39,7 +39,7 @@
             <strong>Hanako Tanaka</strong>
             <span class="nv-text-muted" style="font-size: var(--nv-font-size-xs)">hanako@example.com</span>
             <button commandfor="settings" command="show-modal">Settings</button>
-            <a href="#">Sign out</a>
+            <a href="login.html">Sign out</a>
           </div>
         </div>
       </span>
@@ -55,7 +55,7 @@
       </div>
       <div class="nv-cluster">
         <button commandfor="settings" command="show-modal">Settings</button>
-        <button class="nv-primary" commandfor="settings" command="show-modal">New project</button>
+        <button class="nv-primary" commandfor="create-project" command="show-modal">New project</button>
       </div>
     </section>
 
@@ -181,13 +181,13 @@
     <!-- Pagination -->
     <nav aria-label="Project history">
       <ul class="nv-pagination">
-        <li><a href="#">Prev</a></li>
-        <li><a href="#">1</a></li>
+        <li><a href="dashboard.html">Prev</a></li>
+        <li><a href="index.html">1</a></li>
         <li><span aria-current="page">2</span></li>
-        <li><a href="#">3</a></li>
+        <li><a href="forms.html">3</a></li>
         <li><span>…</span></li>
-        <li><a href="#">8</a></li>
-        <li><a href="#">Next</a></li>
+        <li><a href="settings.html">8</a></li>
+        <li><a href="settings.html">Next</a></li>
       </ul>
     </nav>
   </main>
@@ -214,14 +214,30 @@
           <option>Team</option>
         </select>
       </div>
-      <div class="nv-field">
-        <label>Email notifications</label>
+      <fieldset>
+        <legend>Email notifications</legend>
         <label><input type="checkbox" name="notify" checked> Digest</label>
-      </div>
+      </fieldset>
     </form>
     <footer>
       <button commandfor="settings" command="close">Cancel</button>
       <button class="nv-primary" type="submit" form="settings-form">Save changes</button>
+    </footer>
+  </dialog>
+
+  <dialog id="create-project">
+    <header>
+      <h2>New project</h2>
+    </header>
+    <form action="/projects" method="post" id="create-project-form">
+      <div class="nv-field">
+        <label for="p-name">Project name</label>
+        <input id="p-name" name="name" type="text" required>
+      </div>
+    </form>
+    <footer>
+      <button commandfor="create-project" command="close">Cancel</button>
+      <button class="nv-primary" type="submit" form="create-project-form">Create</button>
     </footer>
   </dialog>
 

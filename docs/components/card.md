@@ -54,7 +54,6 @@
 ## Progressive enhancements
 
 - `src/60-components.css` の `box-shadow: var(--nv-shadow-sm)` による軽い影
-- `src/70-motion.css` により `prefers-reduced-motion: no-preference` 時のみトランジションが付く
 
 ## Fallback behavior
 
@@ -74,7 +73,7 @@
   <article class="nv-card">
     <h3>Native First</h3>
     <p>ブラウザに適切なネイティブ機能が存在する場合、それを使用する。</p>
-    <a href="#">Read more</a>
+    <a href="index.html#buttons">Read more</a>
   </article>
 </div>
 ```

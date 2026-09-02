@@ -54,7 +54,6 @@ variantは非ソリッド系のアクセント色（`--nv-color-*`）を **`bord
 ## Progressive enhancements
 
 - 左アクセントボーダー（`border-inline-start`）は `src/60-components.css` の静的ルール
-- `src/70-motion.css` により `prefers-reduced-motion: no-preference` 時のみトランジションが付く
 
 ## Fallback behavior
 

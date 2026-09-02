@@ -44,13 +44,13 @@
       <details open>
         <summary>Notifications</summary>
         <form action="/settings/notifications" method="post">
-          <div class="nv-field">
-            <label>Email notifications</label>
+          <fieldset>
+            <legend>Email notifications</legend>
             <div class="nv-stack-sm">
               <label><input type="checkbox" name="digest" checked> Weekly digest</label>
               <label><input type="checkbox" name="alerts"> Security alerts</label>
             </div>
-          </div>
+          </fieldset>
           <div class="nv-cluster">
             <button class="nv-primary" type="submit">Save notifications</button>
           </div>

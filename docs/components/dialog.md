@@ -2,12 +2,12 @@
 
 ## Purpose
 
-ネイティブの `<dialog>` 要素でモーダルダイアログを実現する。開閉はHTML Standardの `command` / `commandfor` 属性で宣言的に行う。カスタムモーダル実装は禁止。
+ネイティブの `<dialog>` 要素でモーダルダイアログを実現する。Core は `<dialog>` / `<dialog open>`。対応環境では `command` / `commandfor` で宣言的に開閉する（Enhancement）。カスタムモーダル実装は禁止。
 
 ## Native primitive
 
 - `<dialog>` / `<dialog open>`
-- `commandfor` + `command="show-modal"` / `command="close"` / `command="request-close"`
+- `commandfor` + `command="show-modal"` / `command="close"` / `command="request-close"`（Enhancement）
 - `<form method="dialog">`（submitでdialogを閉じ、**submitterボタンの `value`** を `close(returnValue)` へ渡す。読み取りにはJavaScriptが必要）
 - `::backdrop`
 - `cancel` / `close` イベント（Esc操作等、ブラウザ内部動作）
@@ -18,7 +18,7 @@
 
 ## Required markup
 
-`commandfor` でトリガーとダイアログを結び、`command="show-modal"` でモーダル表示、`command="close"` で閉じる。
+Enhancement: `commandfor` でトリガーとダイアログを結び、`command="show-modal"` でモーダル表示、`command="close"` で閉じる。
 
 ```html
 <button commandfor="settings" command="show-modal">Open settings</button>
@@ -105,14 +105,14 @@ radio / select 等の入力値を使いたい場合は、`returnValue` ではな
 
 ## Progressive enhancements
 
-- `command` / `commandfor` による宣言的開閉（HTML Standard定義）。未対応環境では動作しないため、下記フォールバックが必要
+- `command` / `commandfor` による宣言的開閉（HTML Standard、Enhancement）。未対応環境では動作しないため、下記フォールバックが Core 経路になる
 - `closedby="any"` / `closedby="closerequest"`（対応環境のみ）によるlight dismiss
 - 表示 / 非表示のフェードとスケールは `src/70-motion.css` の `@starting-style` + `allow-discrete` transition（`prefers-reduced-motion: no-preference` 時のみ）
 - `::backdrop` の半透明背景とフェード
 
 ## Fallback behavior
 
-`commandfor` 未対応環境では、`examples/dialog.html` の推奨パターンに従う。
+`commandfor` 未対応環境では、`examples/dialog.html` のフォールバック節（`<dialog open>` + ページ内フォーム。notice だけではなく実マークアップ）に従う。
 
 1. `<dialog>` を `open` 属性付きでサーバーレンダリングする（初期表示を保証）
 2. 操作対象を `commandfor` の代わりにページ内の通常フォームへ置き換える

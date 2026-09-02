@@ -24,8 +24,9 @@
     <section class="nv-stack-sm">
       <h1>Dialog</h1>
       <p class="nv-text-muted">
-        ネイティブの <code>&lt;dialog&gt;</code> を使用する。カスタムmodal実装は禁止。
-        開閉はHTML Standardの <code>command</code> / <code>commandfor</code> 属性で宣言的に行う。
+        ネイティブの <code>&lt;dialog&gt;</code> / <code>&lt;dialog open&gt;</code> が Core。
+        対応環境では <code>command</code> / <code>commandfor</code> で宣言的に開閉する（Enhancement）。
+        カスタムmodal実装は禁止。
       </p>
     </section>
 
@@ -99,10 +100,32 @@
       <code>command="show"</code> / <code>command="hide"</code> はdialogに定義されていないため使用しない。
     </div>
 
-    <div class="nv-notice nv-notice-info" role="status">
-      <code>commandfor</code> に対応しない環境では、<code>&lt;dialog&gt;</code> はフォールバックとして
-      <code>open</code> 属性付きでサーバーレンダリングし、操作対象をページ内のフォームへ置き換えることを推奨する。
-    </div>
+    <section class="nv-stack-sm">
+      <h2>Fallback: dialog[open] + in-page form</h2>
+      <p class="nv-text-muted">
+        Invoker Commands 非対応環境では、サーバーが <code>open</code> を付けてレンダリングし、
+        操作はページ内の通常フォームで行う。この節は <code>commandfor</code> なしで操作できる。
+      </p>
+
+      <dialog id="profile-fallback" open>
+        <header>
+          <h2>Edit profile</h2>
+        </header>
+        <form action="#" method="post" id="profile-fallback-form">
+          <div class="nv-field">
+            <label for="fb-name">Display name</label>
+            <input id="fb-name" name="name" type="text" value="Hanako" required>
+          </div>
+          <div class="nv-field">
+            <label for="fb-email">Email</label>
+            <input id="fb-email" name="email" type="email" value="hanako@example.com" required>
+          </div>
+        </form>
+        <footer>
+          <button class="nv-primary" type="submit" form="profile-fallback-form">Save</button>
+        </footer>
+      </dialog>
+    </section>
 
     <footer class="nv-stack-sm" style="margin-block-start: 3rem">
       <hr>

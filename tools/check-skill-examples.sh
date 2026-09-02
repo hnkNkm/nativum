@@ -3,13 +3,15 @@
 #
 # Agent Skill と CSS 実装の乖離 (stale reference) を CI で検出するための検査。
 # 対象:
-#   - skills/nativum-ui/examples/*.html         の class="..." と var(--nv-...)
-#   - skills/nativum-ui/references/**/*.md      のコード例の class="..." と var(--nv-...)
+#   - skills/nativum-ui/examples/*.html         の class="..." / class='...' と var(--nv-...)
+#   - skills/nativum-ui/references/**/*.md      のコード例の class="..." / class='...' と var(--nv-...)
+#   - skills/nativum-ui/examples/popover.html   の存在 (file-set。日英バイト一致は要求しない)
 # 非対象 (誤検出を避けるため):
 #   - md 内の散文 (anti-pattern 記述が「存在しないクラス」を禁止例として
-#     言及することを許容する。class="..." 属性構文のみを検査するため、
+#     言及することを許容する。class 属性構文のみを検査するため、
 #     散文の言及はマッチしない)
 #   - コマンド・属性・説明の意味論 (実ブラウザでの動作確認と手動レビューで担保)
+#   - 公式 examples/ と skill examples/ のバイト一致
 #
 # POSIX shell + 標準Unix toolのみ。
 set -eu
@@ -32,15 +34,23 @@ if [ -z "$(ls "$SKILL_DIR"/examples/*.html 2>/dev/null)" ]; then
   fail "skill example HTML が見つかりません: $SKILL_DIR/examples"
 fi
 
+if [ ! -f "$SKILL_DIR/examples/popover.html" ]; then
+  fail "skill examples に popover.html がありません"
+fi
+
 # 検査対象ファイル: examples/*.html と references/**/*.md
-FILES="$(find "$SKILL_DIR/examples" "$SKILL_DIR/references" -name '*.html' -o -name '*.md' 2>/dev/null || true)"
+FILES="$(find "$SKILL_DIR/examples" "$SKILL_DIR/references" \( -name '*.html' -o -name '*.md' \) 2>/dev/null || true)"
 if [ -z "$FILES" ]; then
   fail "検査対象ファイルが見つかりません"
 fi
 
 for f in $FILES; do
-  # class 属性から nv- クラスを抽出
-  for cls in $(grep -hoE 'class="[^"]+"' "$f" | grep -oE 'nv-[a-z0-9-]+' | sort -u); do
+  # class="..." と class='...' の両方から nv- クラスを抽出 (散文の nv-* は対象外)
+  for cls in $(
+    { grep -hoE 'class="[^"]+"' "$f" || true
+      grep -hoE "class='[^']+'" "$f" || true
+    } | grep -oE 'nv-[a-z0-9-]+' | sort -u
+  ); do
     if ! echo "$SRC_CLASSES" | grep -qx "$cls"; then
       fail "$f が存在しないクラスを参照しています: $cls"
     fi

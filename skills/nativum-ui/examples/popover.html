@@ -4,22 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Nativum — Popover &amp; Dropdown</title>
-  <link rel="stylesheet" href="../dist/nativum.css">
+  <!--
+    アプリケーションに vendor した nativum.css を参照すること。
+    (推奨構成: public/vendor/nativum/nativum.css)
+    <link rel="stylesheet" href="/vendor/nativum/nativum.css">
+    この例は参照パス nativum.css で同ディレクトリに配置した前提で書いている。
+    すべてのクラス・トークンはこの Skill の references/ に記載されたもののみを使用する。
+  -->
+  <link rel="stylesheet" href="nativum.css">
 </head>
 <body>
-  <header class="nv-container">
-    <nav class="nv-nav" aria-label="Examples">
-      <strong>Nativum</strong>
-      <a href="index.html">Showcase</a>
-      <a href="forms.html">Forms</a>
-      <a href="dialog.html">Dialog</a>
-      <a href="popover.html" aria-current="page">Popover</a>
-      <a href="dashboard.html">Dashboard</a>
-      <a href="login.html">Login</a>
-      <a href="settings.html">Settings</a>
-    </nav>
-  </header>
-
   <main class="nv-container-narrow nv-stack-lg" style="padding-block: 3rem 4rem">
     <section class="nv-stack-sm">
       <h1>Popover &amp; Dropdown</h1>
@@ -31,17 +25,17 @@
     <section class="nv-stack-sm">
       <h2>Popover (popovertarget)</h2>
       <div class="nv-cluster">
-        <button popovertarget="account">Account</button>
-        <button popovertarget="tips" popovertargetaction="show">Show tips</button>
-        <button popovertarget="tips" popovertargetaction="hide">Hide tips</button>
+        <button popovertarget="account">アカウント</button>
+        <button popovertarget="tips" popovertargetaction="show">ヒントを表示</button>
+        <button popovertarget="tips" popovertargetaction="hide">ヒントを隠す</button>
       </div>
 
       <div id="account" popover>
-        <h3 style="margin-block-end: var(--nv-space-2)">Hanako Tanaka</h3>
+        <h3 style="margin-block-end: var(--nv-space-2)">田中 花子</h3>
         <p class="nv-text-muted" style="margin-block-end: var(--nv-space-2)">hanako@example.com</p>
         <div class="nv-cluster">
-          <a href="dashboard.html">Go to dashboard</a>
-          <button popovertarget="account" popovertargetaction="hide">Close</button>
+          <a href="dashboard.html">ダッシュボードへ</a>
+          <button popovertarget="account" popovertargetaction="hide">閉じる</button>
         </div>
       </div>
 
@@ -63,31 +57,31 @@
 
       <div style="--nv-anchor: --nv-anchor-actions" class="nv-cluster">
         <button class="nv-dropdown-trigger" popovertarget="actions">
-          Actions <span aria-hidden="true">▾</span>
+          操作 <span aria-hidden="true">▾</span>
         </button>
 
         <div id="actions" class="nv-dropdown" popover>
           <div class="nv-stack-sm">
-            <a href="forms.html">Edit</a>
-            <a href="dashboard.html">Duplicate</a>
-            <a href="index.html">Move to…</a>
+            <a href="#">編集</a>
+            <a href="#">複製</a>
+            <a href="#">移動…</a>
             <hr style="margin-block: var(--nv-space-1)">
-            <a href="settings.html" style="color: var(--nv-color-danger)">Delete</a>
+            <a href="#" style="color: var(--nv-color-danger)">削除</a>
           </div>
         </div>
       </div>
 
       <div style="--nv-anchor: --nv-anchor-profile" class="nv-cluster">
         <button class="nv-dropdown-trigger" popovertarget="profile">
-          Profile <span aria-hidden="true">▾</span>
+          プロフィール <span aria-hidden="true">▾</span>
         </button>
 
         <div id="profile" class="nv-dropdown nv-dropdown-end" popover>
           <div class="nv-stack-sm">
-            <strong>Hanako Tanaka</strong>
-            <a href="dashboard.html">Dashboard</a>
-            <a href="settings.html">Settings</a>
-            <a href="login.html">Sign out</a>
+            <strong>田中 花子</strong>
+            <a href="dashboard.html">ダッシュボード</a>
+            <a href="settings.html">設定</a>
+            <a href="#">サインアウト</a>
           </div>
         </div>
       </div>
@@ -108,7 +102,7 @@
 
     <footer class="nv-stack-sm" style="margin-block-start: 3rem">
       <hr>
-      <p class="nv-text-muted">Nativum — passive, zero-JavaScript UI system. &copy; 2026</p>
+      <p class="nv-text-muted">Nativum — passive, zero-JavaScript UI system.</p>
     </footer>
   </main>
 </body>

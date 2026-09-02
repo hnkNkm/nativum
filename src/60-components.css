@@ -50,34 +50,34 @@
     cursor: not-allowed;
   }
 
-  .nv-primary {
+  :where(button, input[type="submit"], input[type="reset"], input[type="button"]).nv-primary {
     background-color: var(--nv-color-primary);
     border-color: var(--nv-color-primary);
     color: var(--nv-color-on-primary);
   }
 
-  .nv-primary:hover:not(:disabled) {
+  :where(button, input[type="submit"], input[type="reset"], input[type="button"]).nv-primary:hover:not(:disabled) {
     background-color: var(--nv-color-primary-hover);
     border-color: var(--nv-color-primary-hover);
   }
 
-  .nv-primary:active:not(:disabled) {
+  :where(button, input[type="submit"], input[type="reset"], input[type="button"]).nv-primary:active:not(:disabled) {
     background-color: var(--nv-color-primary-active);
     border-color: var(--nv-color-primary-active);
   }
 
-  .nv-danger {
+  :where(button, input[type="submit"], input[type="reset"], input[type="button"]).nv-danger {
     background-color: var(--nv-color-danger-strong);
     border-color: var(--nv-color-danger-strong);
     color: var(--nv-color-on-danger);
   }
 
-  .nv-danger:hover:not(:disabled) {
+  :where(button, input[type="submit"], input[type="reset"], input[type="button"]).nv-danger:hover:not(:disabled) {
     background-color: var(--nv-color-danger-strong-hover);
     border-color: var(--nv-color-danger-strong-hover);
   }
 
-  .nv-danger:active:not(:disabled) {
+  :where(button, input[type="submit"], input[type="reset"], input[type="button"]).nv-danger:active:not(:disabled) {
     background-color: var(--nv-color-danger-strong-hover);
     border-color: var(--nv-color-danger-strong-hover);
   }
@@ -116,12 +116,17 @@
     border-block-end: var(--nv-border-width) solid var(--nv-color-border-strong);
   }
 
-  tbody tr:hover {
+  .nv-table-striped tbody tr:nth-child(odd) {
     background-color: var(--nv-color-subtle);
   }
 
-  .nv-table-striped tbody tr:nth-child(odd) {
-    background-color: var(--nv-color-subtle);
+  tbody tr:hover {
+    background-color: var(--nv-color-border);
+  }
+
+  /* stripe と同色にならないよう、hover を後段・同等以上の特異性で勝たせる */
+  .nv-table-striped tbody tr:hover {
+    background-color: var(--nv-color-border);
   }
 
   /* テーブルを横スクロールさせる場合のラッパー */
@@ -228,7 +233,8 @@
     border-radius: var(--nv-radius-md);
   }
 
-  .nv-nav a {
+  .nv-nav > a,
+  .nv-nav > .nv-cluster a {
     padding: var(--nv-space-2) var(--nv-space-3);
     font-size: var(--nv-font-size-sm);
     font-weight: var(--nv-font-weight-medium);
@@ -237,12 +243,14 @@
     border-radius: var(--nv-radius-md);
   }
 
-  .nv-nav a:hover {
+  .nv-nav > a:hover,
+  .nv-nav > .nv-cluster a:hover {
     background-color: var(--nv-color-subtle);
     color: var(--nv-color-text);
   }
 
-  .nv-nav a[aria-current="page"] {
+  .nv-nav > a[aria-current="page"],
+  .nv-nav > .nv-cluster a[aria-current="page"] {
     background-color: var(--nv-color-primary);
     color: var(--nv-color-on-primary);
   }
@@ -476,8 +484,11 @@
 
   /* ============================================================
      Dropdown — Popover + CSS Anchor Positioning
-     アンカー名は --nv-anchor カスタムプロパティで与える:
-       <button class="nv-dropdown-trigger" style="--nv-anchor: --nv-anchor-x">
+     アンカー名 --nv-anchor はトリガーと .nv-dropdown の共有親に置く。
+     sibling の .nv-dropdown は button からカスタムプロパティを継承できない:
+       <div style="--nv-anchor: --nv-anchor-x">
+         <button class="nv-dropdown-trigger" popovertarget="...">
+         <div class="nv-dropdown" popover>
      anchor対応ブラウザでのみ絶対配置され、非対応ではpopoverの
      デフォルト配置にフォールバックする。
      ============================================================ */
@@ -503,6 +514,25 @@
     .nv-dropdown-end {
       inset-inline-start: auto;
       inset-inline-end: anchor(end);
+    }
+  }
+
+  /* --- Forced colors --- */
+  @media (forced-colors: active) {
+    button,
+    input[type="submit"],
+    input[type="reset"],
+    input[type="button"] {
+      border-color: ButtonText;
+      color: ButtonText;
+      background-color: Canvas;
+    }
+
+    .nv-card,
+    dialog {
+      border-color: CanvasText;
+      color: CanvasText;
+      background-color: Canvas;
     }
   }
 }
