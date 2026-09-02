@@ -86,13 +86,13 @@
     <input id="email" name="email" type="email" required>
   </div>
 
-  <div class="nv-field">
-    <label>Notification</label>
+  <fieldset>
+    <legend>Notification</legend>
     <div class="nv-stack-sm">
       <label><input type="checkbox" name="digest" checked> Email digest</label>
       <label><input type="checkbox" name="weekly"> Weekly report</label>
     </div>
-  </div>
+  </fieldset>
 
   <fieldset>
     <legend>Account type</legend>

@@ -34,8 +34,9 @@
       <form action="#" method="post">
         <div class="nv-field">
           <label for="name">Name</label>
-          <input id="name" name="name" type="text" placeholder="Your name" required>
-          <span class="nv-field-hint">必須です。空欄のまま送信するとネイティブ検証が働きます。</span>
+          <input id="name" name="name" type="text" placeholder="Your name" required
+                 aria-describedby="name-hint">
+          <span class="nv-field-hint" id="name-hint">必須です。空欄のまま送信するとネイティブ検証が働きます。</span>
         </div>
 
         <div class="nv-field">
@@ -67,13 +68,13 @@
           <input id="slider" name="slider" type="range" min="0" max="100" value="40">
         </div>
 
-        <div class="nv-field">
-          <label>Notification</label>
+        <fieldset>
+          <legend>Notification</legend>
           <div class="nv-stack-sm">
             <label><input type="checkbox" name="notify" checked> Email digest</label>
             <label><input type="checkbox" name="notify2"> Weekly report</label>
           </div>
-        </div>
+        </fieldset>
 
         <fieldset>
           <legend>Account type</legend>

@@ -70,7 +70,6 @@
 
 - `nv-table-striped` のゼブラ表示
 - `tbody tr:hover` の行ハイライト
-- `src/70-motion.css` のトランジションが `prefers-reduced-motion: no-preference` 時のみ有効
 
 ## Fallback behavior
 

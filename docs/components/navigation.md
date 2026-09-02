@@ -129,11 +129,11 @@
   <div class="nv-cluster-between nv-cluster">
     <nav aria-label="Pagination">
       <ul class="nv-pagination">
-        <li><a href="#">Prev</a></li>
-        <li><a href="#">1</a></li>
+        <li><a href="index.html">Prev</a></li>
+        <li><a href="index.html">1</a></li>
         <li><span aria-current="page">2</span></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">Next</a></li>
+        <li><a href="forms.html">3</a></li>
+        <li><a href="dialog.html">Next</a></li>
       </ul>
     </nav>
 

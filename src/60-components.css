@@ -484,8 +484,11 @@
 
   /* ============================================================
      Dropdown — Popover + CSS Anchor Positioning
-     アンカー名は --nv-anchor カスタムプロパティで与える:
-       <button class="nv-dropdown-trigger" style="--nv-anchor: --nv-anchor-x">
+     アンカー名 --nv-anchor はトリガーと .nv-dropdown の共有親に置く。
+     sibling の .nv-dropdown は button からカスタムプロパティを継承できない:
+       <div style="--nv-anchor: --nv-anchor-x">
+         <button class="nv-dropdown-trigger" popovertarget="...">
+         <div class="nv-dropdown" popover>
      anchor対応ブラウザでのみ絶対配置され、非対応ではpopoverの
      デフォルト配置にフォールバックする。
      ============================================================ */
