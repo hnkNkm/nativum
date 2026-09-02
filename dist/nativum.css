@@ -1239,24 +1239,28 @@
     }
 
     /* --- Popover enter / exit --- */
-    [popover] {
-      opacity: 0;
-      transition:
-        opacity var(--nv-duration-normal) var(--nv-ease-standard),
-        transform var(--nv-duration-normal) var(--nv-ease-standard),
-        overlay var(--nv-duration-normal) var(--nv-ease-standard) allow-discrete,
-        display var(--nv-duration-normal) var(--nv-ease-standard) allow-discrete;
-    }
-
-    [popover]:popover-open {
-      opacity: 1;
-      transform: none;
-    }
-
-    @starting-style {
-      [popover]:popover-open {
+    /* [popover] 単体に opacity: 0 を付けない。:popover-open 非対応では
+       フロー内フォールバックが不可視になるため、セレクタ対応時のみゲートする */
+    @supports selector(:popover-open) {
+      [popover] {
         opacity: 0;
-        transform: translateY(-0.25rem);
+        transition:
+          opacity var(--nv-duration-normal) var(--nv-ease-standard),
+          transform var(--nv-duration-normal) var(--nv-ease-standard),
+          overlay var(--nv-duration-normal) var(--nv-ease-standard) allow-discrete,
+          display var(--nv-duration-normal) var(--nv-ease-standard) allow-discrete;
+      }
+
+      [popover]:popover-open {
+        opacity: 1;
+        transform: none;
+      }
+
+      @starting-style {
+        [popover]:popover-open {
+          opacity: 0;
+          transform: translateY(-0.25rem);
+        }
       }
     }
   }

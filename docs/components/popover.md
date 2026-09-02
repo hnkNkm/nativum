@@ -62,6 +62,7 @@ Dropdownとして使う場合は `nv-dropdown-trigger` / `nv-dropdown` / `nv-dro
 
 - Popover API非対応環境では、`[popover]` は未知の属性として扱われ、要素は通常のドキュメントフロー内コンテンツとして表示される
 - フォールバック時も意味のある内容を保つこと（コンテンツが「隠れたまま」にならない設計にする）
+- フェードは `@supports selector(:popover-open)` でゲートされ、非対応環境では `[popover]` に `opacity: 0` を付けない
 - アンカー付きDropdownとして使う場合、CSS Anchor Positioning非対応環境ではpopoverのデフォルト配置にフォールバックする（[dropdown.md](./dropdown.md)）
 
 ## Examples
