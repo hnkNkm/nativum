@@ -50,34 +50,34 @@
     cursor: not-allowed;
   }
 
-  .nv-primary {
+  :where(button, input[type="submit"], input[type="reset"], input[type="button"]).nv-primary {
     background-color: var(--nv-color-primary);
     border-color: var(--nv-color-primary);
     color: var(--nv-color-on-primary);
   }
 
-  .nv-primary:hover:not(:disabled) {
+  :where(button, input[type="submit"], input[type="reset"], input[type="button"]).nv-primary:hover:not(:disabled) {
     background-color: var(--nv-color-primary-hover);
     border-color: var(--nv-color-primary-hover);
   }
 
-  .nv-primary:active:not(:disabled) {
+  :where(button, input[type="submit"], input[type="reset"], input[type="button"]).nv-primary:active:not(:disabled) {
     background-color: var(--nv-color-primary-active);
     border-color: var(--nv-color-primary-active);
   }
 
-  .nv-danger {
+  :where(button, input[type="submit"], input[type="reset"], input[type="button"]).nv-danger {
     background-color: var(--nv-color-danger-strong);
     border-color: var(--nv-color-danger-strong);
     color: var(--nv-color-on-danger);
   }
 
-  .nv-danger:hover:not(:disabled) {
+  :where(button, input[type="submit"], input[type="reset"], input[type="button"]).nv-danger:hover:not(:disabled) {
     background-color: var(--nv-color-danger-strong-hover);
     border-color: var(--nv-color-danger-strong-hover);
   }
 
-  .nv-danger:active:not(:disabled) {
+  :where(button, input[type="submit"], input[type="reset"], input[type="button"]).nv-danger:active:not(:disabled) {
     background-color: var(--nv-color-danger-strong-hover);
     border-color: var(--nv-color-danger-strong-hover);
   }
@@ -228,7 +228,8 @@
     border-radius: var(--nv-radius-md);
   }
 
-  .nv-nav a {
+  .nv-nav > a,
+  .nv-nav > .nv-cluster a {
     padding: var(--nv-space-2) var(--nv-space-3);
     font-size: var(--nv-font-size-sm);
     font-weight: var(--nv-font-weight-medium);
@@ -237,12 +238,14 @@
     border-radius: var(--nv-radius-md);
   }
 
-  .nv-nav a:hover {
+  .nv-nav > a:hover,
+  .nv-nav > .nv-cluster a:hover {
     background-color: var(--nv-color-subtle);
     color: var(--nv-color-text);
   }
 
-  .nv-nav a[aria-current="page"] {
+  .nv-nav > a[aria-current="page"],
+  .nv-nav > .nv-cluster a[aria-current="page"] {
     background-color: var(--nv-color-primary);
     color: var(--nv-color-on-primary);
   }
