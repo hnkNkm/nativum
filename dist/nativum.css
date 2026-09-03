@@ -1279,9 +1279,6 @@
     color: var(--nv-color-text-muted);
   }
 
-  .nv-text-center {
-    text-align: center;
-  }
 }
 
 /* Nativum 0.1.0 — Motion */
