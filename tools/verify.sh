@@ -167,4 +167,10 @@ if grep -rEn '<(div|span)[^>]*role[[:space:]]*=[[:space:]]*["'"'"']button["'"'"'
   fail 'role="button" reimplementation found in official examples'
 fi
 
+# 9. src/50-forms.css の text-field :where() リストは重複箇所で同一内容に保つ
+#    (2箇所更新ルール。更新漏れはここで検出する。仕様は同ファイルのコメント参照)
+if ! awk '/^[[:space:]]*:where\(/{n++;capture=1;buf="";next} /^[[:space:]]*\)/{if(capture){capture=0;if(n==1){first=buf}else if(buf!=first){exit 1}};next} capture{buf=buf $0 "\n"} END{if(n<2){exit 1}}' src/50-forms.css; then
+  fail "src/50-forms.css の :where() リストが重複箇所で不一致です (全箇所を同一に更新してください)"
+fi
+
 echo "VERIFY OK — executable supply-chain attack surface は検出されませんでした"

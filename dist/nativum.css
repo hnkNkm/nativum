@@ -532,6 +532,8 @@
 
   /* --- Text fields (input / textarea / select) --- */
   /* タイプ列は :where() で特異性を 0 にする。input:not([type]) も同じリストに含める */
+  /* 更新ルール: 下の :where() リストは2箇所 (base / :hover) で重複している。全箇所を
+     テキスト同一に保つこと (input:not([type]) の有無を含む)。不一致は tools/verify.sh §9 が検出する */
   :where(
     input:not([type]),
     input[type="text"],
