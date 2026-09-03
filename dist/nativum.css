@@ -174,16 +174,20 @@
     --nv-color-warning-hover: #92400e;
     --nv-color-on-warning: #ffffff;
 
-    /* ソリッドなstatus背景色 (badge / 破壊的ボタン用)。
-       白文字とのコントラストが light / dark 双方で WCAG AA (4.5:1) を満たす。 */
-    --nv-color-danger-strong: #dc2626;
-    --nv-color-danger-strong-hover: #b91c1c;
-    --nv-color-success-strong: #15803d;
+    /* ソリッドなstatus背景色 (badge / 破壊的ボタン用)。base トークンの別名であり、
+       ホストが --nv-color-danger / -success / -warning を上書きすると全consumer
+       (badge / danger button / field-error / notice) が連動して変わる。
+       ライト計算値は従来の -strong 値と同一。ダーク値は light-dark() / data-theme
+       の base 値を追従する。on-* のダーク値は濃色テキストにし、白背景・淡背景の
+       双方で WCAG AA (4.5:1) を満たす (dark: danger 6.08 / success 7.45 / warning 7.39)。 */
+    --nv-color-danger-strong: var(--nv-color-danger);
+    --nv-color-danger-strong-hover: var(--nv-color-danger-hover);
+    --nv-color-success-strong: var(--nv-color-success);
     /* override-only: Core では未使用。ホストアプリ用の予約トークン */
-    --nv-color-success-strong-hover: #166534;
-    --nv-color-warning-strong: #b45309;
+    --nv-color-success-strong-hover: var(--nv-color-success-hover);
+    --nv-color-warning-strong: var(--nv-color-warning);
     /* override-only: Core では未使用。ホストアプリ用の予約トークン */
-    --nv-color-warning-strong-hover: #92400e;
+    --nv-color-warning-strong-hover: var(--nv-color-warning-hover);
 
     --nv-color-link: var(--nv-color-primary);
     --nv-color-link-hover: var(--nv-color-primary-hover);
@@ -210,13 +214,13 @@
       --nv-color-on-primary: light-dark(#ffffff, #0d0d10);
       --nv-color-danger: light-dark(#dc2626, #f06a6a);
       --nv-color-danger-hover: light-dark(#b91c1c, #f08383);
-      --nv-color-on-danger: light-dark(#ffffff, #ffffff);
+      --nv-color-on-danger: light-dark(#ffffff, #2a0a0a);
       --nv-color-success: light-dark(#15803d, #3fb950);
       --nv-color-success-hover: light-dark(#166534, #2ea043);
-      --nv-color-on-success: light-dark(#ffffff, #ffffff);
+      --nv-color-on-success: light-dark(#ffffff, #04140a);
       --nv-color-warning: light-dark(#b45309, #d29922);
       --nv-color-warning-hover: light-dark(#92400e, #bb8009);
-      --nv-color-on-warning: light-dark(#ffffff, #ffffff);
+      --nv-color-on-warning: light-dark(#ffffff, #1c1005);
       --nv-color-selection: light-dark(rgb(29 78 216 / 0.18), rgb(124 159 255 / 0.28));
     }
   }
@@ -238,13 +242,13 @@
     --nv-color-on-primary: #0d0d10;
     --nv-color-danger: #f06a6a;
     --nv-color-danger-hover: #f08383;
-    --nv-color-on-danger: #ffffff;
+    --nv-color-on-danger: #2a0a0a;
     --nv-color-success: #3fb950;
     --nv-color-success-hover: #2ea043;
-    --nv-color-on-success: #ffffff;
+    --nv-color-on-success: #04140a;
     --nv-color-warning: #d29922;
     --nv-color-warning-hover: #bb8009;
-    --nv-color-on-warning: #ffffff;
+    --nv-color-on-warning: #1c1005;
     --nv-color-selection: rgb(124 159 255 / 0.28);
     --nv-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.55), 0 0 0 1px rgb(255 255 255 / 0.08);
     --nv-shadow-md: 0 2px 6px rgb(0 0 0 / 0.5), 0 8px 24px rgb(0 0 0 / 0.4), 0 0 0 1px rgb(255 255 255 / 0.08);
