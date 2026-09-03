@@ -102,8 +102,6 @@
     :root {
       --nv-duration-fast: 0.01ms;
       --nv-duration-normal: 0.01ms;
-      /* --nv-duration-slow は override-only ではなく Core (motion) 自身が消費するためここで再割当する */
-      --nv-duration-slow: 0.01ms;
     }
   }
 }

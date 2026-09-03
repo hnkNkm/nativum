@@ -115,7 +115,6 @@
     /* --- Motion --- */
     --nv-duration-fast: 120ms;
     --nv-duration-normal: 180ms;
-    --nv-duration-slow: 300ms;
     --nv-ease-standard: cubic-bezier(0.2, 0, 0, 1);
     /* override-only: Core では未使用。ホストアプリ用の予約トークン */
     --nv-ease-emphasized: cubic-bezier(0.3, 0, 0.2, 1);
@@ -1271,6 +1270,7 @@
     margin: -1px;
     overflow: hidden;
     clip: rect(0 0 0 0);
+    clip-path: inset(50%);
     white-space: nowrap;
     border: 0;
   }
@@ -1388,8 +1388,6 @@
     :root {
       --nv-duration-fast: 0.01ms;
       --nv-duration-normal: 0.01ms;
-      /* --nv-duration-slow は override-only ではなく Core (motion) 自身が消費するためここで再割当する */
-      --nv-duration-slow: 0.01ms;
     }
   }
 }
