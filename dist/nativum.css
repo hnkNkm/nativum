@@ -16,6 +16,7 @@
   nativum.tokens,
   nativum.base,
   nativum.layout,
+  nativum.forms,
   nativum.components,
   nativum.motion,
   nativum.utilities;
@@ -515,7 +516,7 @@
 /* Nativum 0.1.0 — Forms */
 /* ネイティブのform controlをスタイルする。再実装しない。 */
 
-@layer nativum.components {
+@layer nativum.forms {
   /* --- Label --- */
   label {
     font-size: var(--nv-font-size-sm);
