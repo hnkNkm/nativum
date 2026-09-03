@@ -107,6 +107,9 @@ nix develop
 # セキュリティ検証 (executable supply-chain attack surface の検査)
 ./tools/verify.sh
 
+# Skill examples と references の整合性検査 (CI でも実行)
+./tools/check-skill-examples.sh
+
 # 例ページの表示
 ./tools/serve.sh          # → http://localhost:8080/examples/
 ```
@@ -127,7 +130,7 @@ dist/       ビルド済み nativum.css
 examples/   デモアプリ (HTML + nativum.css のみ)
 docs/       component / pattern ドキュメント
 skills/     公式Agent Skill (nativum-ui)
-tools/      build.sh / verify.sh / serve.sh
+tools/      build.sh / verify.sh / serve.sh / check-skill-examples.sh
 ```
 
 ## セキュリティ
