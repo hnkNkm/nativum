@@ -51,7 +51,6 @@
     /* --- Motion --- */
     --nv-duration-fast: 120ms;
     --nv-duration-normal: 180ms;
-    --nv-duration-slow: 300ms;
     --nv-ease-standard: cubic-bezier(0.2, 0, 0, 1);
     /* override-only: Core では未使用。ホストアプリ用の予約トークン */
     --nv-ease-emphasized: cubic-bezier(0.3, 0, 0.2, 1);
